@@ -1,7 +1,7 @@
 # Progetto per il corso di Tecnologie Web
 
 # Membri del gruppo
-- Aala Ajmaime
+- Ajmaime Aala
 - Iadadi Ines
 - Maule Angela
 - Suar Alberto
