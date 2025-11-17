@@ -3,20 +3,20 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // Molto semplicemente
 
 switch ($path) {
     case '/':
-        include 'home.php';
+        include('home.php');
         break;
 
     case '/register':
-        include 'register.php';
+        include('register.php');
         break;
 
     case '/login':
-        include 'login.php';
+        include('login.php');
         break;
 
     default:
         http_response_code(404);
-        include 'error_404.php';
+        include('error_404.php');
         break;
 }
 ?>
