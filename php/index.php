@@ -13,6 +13,10 @@ switch ($path) {
     case '/login':
         include('login.php');
         break;
+    
+    case '/come-funziona':
+        include('come_funziona.php');
+        break;    
 
     default:
         http_response_code(404);
