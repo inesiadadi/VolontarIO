@@ -1,23 +1,26 @@
 <?php
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // Molto semplicemente prende quello dopo il dominio
 
+
+// Router funziona a metà, da mettere apposto quando si capirà meglio come funziona il server tecweb
+
 switch ($path) {
     case '/':
-        include('home.php');
+        include('php/home.php');
         break;
 
     case '/register':
-        include('register.php');
+        include('php/register.php');
         break;
 
     case '/login':
-        include('login.php');
+        include('php/login.php');
         break;
     
     case '/come-funziona':
-        include('come_funziona.php');
+        include('php/come_funziona.php');
         break;    
-
+    
     default:
         http_response_code(404);
         include('error_404.php');
