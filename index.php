@@ -3,7 +3,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // Molto semplicemente
 
 
 // Router funziona a metà, da mettere apposto quando si capirà meglio come funziona il server tecweb
-
+// GRANDISSIMO problema di sicurezza (Si puo' scaricare qualsiasi file della cartella, da capire come far funzionare tutto cio' con .htaccess)
 switch ($path) {
     case '/':
         include('php/home.php');

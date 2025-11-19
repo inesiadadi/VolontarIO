@@ -15,11 +15,11 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     if($password != $pass_again) {
         $messaggio = "<p class='error'>Le password sono diverse</span>";
     } else {
-        
+
+        //Il blocco qui sotto è fatto in modo da aver una query "safe" invece di avere $username direttamente sparato nella query, ancora manca qualche step per avere solo valori alfanumerici
         $check = $connessione->prepare("SELECT id FROM users WHERE username = ?");
         $check->bind_param("s", $username);
         $check->execute();
-        
         $result = $check->get_result();
         
         if($result->num_rows > 0) {
