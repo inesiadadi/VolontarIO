@@ -1,5 +1,5 @@
 <?php 
-$title = "Homepage";
+$title = "Homepage | VolontarIO";
 include('header.php');
 ?>
 <main>

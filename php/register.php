@@ -3,7 +3,7 @@
 // ini_set('display_errors', 1);
 // Per avere un echo degli errori php dentro la pagina
 
-$title = "Registrazione";
+$title = "Registrazione | VolontarIO";
 include('header.php');
 $messaggio = "";
 
@@ -26,9 +26,23 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             $messaggio = "<p class='error'>Account con questo username già esistente</span>";
         } else {
             $check = $connessione->prepare("INSERT INTO users (username, pass) VALUES (?, ?)");
-            $check->bind_param("ss", $username, $password);
+            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+            $check->bind_param("ss", $username, $pass_hash);
             $check->execute();
-            $messaggio = "<p class='valid'>Account creato.</span>";
+            
+            $retreive_id = $connessione->prepare("SELECT id FROM users WHERE username = ?");
+            $retreive_id->bind_param("s", $username);
+            $retreive_id->execute();
+            $result = $retreive_id->get_result();
+            $row = $result->fetch_assoc();
+    
+            // Inizio della sessione, da vedere meglio ancora
+            session_start();
+            $_SESSION['logged'] = true;
+            $_SESSION['user_id'] = $row['id'];
+
+            header('Location: /');
+            exit();
         }
     }
 }   

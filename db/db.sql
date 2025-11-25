@@ -5,7 +5,7 @@ FLUSH PRIVILEGES; -- Ricarica tutti i permessi
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    pass VARCHAR(50) NOT NULL
+    pass VARCHAR(255) NOT NULL
 ); -- Crea table users per tutti gli account
 INSERT INTO users (username, pass) VALUES ('user', 'user'); -- Crea account base user
 INSERT INTO users (username, pass) VALUES ('admin', 'admin'); -- Crea account base admin
