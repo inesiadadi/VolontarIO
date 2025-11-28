@@ -20,10 +20,12 @@ switch ($path) {
     case '/come-funziona':
         include('php/come_funziona.php');
         break;    
-    
+    case '/logout':
+        include('php/logout.php');
+        break;
     default:
         http_response_code(404);
-        include('error_404.php');
+        include('php/error_404.php');
         break;
 }
 ?>

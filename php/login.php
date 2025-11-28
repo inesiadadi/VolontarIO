@@ -7,7 +7,7 @@ $messaggio = "";
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
 $username = $_POST['username'];
 $password = $_POST['password'];
-$check_username = $connessione->prepare("SELECT id, pass FROM users WHERE username =  ?");
+$check_username = $connessione->prepare("SELECT username, id, pass FROM users WHERE username =  ?");
 $check_username->bind_param("s", $username);
 $check_username->execute();
 $result = $check_username->get_result();
@@ -21,6 +21,7 @@ if ($result->num_rows == 0) {
         session_start();
         session_regenerate_id(true);
         $_SESSION['logged'] = true;
+        $_SESSION['username'] = $row['username'];
         $_SESSION['user_id'] = $row['id'];
         header('Location: /');
         exit();

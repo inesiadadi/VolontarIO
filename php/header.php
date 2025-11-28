@@ -1,5 +1,6 @@
 <?php 
 include('connessione.php'); // La connessione con il database è fatto in un file a parte, aggiunto nell'header (quindi aggiunto in ogni pagina).
+session_start(); // Per poter usare l'array $_SESSION
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -14,8 +15,14 @@ include('connessione.php'); // La connessione con il database è fatto in un fil
         <nav>
             <ul>
                 <li><a href="/" lang="en">Home</a></li>
-                <li><a href="/register">Registrazione</a></li>
-                <li><a href="/login" lang="en">Login</a></li>
+                <?php
+                if(!isset($_SESSION['logged'])) {
+                    echo "<li><a href='/register'>Registrazione</a></li>";
+                    echo "<li><a href='/login' lang='en'>Login</a></li>";
+                } else {
+                    echo "<li><a href='/logout' lang='en'>Logout</a></li>";
+                }
+                ?>
                 <li><a href="/come-funziona">Come funziona</a></li> <!-- Da aggiungere -->
             </ul>
         </nav>
