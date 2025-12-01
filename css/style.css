@@ -1,0 +1,125 @@
+*{
+    padding:0em;
+    margin:0em;
+    background-color:#D9CBBF;
+
+}
+
+
+html, body{
+    font-size: 100%;                                                                     
+    font-family: "Lexend", "Roboto", sans-serif;
+    line-height:1.5em;
+}
+
+
+/*
+======================================================================================
+
+SELEZIONA HEADER
+
+======================================================================================
+*/
+
+
+#Logo{
+    width:70px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 10px 10px;
+    border-bottom: 2px solid #02381A;
+    margin-bottom: 10px;
+    box-shadow:
+        inset 0 6px 12px -6px rgba(35, 80, 45, 0.6),
+        inset 0 -6px 12px -6px rgba(35, 80, 45, 0.6);
+    }
+nav {
+   flex: 1; 
+    display: flex;
+    justify-content: center; 
+}
+
+nav ul{
+   list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.center-menu{
+     display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.center-menu li a,
+.login_menu {
+    text-decoration: none;
+    font-weight: bold;
+    
+}
+
+a:link{
+    color:#02381A;
+}
+a:visited{
+    color:#395731;
+}
+
+.login-bot{
+    border-radius: 8px;
+    padding: 10px;
+    border:2px solid #02381A;
+}
+
+/*
+======================================================================================
+
+SELEZIONA COME_FUNZIONA
+
+======================================================================================
+*/
+
+.container-left {
+    display: flex;
+    align-items: flex-start; 
+    gap: 20px;  
+    margin-bottom: 2rem;
+}
+
+.container-left.reverse {
+    flex-direction: row-reverse; 
+}
+
+.container-left img {
+    width: 200px; 
+    height: auto;
+    border-radius: 8px; 
+}
+
+.container-text {
+    flex: 1; 
+}
+
+main section {
+    background-color: #D9CBBF;
+    border: 1px solid #CFC1B2; 
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom:3.5rem;
+    margin-left:1.5rem;
+    margin-right: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+main section h1,h2{
+    text-align: center;
+}
+
