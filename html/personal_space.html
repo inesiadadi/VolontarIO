@@ -1,58 +1,46 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-	<meta author="Suar Alberto">
-	<meta charset="UTF-8">
-	<meta name="description"
-		content="Pagina dedicata alla gestione e alla visualizzazione delle informazioni del tuo account personale di volontarIO">
-	<meta name="keywords" content="account, personale, infomazioni, gestione, visualizzazione">
-	<meta name="robots" content="index, follow">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<title>volontarIO | Account Personale</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="volontarIOTeam">
+    <meta name="description" content="Pagina dedicata alla gestione e alla visualizzazione delle informazioni del tuo account personale di volontarIO">
+    <meta name="keywords" content="account, personale, informazioni, gestione, visualizzazione">
+    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>volontarIO | Account Personale</title> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
 </head>
-
 <body>
-    <header>
-	<nav id="menu">
+    <header class="headerSite">
+	<a class="logoSection" href="#"> <!-- Diventerà home.html o come decidiamo di chiamarlo -->
+	    <img src="../images/logov1.svg" alt="Logo volontarIO" class="logoImage">
+	    <span>volontarIO</span>
+	</a>
+	<nav class="pagesNavigation" aria-label="Menù di navigazione">
 	    <ul>
-		<li lang="en">Home</li>
-		<li>Chi siamo</li>
-		<li>Sfoglia Richieste</li>
-		<li><a href="personal_space.html"><span lang="en">Account </span>personale</a></li>
+		<li><a href="#">Chi siamo</a></li>
+		<li><a href="#">Come funziona</a></li>
+		<li><a href="#">Sfoglia Servizi</a></li>
+		<li><button id="changeMode" aria-label="Passa alla modalità scura">Dark Mode</button></li>
 	    </ul>
 	</nav>
+	<div class="accountAccess">
+	    <a href="#">Accedi</a> <!-- Diventerà login.html -->
+	    <a href="#">Registrati</a> <!-- Diventerà register.html-->
+	</div>
     </header>
-    <main class="AccountPage">
-        <h1>L'angolo del volontario</h1>
-	<section class="mainAccountInfo">
-	    <img src="" alt="Immagine del profilo dell'utente"> 
-	    <h2>Nome e Cognome</h2>
-	    <h3>Username</h3>
-	    <dl class="aboutMe">
-		<dt>Città di Residenza</dt>
-		<dd id="residenceCity">Nome città</dd>
-		<dt>Email</dt>
-		<dd id="email">email utente</dd>
-		<dt>Numero di Telefono</dt>
-		<dd id="phone">telephone</dd>
-		<dt>Social</dt>
-		<dd>
-		    <ul id="socialList">
-			<li lang="en">Instagram</li>
-			<li lang="en">LinkedIn</li>
-		    </ul>
-		</dd>
-	    </dl> 
-	</section>
-	<section class="detailedInfo">
-		<!-- Da definire la struttura -->
-	</section>
+    <main>
+	<h1></h1>
+	<div class="accountPage">
+	    <section id="AccountMainInfo">
+
+	</div>
     </main>
-    <footer>
-	<p>@ 2025 volontarIO <span lang="en">All Rights Reserved</span></p>
+    <footer class="footerSite">
+        <p>&copy; 2025 volontarIO — <span lang="en">All Rights Reserved</span></p>
     </footer>
 </body>
-
 </html>

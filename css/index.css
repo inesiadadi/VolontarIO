@@ -1,0 +1,107 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Inclusive Sans", monospace;
+}
+
+:root {
+    --dark-green: #021F0E;
+    --deep-green: #02381A;
+    --outline: #395731;
+    --footer-text: #93A680;
+    --secondary-bg: #D9CBBF;
+    --main-bg: #F5F0E8;
+}
+
+body.darkMode {
+    --dark-green: #F5F0E8;
+    --deep-green: #93A680;
+    --outline: #93A680;
+    --footer-text: #D9CBBF;
+    --secondary-bg: #02381A;
+    --main-bg: #021F0E;
+}
+
+.headerSite {
+    background-color: var(--main-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 5px solid var(--outline);
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+}
+
+.logoSection img {
+    width: 80px;
+    height: 45px;
+}
+
+.logoSection span {
+    font-size: 1.5em;
+    color: var(--dark-green);
+}
+
+.pagesNavigation ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.pagesNavigation li a {
+    font-weight: bold;
+    color: var(--dark-green);
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+
+.pagesNavigation li a:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+#changeMode {
+    cursor: pointer;
+    margin-left: 1.5rem;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    background-color: var(--secondary-bg);
+    color: var(--dark-green);
+    transition: all 0.5s ease;
+}
+
+#changeMode:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+.accountAccess {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 2rem;
+}
+
+.accountAccess a {
+    text-decoration: none;
+    color: var(--dark-green);
+    font-weight: bold;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    transition: all 0.5s ease;
+}
+
+.accountAccess a:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
