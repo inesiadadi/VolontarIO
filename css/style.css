@@ -1,17 +1,13 @@
 *{
     padding:0em;
     margin:0em;
-    background-color:#D9CBBF;
-
 }
-
 
 html, body{
     font-size: 100%;                                                                     
-    font-family: "Lexend", "Roboto", sans-serif;
+    font-family: "Quicksand", sans-serif;
     line-height:1.5em;
 }
-
 
 /*
 ======================================================================================
@@ -21,63 +17,128 @@ SELEZIONA HEADER
 ======================================================================================
 */
 
-
 #Logo{
-    width:70px;
+    background-color: #D9CBBF;
+    width:50px;
+    padding-top: 5px;
 }
 
-header {
-    display: flex;
-    align-items: center;
+header { 
+    background-color: #D9CBBF; 
+    display: flex; 
+    align-items: center; 
     justify-content: space-between; 
-    padding: 10px 10px;
-    border-bottom: 2px solid #02381A;
-    margin-bottom: 10px;
-    box-shadow:
-        inset 0 6px 12px -6px rgba(35, 80, 45, 0.6),
-        inset 0 -6px 12px -6px rgba(35, 80, 45, 0.6);
-    }
-nav {
-   flex: 1; 
-    display: flex;
-    justify-content: center; 
-}
-
-nav ul{
-   list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-}
-
-.center-menu{
-     display: flex;
-    gap: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.center-menu li a,
-.login_menu {
-    text-decoration: none;
-    font-weight: bold;
+    padding: 2px 2px; 
+    border-bottom: 2px solid #395731; 
+    margin-bottom: 10px; 
+    padding-left: 10px; 
+    padding-right: 10px; 
+    } 
     
-}
+nav { 
+    flex: 1; 
+    display: flex; 
+    justify-content: center; 
+    } 
+
+nav ul{ 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+    align-items: center; 
+    }
+    
+.center-menu{ 
+    display: flex; 
+    gap: 80px; 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+    } 
+    
+a{ 
+    font-weight: bold; 
+    }
 
 a:link{
     color:#02381A;
+    }
+
+a:visited{ 
+    color:#395731; 
+    }
+
+.left-menu {
+    display: flex;            
+    align-items: center;      
 }
-a:visited{
-    color:#395731;
-}
+
+.signin{ 
+    margin-right: 10px; 
+    } 
 
 .login-bot{
     border-radius: 8px;
     padding: 10px;
     border:2px solid #02381A;
-}
+    background-color: #02381A;
+    color:#D9CBBF;
+    font-weight: bold;
+    }
+
+.light-dark-mode {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+    height: 40px;
+    margin-right: 20px; 
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    }
+
+.light-dark-mode input {
+    display: none;
+    }
+
+.icon-pos {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+.icon-anim{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s ease;
+    }
+
+.sun {
+    opacity: 1;
+    color:#02381A;
+    }
+
+.moon {
+    opacity: 0;
+    color:black;
+    }
+
+.light-dark-mode input:checked ~ .icon-pos .sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+    }
+
+.light-dark-mode input:checked ~ .icon-pos .moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    }
 
 /*
 ======================================================================================
@@ -86,6 +147,10 @@ SELEZIONA COME_FUNZIONA
 
 ======================================================================================
 */
+
+body{
+    background-color:#F5F0E8;
+}
 
 .container-left {
     display: flex;
@@ -109,8 +174,8 @@ SELEZIONA COME_FUNZIONA
 }
 
 main section {
-    background-color: #D9CBBF;
-    border: 1px solid #CFC1B2; 
+    background-color: #F5F0E8;
+    border: 1px solid #F5F0E8; 
     border-radius: 12px;
     padding: 2rem;
     margin-bottom:3.5rem;
@@ -122,4 +187,3 @@ main section {
 main section h1,h2{
     text-align: center;
 }
-
