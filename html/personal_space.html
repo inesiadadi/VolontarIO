@@ -16,28 +16,39 @@
 <body>
     <header class="headerSite">
 	<a class="logoSection" href="#"> <!-- Diventerà home.html o come decidiamo di chiamarlo -->
-	    <img src="../images/logov1.svg" alt="Logo volontarIO" class="logoImage">
-	    <span>volontarIO</span>
+	    <img src="../images/birbo.jpeg" alt="Logo volontarIO" class="logoImage">
+	    <p id="siteName">volontarIO</p>
 	</a>
 	<nav class="pagesNavigation" aria-label="Menù di navigazione">
 	    <ul>
-		<li><a href="#">Chi siamo</a></li>
 		<li><a href="#">Come funziona</a></li>
 		<li><a href="#">Sfoglia Servizi</a></li>
-		<li><button id="changeMode" aria-label="Passa alla modalità scura">Dark Mode</button></li>
 	    </ul>
+
 	</nav>
+	<button id="changeMode" aria-label="Passa alla modalità scura">Dark Mode</button>
 	<div class="accountAccess">
 	    <a href="#">Accedi</a> <!-- Diventerà login.html -->
 	    <a href="#">Registrati</a> <!-- Diventerà register.html-->
 	</div>
     </header>
-    <main>
-	<h1></h1>
-	<div class="accountPage">
-	    <section id="AccountMainInfo">
-
-	</div>
+    <main id="accountPage">
+	<h1 id="accountTitle">L'Angolo del Volontario</h1>
+	    <section id="accountMainInfo">
+		<h2 class="UserIdentity" id="">Nome Cognome</h2> 
+		<h3 class="UserIdentity" id="username">Username</h3>
+		<dl class="userInformation">
+		    <dt>Data di Nascita</dt>
+		    <dd>birthdate</dd>
+		    <dt>Social</dt>
+		    <dd>
+			<ul>
+			    <li>Instagram</li>
+			    <li>LinkedIn</li>
+			</ul>
+		    </dd>
+		</dl>
+	    </section>
     </main>
     <footer class="footerSite">
         <p>&copy; 2025 volontarIO — <span lang="en">All Rights Reserved</span></p>

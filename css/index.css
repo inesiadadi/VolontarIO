@@ -29,7 +29,6 @@ body.darkMode {
     justify-content: space-between;
     border-bottom: 5px solid var(--outline);
     padding: 1rem 2rem;
-    flex-wrap: wrap;
 }
 
 .logoSection {
