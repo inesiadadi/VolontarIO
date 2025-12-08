@@ -6,7 +6,10 @@ session_start();
 
 $_SESSION = array();
 session_destroy();
-
-header("Location: /");
+if(isset($_SERVER['HTTP_REFERER'])) {
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+} else {
+    header("Location: /");
+}
 exit();
 ?>

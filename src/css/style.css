@@ -1,0 +1,169 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Inclusive Sans", monospace;
+}
+
+:root {
+    --dark-green: #021F0E;
+    --deep-green: #02381A;
+    --outline: #395731;
+    --footer-text: #93A680;
+    --secondary-bg: #D9CBBF;
+    --main-bg: #F5F0E8;
+}
+
+body.darkMode {
+    --dark-green: #F5F0E8;
+    --deep-green: #93A680;
+    --outline: #93A680;
+    --footer-text: #D9CBBF;
+    --secondary-bg: #02381A;
+    --main-bg: #021F0E;
+}
+
+.headerSite {
+    background-color: var(--main-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 5px solid var(--outline);
+    padding: 1rem 2rem;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+}
+
+.logoSection img {
+    width: 80px;
+    height: 45px;
+}
+
+.logoSection span {
+    font-size: 1.5em;
+    color: var(--dark-green);
+}
+
+.pagesNavigation ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.pagesNavigation li a {
+    font-weight: bold;
+    color: var(--dark-green);
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+
+.pagesNavigation li a:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+#changeMode {
+    cursor: pointer;
+    margin-left: 1.5rem;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    background-color: var(--secondary-bg);
+    color: var(--dark-green);
+    transition: all 0.5s ease;
+}
+
+#changeMode:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+.accountAccess {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 2rem;
+}
+
+.accountAccess a {
+    text-decoration: none;
+    color: var(--dark-green);
+    font-weight: bold;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    transition: all 0.5s ease;
+}
+
+.accountAccess a:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+/*
+======================================================================================
+
+SELEZIONA COME_FUNZIONA
+
+======================================================================================
+*/
+
+body{
+    background-color:#F5F0E8;
+}
+
+.container-left {
+    display: flex;
+    align-items: flex-start; 
+    gap: 20px;  
+    margin-bottom: 2rem;
+}
+
+.container-left.reverse {
+    flex-direction: row-reverse; 
+}
+
+.container-left img {
+    width: 200px; 
+    height: auto;
+    border-radius: 8px; 
+}
+
+.container-text {
+    flex: 1; 
+}
+
+main section {
+    background-color: #F5F0E8;
+    border: 1px solid #F5F0E8; 
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom:3.5rem;
+    margin-left:1.5rem;
+    margin-right: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+main section h1,h2{
+    text-align: center;
+}
+
+/*
+======================================================================================
+
+SELEZIONA LOGIN E REGISTER
+
+======================================================================================
+*/
+
+.error {
+    color: red; /* Colore da cambiare per accessibilità*/
+}
+.valid {
+    color: green; /* Colore da cambiare per accessibilità*/
+}

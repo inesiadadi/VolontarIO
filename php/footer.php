@@ -1,5 +1,3 @@
-        <footer>
-            <p>AIMS</p>
-        </footer>
-    </body>
-</html>
+<?php
+include(realpath(__DIR__ . '/' . '../src/html/footer.html'));
+?>
