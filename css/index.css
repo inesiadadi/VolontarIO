@@ -1,8 +1,247 @@
 * {
-    padding: 0em;
-    margin: 0em;
+    padding: 0;
+    margin: 0;
+    line-height: 1.5;
+    font-family: "Inclusive Sans", monospace;
 }
 
-header img {
-    width: 100px;
+:root {
+    --dark-green: #012713;
+    --deep-green: #064824;
+    --outline: #395731;
+    --footer-text: #A9BC95;
+    --secondary-bg: #D3C3B2;
+    --main-bg: #F8F3EB;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Inclusive Sans", monospace;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.headerSite {
+    background-color: var(--main-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 5px solid var(--outline);
+    padding: 1rem 0.3rem;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--dark-green);
+}
+
+.logoSection img {
+    padding-right: 0.2em;
+    width: 65px;
+    height: 65px;
+}
+
+#siteName {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.pagesNavigation ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    min-width: 0;
+    flex-shrink: 1;
+}
+
+.pagesNavigation li {
+    padding: 0.2em 0;
+    font-size: 16px;
+}
+
+.pagesNavigation li a {
+    font-weight: bold;
+    color: var(--dark-green);
+    padding: 0.3em 0.3em;
+    border-radius: 0.5em;
+    text-decoration: none;
+    transition: all 0.5s ease;
+
+    flex-shrink: 1;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.pagesNavigation li a:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+#changeMode {
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5em 0.4em;
+    border-radius: 0.5em;
+    background-color: var(--secondary-bg);
+    color: var(--dark-green);
+    transition: all 0.5s ease;
+}
+
+#changeMode:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+.accountAccess {
+    display: flex;
+    align-items: center;
+}
+
+.accountAccess a {
+    text-decoration: none;
+    color: var(--dark-green);
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0.3em 0.4em;
+
+    border-radius: 0.5em;
+    transition: all 0.5s ease;
+}
+
+.accountAccess a:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+main#accountPage {
+    padding: 1rem 0 1rem 0.5rem;
+    background-color: var(--main-bg);
+    color: var(--dark-green);
+    flex: 1;
+}
+
+#accountTitle {
+    padding: 0.1rem 0.3rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    font-weight: bold;
+    border-radius: 0.5em;
+    border: 3px solid var(--outline);
+    background-color: var(--secondary-bg);
+}
+
+#accountLayout {
+    max-width: 1200px;
+    margin: 1rem auto;
+    display: flex;
+}
+
+#accountMainInfo {
+    background-color: var(--secondary-bg);
+    border: 2px solid var(--outline);
+    border-radius: 1rem;
+
+    width: 280px;          
+    height: max-content;
+    max-width: 90%;        
+
+    padding: 2rem;
+    border: 2px solid var(--outline);
+    text-align: center;
+
+    margin: 1rem auto 0 1rem;  
+}
+
+#profilePicture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;         
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 4px solid var(--outline);
+}
+
+.UserIdentity {
+    margin: 0.3rem 0;
+    color: var(--dark-green);
+    font-size: 20px;
+}
+
+.UserIdentity #username {
+    font-size: 17px;
+}
+
+.userInformation {
+    margin-top: 1rem;
+    text-align: left;            /* le info restano ordinate */
+    font-size: 20px;
+}
+
+.userInformation dt {
+    font-weight: bold;
+    font-size: 18pt;
+    margin-top: 1rem;
+    color: var(--deep-green);
+}
+
+.userInformation dd {
+    margin-left: 0;
+    color: var(--dark-green);
+}
+
+.userInformation ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#accountGeneralInfo {
+    margin: 1rem; 
+    padding: 2rem;
+    border-radius: 0.5em;
+    border: 2px solid var(--outline);
+    flex: 1;
+    height: max-content;
+    max-width: 1000px;
+
+    background-color: var(--secondary-bg);
+}
+
+.footerSite {
+    height: 60px;
+    background-color: var(--outline);
+    color: var(--footer-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-green);
+    color: var(--footer-text);
+    text-align: center;
+    font-size: 17px;
+}
+
+@media (max-width: 800px) {
+    #siteName {
+        display: none;
+    }
+
+    #accountTitle {
+        text-align: center;
+        margin: auto;
+    }
+
+    #accountMainInfo {
+        text-align: center;
+        margin: 1rem auto 0.5em auto;
+    }
+
+    #accountLayout {
+        flex-direction: column; /* mettiamo le colonne una sotto l’altra */
+        align-items: stretch;   /* riempiono la larghezza */
+    }  
 }

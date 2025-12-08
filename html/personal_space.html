@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html lang="it">
-    <head>
-        <meta author="Suar Alberto">
-        <meta charset="UTF-8">
-        <meta name="description" content="Pagina dedicata alla gestione e visualizzazione delle informazioni del tuo account personale su VolontarIO">
-        <meta name="keywords" content="accesso, account, spazio personale, privato">
-        <meta name="robots" content="index, follow">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <title>volontarIO | Account Personale</title>
-
-        <link rel="stylesheet" href=" ">
-    </head>
-    <body>
-        <header>
-            <img src="../images/logo_volontarIO.png" alt="Immagine logo volontarIO" style="width: 100px;">
-            <nav id="menu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="volontarIOTeam">
+    <meta name="description" content="Pagina dedicata alla gestione e alla visualizzazione delle informazioni del tuo account personale di volontarIO">
+    <meta name="keywords" content="account, personale, informazioni, gestione, visualizzazione">
+    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>volontarIO | Account Personale</title> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    <header class="headerSite">
+	<a class="logoSection" href="#"> <!-- Diventerà home.html o come decidiamo di chiamarlo -->
+	    <img src="../images/birbo.jpeg" alt="Logo volontarIO" class="logoImage">
+	    <p id="siteName">volontarIO</p>
+	</a>
+	<nav class="pagesNavigation" aria-label="Menù di navigazione">
+	    <ul>
+		<li><a href="#">Come funziona</a></li>
+		<li><a href="#">Sfoglia Servizi</a></li>
+	    </ul>
+	</nav>
+	<button id="changeMode" aria-label="Passa alla modalità scura">Dark Mode</button>
+	<div class="accountAccess">
+	    <a href="#">Accedi</a> <!-- Diventerà login.html -->
+	    <a href="#">Registrati</a> <!-- Diventerà register.html-->
+	</div>
+    </header>
+    <main id="accountPage">
+	<h1 id="accountTitle">L'Angolo del Volontario</h1>
+        <div id="accountLayout">
+            <section id="accountMainInfo">
+            <img src="../images/birbo.jpeg" id="profilePicture" alt="immagine del profilo">
+            <h2 class="UserIdentity" id="">Nome Cognome</h2> 
+            <h3 class="UserIdentity" id="username">Username</h3>
+            <dl class="userInformation">
+                <dt>Data di Nascita</dt>
+                <dd>birthdate</dd>
+                <dt>Citt&agrave; di Residenza</dt>
+                <dd>city</dd>
+                <dt>Social</dt>
+                <dd>
                 <ul>
-                    <li lang="en">Home</li>
-                    <li>Chi siamo</li>
-                    <li>Sfoglia Richieste</li>
-                    <li><a href="personal_space.html"><span lang="en">Account</span> personale</a></li>
+                    <li>Instagram</li>
+                    <li>LinkedIn</li>
                 </ul>
-            </nav>
-        </header>
-        <main id="accountPage">
-            <h1>L'Angolo del Volontario</h1>
-            <div id="profile">
-                <section id="mainInfo">
-                    <img id="pfp" alt="Immagine profilo dell'utente">
-                    <h2>Nome e Cognome</h2>
-                    <h3>@Username</h3>
-                    <dl id="aboutMe">
-                        <dt>Città</dt>
-                        <dd id="city">Nome Città</dd>
+                </dd>
+            </dl>
+            </section>
+            <section id="accountGeneralInfo">
 
-                        <dt>Email</dt>
-                        <dd id="email">email utente</dd>
-
-                        <dt>Numero di Telefono</dt>
-                        <dd id="phone">cellulare</dd>
-
-                        <dt>Social</dt>
-                        <dd>
-                            <ul id="socialList">
-                                <li><span lang="en">Instagram</span></li>
-                                <li><span lang="en">LinkedIn</span></li>
-                                <li><span lang="en">TikTok</span></li>
-                            </ul>
-                        </dd>
-                    </dl>
-                </section>
-                <section class="accountInfoContainer" id="info">
-                    <!-- Qui andranno la textArea, la valutazione generale dell'utente e le recensioni -->
-                    <!-- Ora sono stanco quindi lo farò un altro giorno -->
-                </section>
-            </div>
-        </main>
-        <footer>
-                <p>© 2025 VolontarIO <span lang="en">All rights Reserved</span></p>
-        </footer>
-    </body>
+            </section>
+        </div>
+    </main>
+    <footer class="footerSite">
+        <p>&copy; 2025 volontarIO — <span lang="en">All Rights Reserved</span></p>
+    </footer>
+</body>
 </html>
