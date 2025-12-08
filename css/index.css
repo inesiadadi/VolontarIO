@@ -179,7 +179,7 @@ main#accountPage {
 
 .userInformation {
     margin-top: 1rem;
-    text-align: left;            /* le info restano ordinate */
+    text-align: left;
     font-size: 20px;
 }
 
@@ -200,16 +200,41 @@ main#accountPage {
     padding-left: 0;
 }
 
+
+
 #accountGeneralInfo {
     margin: 1rem; 
     padding: 2rem;
-    border-radius: 0.5em;
+    border-radius: 1rem;
     border: 2px solid var(--outline);
     flex: 1;
     height: max-content;
     max-width: 1000px;
 
+    box-sizing: border-box;
     background-color: var(--secondary-bg);
+}
+
+#accountGeneralInfo h3 {
+    font-size: 20px;
+    margin-bottom: 0.4em;
+}
+
+#textAreaDescription {
+    width: 100%;           
+    padding: 0.5rem;       
+    box-sizing: border-box;
+    white-space: pre-wrap; 
+    resize: none;          
+    overflow: hidden;               
+
+    font-size: 16px;
+    line-height: 1.5;
+
+    background-color: var(--main-bg);
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .footerSite {
@@ -227,7 +252,7 @@ main#accountPage {
 
 @media (max-width: 800px) {
     #siteName {
-        display: none;
+        text-indent: -999em;
     }
 
     #accountTitle {
@@ -241,7 +266,7 @@ main#accountPage {
     }
 
     #accountLayout {
-        flex-direction: column; /* mettiamo le colonne una sotto l’altra */
-        align-items: stretch;   /* riempiono la larghezza */
+        flex-direction: column;
+        align-items: stretch;
     }  
 }
