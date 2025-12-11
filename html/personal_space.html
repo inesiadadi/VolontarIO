@@ -14,22 +14,29 @@
     <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-    <header class="headerSite">
-	<a class="logoSection" href="#"> <!-- Diventerà home.html o come decidiamo di chiamarlo -->
-	    <img src="../images/birbo.jpeg" alt="Logo volontarIO" class="logoImage">
-	    <p id="siteName">volontarIO</p>
-	</a>
-	<nav class="pagesNavigation" aria-label="Menù di navigazione">
-	    <ul>
-		<li><a href="#">Come funziona</a></li>
-		<li><a href="#">Sfoglia Servizi</a></li>
-	    </ul>
-	</nav>
-	<button id="changeMode" aria-label="Passa alla modalità scura">Dark Mode</button>
-	<div class="accountAccess">
-	    <a href="#">Accedi</a> <!-- Diventerà login.html -->
-	    <a href="#">Registrati</a> <!-- Diventerà register.html-->
-	</div>
+    <header> 
+        <a href="index.html"> 
+            <img id="Logo" src="logov1.svg" alt="Logo"> 
+        </a> <p>VolontarIO</p> 
+        <nav> 
+            <ul class="center-menu"> 
+                <li><a href="Bacheca_richieste.html">Bacheca</a></li> 
+                <li><a href="come_funziona.html">Come funziona</a></li>
+            </ul> 
+        </nav> 
+        <div class="left-menu">
+            <label class="light-dark-mode">
+                <input type="checkbox"> 
+                <div class="icon-pos">
+                    <svg class="icon-anim sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="icon-anim moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </div>
+            </label>
+            <a href="accesso.html" class="signin">Sign in</a>
+            <a href="registrazione.html">
+                <button type="button" class="login-bot">Join in</button>
+            </a>
+        </div>
     </header>
     <main id="accountPage">
 	<h1 id="accountTitle">L'Angolo del Volontario</h1>
@@ -48,15 +55,16 @@
             <section id="accountGeneralInfo">
                 <section class="descrizioneProfilo">
                     <h3>Descrizione</h3>
-                    <p id="textAreaDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae nisi mollitia debitis eaque et eum accusamus voluptatibus delectus, quo laboriosam ex quisquam aspernatur molestias libero ratione obcaecati necessitatibus sapiente vel optio! Ullam eveniet quibusdam sit natus quaerat sint eligendi maxime id illum temporibus rerum, cupiditate architecto explicabo ipsam laboriosam. Deleniti.
-                    </p>
+                    <p id="textAreaDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae nisi mollitia debitis eaque et eum accusamus voluptatibus delectus, quo laboriosam ex quisquam aspernatur molestias libero ratione obcaecati necessitatibus sapiente vel optio! Ullam eveniet quibusdam sit natus quaerat sint eligendi maxime id illum temporibus rerum, cupiditate architecto explicabo ipsam laboriosam. Deleniti.</p>
                 </section>
-                <section class="valutazioneUtente">
+                <section id="valutazioneUtente">
                     <h3>Valutazione</h3>
-                    <div class="valutazione">
-                        <div class="votoContainer">
-                            <div class="votoFiller"></div>
-                            <div class="votoNumeroContainer"></div>
+                    <div class="review">
+                        <div class="valutazione">
+                            <div class="votoContainer">
+                                <div class="votoFiller"></div>
+                                <div class="votoNumeroContainer"></div>
+                            </div>
                         </div>
                     </div>
                 </section>
