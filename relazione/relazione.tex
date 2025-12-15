@@ -84,7 +84,96 @@ L’idea alla base del sito è quella di creare uno spazio digitale in cui si po
 Il sito è stato sviluppato dando grande importanza alla facilità d’uso e all’accessibilità, così che anche chi ha poca esperienza con gli strumenti digitali possa muoversi senza difficoltà.\\ 
 \textit{VolontarIO} si pone come uno strumento concreto per rafforzare il senso di comunità, avvicinando persone che possono aiutare a persone che hanno bisogno, attraverso un'esperienza digitale semplice e trasparente.
 \section{Analisi dei Requisiti}
+VolontarIO è una piattaforma progettata per mettere in contatto persone che hanno bisogno di una mano con utenti disponibili a offrire il proprio tempo come volontari.\\
+Il sito nasce con l’obiettivo di rendere più semplice, immediato e accessibile il processo di richiesta e offerta di aiuto, favorendo la collaborazione tra cittadini e la diffusione di una cultura di supporto reciproco.\\
+La piattaforma è pensata per un pubblico molto ampio: studenti, lavoratori, persone anziane o chiunque voglia offrire o ricevere un piccolo aiuto nella vita quotidiana. Per questo motivo è stato scelto un linguaggio semplice, una struttura intuitiva e un design accessibile.
+\subsection{Tipologia d'utenza}
+Nel sito sono previste tre principali categorie di utenti:
+\begin{itemize}
+    \item Utente non registrato\\Può:
+    \begin{itemize}
+        \item Visualizzare le pagine informative(Home,Come funziona);
+        \item Consultare la pagina dedicata alle richieste pubblicate,ma non può rispondere alle richieste ne crearne di nuove.
+    \end{itemize}
+    \item Utenti registrati\\Una volta effettuato l'accesso,può:
+    \begin{itemize}
+        \item creare nuove richieste di aiuto;
+        \item candidarsi come volontario per richieste pubblicate da altri utenti;
+        \item gestire il proprio profilo e controlare lo stato delle richieste da lui create o a cui ha risposto.
+    \end{itemize}
+    \item Amministratore\\Responsabile della gestione tecnica del sito,può:
+    \begin{itemize}
+        \item moderare contenuti inappropriati;
+        \item gestire gli utenti in caso di comportamneti scorretti.
+    \end{itemize}
+\end{itemize}
+\subsection{Requisiti funzionali}
+La piattaforma offre una serie di funzionalita pensate per gestire l'esperienza migliore possibile:
+\begin{itemize}
+    \item Registrazione e Login:\\permette agli utenti di creare un profilo personale accedere a tutti i servizi.
+    \item Bacheca delle richieste:\\sezione che raccoglie tutte le richieste di aiuto pubblicate dagli itenti, con la possibilità di filtrarle:
+    \begin{itemize}
+        \item categoria,
+        \item luogo,
+        \item data e orario.
+    \end{itemize}
+    \item Creazione di una richiesta:\\l'utente nella richiesta può descrivere il suo bisogno, inserendo luogo e orario, e pubblicarlo nella richiesta.
+    \item Candidatura come volontario:\\l'utente può offrirsi per dare una mano. 
+    \item Gestione delle richieste:\\ogni utente può controllare lo stato delle proprie richeiste o delle candidature inviate
+\end{itemize}
+\begin{itemize}
+    \item Registrazione e Login:\\permette agli utenti di creare un profilo personale e accedere ai sevizi della piattaforma 
+\end{itemize}
+\subsection{Requisiti non funzionali}
+Per garantire un'esperienza efficace, il sito rispetta i seguenti requisiti.
+\begin{itemize}
+    \item Usabilità:\\La navigazione all'interno del sito è semplice e comprensibile anche agli utenti meno esperti. Tramite una struttura chiara e un linguaggio accessibile le informazioni sono raggiungibili in pochhi passi.
+    \item Accessibilità:
+    \begin{itemize}
+        \item Rispetto dei principi base WCAG
+        \item Presenza di una modalità scura
+        \item Pulsananti e interfaccia adatti anche a utenti con difficoltà visive o motorie
+    \end{itemize}
+    \item Prestazione:
+    \begin{itemize}
+        \item Caricamento delle pagine in tempi rapidi, con immagini ottimizzate.
+        \item Animazioni fluide (es. passaggio giorno/notte).
+    \end{itemize}
+    \item Compatibilità:
+    \begin{itemize}
+        \item Funzionamento garantito sui principali browser moderni.
+        \item Layout completamente responsive per desktop, tablet e smartphone.
+    \end{itemize}
+    \item Sicurezza:
+    \begin{itemize}
+        \item 
+    \end{itemize}
+    \end{itemize}
+\end{itemize}
 \section{Progettazione}
+\subsection{Architettura del sito}
+L’architettura del sito VolontarIO è stata progettata per garantire una navigazione semplice, intuitiva e coerente con gli obiettivi della piattaforma.\\
+La struttura segue un modello gerarchico poco profondo, in modo da permettere agli utenti di raggiungere le informazioni principali con un numero ridotto di interazioni.\\
+Il sito è organizzato in aree pubbliche e aree riservate, differenziate in base allo stato di autenticazione dell’utente.\\
+\subsubsection{Area pubblica}
+Accessibile a tutti gli utenti senza necessità di registrazione, ha lo scopo di presentare il servizio.\\
+Comprende:
+\begin{itemize}
+    \item Home page, introduce il progetto VolontarIO e ne spiega le finalità;
+    \item Come funziona, sezione informativa che descrive il processo di login, richiesta e offerta di aiuto;
+    \item Bacheca delle richieste, consultabile anche da utenti non registrati, per visualizzare le richieste pubblicate;
+    \item Contatti, ???
+    \item Accesso e Registrazione, pagine dedicate all’autenticazione e alla creazione di un account.
+\end{itemize}
+\subsubsection{Area riservata}
+Disponibile solo per gli utenti autenticati.\\
+Include.
+\begin{itemize}
+    \item 
+\end{itemize}
+\subsubsection{Navigazione}
+La navigazione è supportata da 
+\subsection{Archite}
 \section{Sviluppo}
 \section{Accessibilità}
 \section{Test e validazione}
