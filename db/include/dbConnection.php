@@ -1,7 +1,4 @@
 <?php
-
-// File per la gestione della connessione al database di volontarIO
-
 namespace DB;
 
 class DBAccess {
