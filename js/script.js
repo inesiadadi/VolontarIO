@@ -1,3 +1,5 @@
+// File di JavaScript per la gestione della UI/UX
+
 function setVoto(container, value) {
     if (value < 0 || value > 10) return;
 
@@ -22,4 +24,4 @@ function setVoto(container, value) {
 }
 
 // Esempio
-setVoto(document.querySelector(".valutazione"), 9.8);
+setVoto(document.querySelector(".valutazione"), 10);

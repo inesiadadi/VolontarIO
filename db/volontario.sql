@@ -64,7 +64,7 @@ CREATE TABLE Richiesta (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT richiedente 
-        FOREIGN KEY (idRichidente) REFERENCES Persona(idPersona)
+        FOREIGN KEY (idRichiedente) REFERENCES Persona(idPersona)
         ON DELETE CASCADE,
     
     CONSTRAINT offerente
