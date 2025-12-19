@@ -1,6 +1,9 @@
 <div class="profileContainer" itemscope itemtype="https://schema.org/Person">
-    <h1 class="profilePageTitle">L'Angolo del Volontario</h1>
+    
     <div class="profileGrid">
+        
+        <h1 class="profilePageTitle">L'Angolo del Volontario</h1>
+        
         <aside class="profileInfoColumn">
             <div class="userMainInfo">
                 <div class="profilePicture">
@@ -9,6 +12,7 @@
                 <h2 class="identity" itemprop="name">[Nome] [Cognome]</h2>
                 <h3 class="username" itemprop="alternateName">@[Username]</h3>
             </div>
+            
             <dl class="info-list">
                 <div class="info-item">
                     <dt class="label">Nascita:</dt>
@@ -23,9 +27,30 @@
                     </dd>
                 </div>
             </dl>
+            
             <div class="sidebar-actions">
                 [Actions]
             </div>
         </aside>
+
+        <div class="content-col">
+            
+            <section class="bio-section" aria-labelledby="bio-title">
+                <h2 id="bio-title" class="card-title">Chi sono</h2>
+                <div class="bio-text" itemprop="description">
+                    <p>[Descrizione]</p>
+                </div>
+            </section>
+
+            [SezioneReputazione]
+
+            <section class="reviews-section" aria-labelledby="rev-title">
+                <h3 id="rev-title" class="section-header">Ultime Recensioni</h3>
+                
+                [SezioneRecensioni]
+                
+            </section>
+
+        </div>
     </div> 
 </div>

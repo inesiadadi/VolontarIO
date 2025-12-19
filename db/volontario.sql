@@ -9,7 +9,7 @@ CREATE TABLE Citta (
 
 INSERT INTO Citta (nome, provincia)
 SELECT denominazione_ita, sigla_provincia
-FROM gi_comuni;
+FROM gi_comuni
 ORDER BY denominazione_ita ASC;
 
 DROP TABLE gi_comuni;

@@ -9,12 +9,17 @@ class DBAccess {
     private $connection;
 
     public function openDBConnection() {
+        // Da rimuovere quando si passerà al server di 
+        // TecWeb perché questa funzione mostra gli errori di Database
         mysqli_report(MYSQLI_REPORT_ERROR);
         $this->connection = mysqli_connect(DBAccess::HOST_DB, 
                                            DBAccess::USERNAME, 
                                            DBAccess::PASSWORD, 
                                            DBAccess::DATABASE_NAME);
-        return mysqli_connect_errno() ? false : true;
+        if(mysqli_connect_errno()) return false;
+
+        mysqli_set_charset($this->connection, "utf8mb4");
+        return true;
     }
 
     public function closeDBConnection() {
@@ -22,13 +27,15 @@ class DBAccess {
     }
 
     public function executeQuery($query) {
-        $result = mysqli_query($this->connection, $query) or 
-                  die("Errore: " . mysqli_error($this->connection));
-        if(!mysqli_num_rows($result)) return array();
-        $answer = array();
-        while($row = mysqli_fetch_assoc($result)) array_push($answer, $row);
-        $result->free();
-        return $answer;
+        if($result = mysqli_query($this->connection, $query)) {
+            if ($result === true) return true;
+            if(mysqli_num_rows($result) === 0) return array();
+            $answer = array();
+            while($row = mysqli_fetch_assoc($result)) array_push($answer, $row);
+            $result->free();
+            return $answer;
+        }
+        return null;
     }
 
     public function getStateDBConnection() { return $this->connection; }
