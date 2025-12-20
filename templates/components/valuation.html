@@ -1,22 +1,19 @@
-<section class="rep-section" aria-labelledby="rep-title" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
-    <h2 id="rep-title" class="card-title">Reputazione</h2>
-    
+<section class="valuationSection" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+    <h2 class="cardTitle">Reputazione</h2>
     <meta itemprop="ratingValue" content="[MediaVoto]">
     <meta itemprop="reviewCount" content="[NumRecensioni]">
-
-    <div class="rep-widget">
-        <div class="rep-score">
-            <span class="score-val">[MediaVoto]</span>
-            <span class="score-max">/10</span>
+    <div class="valuationContainer">
+        <div class="valuationScore">
+            <span class="valuationValue">[MediaVoto]</span>
+            <span class="valuationMax">/10</span>
         </div>
-
-        <div class="rep-stars">
-            <div class="stars-wrap" role="img" aria-label="Valutazione media: [MediaVoto] su 10">
-                <div class="stars-bg" aria-hidden="true">★★★★★</div>
-                
-                <div class="stars-fg" style="--percentuale: [PercentualeStelle]%;" aria-hidden="true">★★★★★</div>
+        <div class="valuationStars">
+            <div class="starsWrapper" role="img" aria-hidden="true">
+                <div class="starsBackground">★★★★★</div>
+                <div class="starsColor" style="--percentuale: [PercentualeStelle];">★★★★★</div>
             </div>
-            <p class="rep-count">[NumRecensioni] recensioni</p>
+            <p class="srOnly">
+                Valutazione media: [MediaVoto] su 10 da [NumRecensioni] recensioni
+            </p>
         </div>
-    </div>
 </section>

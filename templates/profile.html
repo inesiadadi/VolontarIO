@@ -1,56 +1,39 @@
-<div class="profileContainer" itemscope itemtype="https://schema.org/Person">
-    
+<main class="profileContainer" itemscope itemtype="https://schema.org/Person">
     <div class="profileGrid">
-        
         <h1 class="profilePageTitle">L'Angolo del Volontario</h1>
-        
         <aside class="profileInfoColumn">
             <div class="userMainInfo">
-                <div class="profilePicture">
-                    <img src="[FotoProfilo]" alt="Foto Profilo di [Nome] [Cognome]" class="userPfP" itemprop="image">
-                </div>
-                <h2 class="identity" itemprop="name">[Nome] [Cognome]</h2>
-                <h3 class="username" itemprop="alternateName">@[Username]</h3>
+                <img src="[FotoProfilo]" alt="Foto Profilo di [Nome] [Cognome]" class="userPfP" itemprop="image">
+                <h2 class="userIdentity" itemprop="name">[Nome] [Cognome]</h2>
+                <h3 class="userUsername" itemprop="alternateName">@[Username]</h3>
             </div>
-            
-            <dl class="info-list">
-                <div class="info-item">
-                    <dt class="label">Nascita:</dt>
-                    <dd class="value">
-                        <time datetime="[DataISO]" itemprop="birthDate">[DataVisual]</time>
-                    </dd>
-                </div>
-                <div class="info-item">
-                    <dt class="label">Città:</dt>
-                    <dd class="value" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                        <span itemprop="addressLocality">[Citta]</span>
-                    </dd>
-                </div>
+            <dl class="userInformation">
+                <dt class="infoLabel">Nascita:</dt>
+                <dd class="infoValue">
+                    <time datetime="[DataISO]" itemprop="birthDate">[DataVisual]</time>
+                </dd>
+
+                <dt class="infoLabel">Città:</dt>
+                <dd class="infoValue" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <span itemprop="addressLocality">[Citta]</span>
+                </dd>
             </dl>
-            
-            <div class="sidebar-actions">
+            <div class="userButtons">
                 [Actions]
             </div>
         </aside>
-
-        <div class="content-col">
-            
-            <section class="bio-section" aria-labelledby="bio-title">
-                <h2 id="bio-title" class="card-title">Chi sono</h2>
-                <div class="bio-text" itemprop="description">
+        <div class="volunteerInformation">
+            <section class="volunteerBiography">
+                <h2 class="cardTitle">Chi sono</h2>
+                <div class="biographyText" itemprop="description">
                     <p>[Descrizione]</p>
                 </div>
             </section>
-
             [SezioneReputazione]
-
-            <section class="reviews-section" aria-labelledby="rev-title">
-                <h3 id="rev-title" class="section-header">Ultime Recensioni</h3>
-                
+            <section id="reviewsSection" class="reviewsGrid" aria-labelledby="reviewsTitle">
+                <h2 id="reviewsTitle" class="sectionHeader">Ultime Recensioni</h2>
                 [SezioneRecensioni]
-                
             </section>
-
         </div>
     </div> 
-</div>
+</main>

@@ -138,29 +138,6 @@ button:focus-visible {
     max-width: 20rem; 
 }
 
-@media (max-width: 600px) {
-    .back-to-top {
-        bottom: 2rem;
-        right: 2rem;
-        padding-right: 2rem;
-        min-width: auto;
-        height: 4.5rem;
-    }
-
-    .back-to-top::after {
-        max-width: 15rem;
-        margin-left: 1rem;
-        opacity: 1;
-        font-size: 1.4rem;
-    }
-    
-    .back-to-top::before {
-        width: 1rem;
-        height: 1rem;
-        border-width: 2.5px;
-    }
-}
-
 /* 
    ========================
 
@@ -222,6 +199,7 @@ button:focus-visible {
     padding: 0 2rem;
 }
 
+/* Probabilmente diventa quello per tutti i titoli!! */
 .profilePageTitle {
     width: fit-content;
     padding: 1rem 2rem;
@@ -232,8 +210,7 @@ button:focus-visible {
     border-radius: var(--radius);
     border: 3px solid var(--outline);
     grid-column: 1 / -1;
-    justify-self: start;
-    margin: 2rem 0 3rem 0;
+    margin: 2rem auto 3rem auto;
     text-align: left;
 }
 
@@ -263,7 +240,7 @@ button:focus-visible {
     background-color: var(--secondary-bg);
 }
 
-.identity {
+.userIdentity {
     font-size: 2.6rem;
     font-weight: 900;
     margin: 0.5rem 0;
@@ -271,48 +248,36 @@ button:focus-visible {
     line-height: 1.2;
 }
 
-.username {
+.userUsername {
     font-size: 2.0rem;
     color: var(--outline);
     font-weight: 400;
     margin-top: 0.5rem;
 }
 
-.info-list {
-    text-align: left;
-    margin-bottom: 3rem;
-    padding: 0;
-}
-
-.info-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 1.5rem 0;
+.userInformation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1.5rem;
     border-bottom: 1px solid var(--separator);
 }
 
-.info-item:last-child {
-    border-bottom: none;
-}
-
-.info-item .label {
+.userInformation dt {
     font-weight: 900;
     color: var(--outline);
-    margin: 0;
-    font-size: 1.8rem;
 }
 
-.info-item .value {
-    margin: 0;
-    color: var(--dark-green);
+.userInformation dd {
     font-weight: 500;
+    color: var(--dark-green);
     text-align: right;
-    font-size: 1.8rem;
 }
 
-.sidebar-actions {
+.userButtons {
     margin-top: 2rem;
 }
+
+/* === Creati in profilo.php a seconda dello stato della sessione dell'utente === */
 
 .btn {
     display: inline-block;
@@ -322,17 +287,12 @@ button:focus-visible {
     text-align: center;
     cursor: pointer;
     border: none;
-    transition: background 0.3s, transform 0.1s;
     font-size: 1.8rem;
 }
 
 .modifyProfile {
     background-color: var(--deep-green);
     color: var(--white);
-}
-
-.modifyProfile:hover {
-    background-color: var(--dark-green);
 }
 
 .contactUser {
@@ -346,14 +306,14 @@ button:focus-visible {
     color: var(--white);
 }
 
-.content-col {
+.volunteerInformation {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
 }
 
-.bio-section, 
-.rep-section {
+.volunteerBiography, 
+.valuationSection {
     background-color: var(--white);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
@@ -361,8 +321,8 @@ button:focus-visible {
     padding: 3rem;
 }
 
-.card-title,
-.section-header {
+.cardTitle,
+.sectionTitle {
     font-size: 2.4rem;
     font-weight: 900;
     color: var(--dark-green);
@@ -374,7 +334,7 @@ button:focus-visible {
     width: 100%;
 }
 
-.section-header {
+.sectionHeader {
     background: transparent;
     border: none;
     box-shadow: none;
@@ -384,7 +344,7 @@ button:focus-visible {
     width: auto;
 }
 
-.bio-text p {
+.biographyText p {
     font-size: 1.8rem;
     color: var(--dark-green);
     line-height: 1.8;
@@ -392,38 +352,40 @@ button:focus-visible {
     font-weight: 500;
 }
 
-.rep-widget {
+/* === Valuation.html === */
+
+.valuationContainer {
     display: flex;
     align-items: center;
     gap: 4rem;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* TODO: testare comportamento su schermi stretti */
 }
 
-.rep-score {
+.valuationScore {
     display: flex;
     align-items: baseline;
 }
 
-.score-val {
+.valuationValue {
     font-size: 5rem;
     font-weight: 900;
-    color: var(--dark-green);
+    color: var(--dark-green); /* TODO: verificare contrasto con background */
     line-height: 1;
 }
 
-.score-max {
+.valuationMax {
     font-size: 2rem;
-    color: var(--outline);
+    color: var(--outline); /* TODO: verificare contrasto con background */
     margin-left: 0.5rem;
     font-weight: 700;
 }
 
-.rep-stars {
+.valuationStars {
     display: flex;
     flex-direction: column;
 }
 
-.stars-wrap {
+.starsWrapper {
     position: relative;
     display: inline-block;
     font-size: 3.5rem;
@@ -431,134 +393,145 @@ button:focus-visible {
     font-family: sans-serif;
 }
 
-.stars-bg {
+.starsBackground {
     color: #808080;
 }
 
-.stars-fg {
+.starsColor {
     position: absolute;
     top: 0;
     left: 0;
     white-space: nowrap;
-    overflow: hidden;
     color: var(--deep-green);
     width: var(--percentuale, 0%);
+    overflow: hidden;
     text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.1);
 }
 
-.rep-count {
-    margin-top: 0.8rem;
-    font-size: 1.4rem;
-    color: var(--outline);
-    font-weight: 700;
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-.reviews-section {
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.reviews-grid {
+.reviewsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+    gap: 2.5rem;
     width: 100%;
+    margin-bottom: 3rem;
 }
 
-.review-mini {
+.sectionHeader {
+    grid-column: 1 / -1; 
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-bottom: 2px solid var(--separator);
+    padding-bottom: 1rem;
+}
+
+.reviewCard {
     background-color: var(--white);
     border-radius: 2rem;
-    padding: 2.5rem;
+    padding: 2rem;
     box-shadow: var(--shadow);
     border: 3px solid var(--outline);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
+    aspect-ratio: 1 / 1.1;
+    min-height: 25rem;
+    
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.review-mini:hover {
+.reviewCard:hover {
     transform: translateY(-0.5rem);
     box-shadow: 0 1.5rem 3rem rgba(1, 39, 19, 0.1);
     border-color: var(--deep-green);
 }
 
-.review-header {
+.reviewHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--separator);
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--separator);
+    padding-bottom: 0.8rem;
 }
 
-.reviewer-identity {
+.reviewerIdentity {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.2rem;
 }
 
-.reviewer-pfp {
-    width: 4.5rem;
-    height: 4.5rem;
+.reviewerPfp {
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--outline);
-    background-color: var(--secondary-bg);
+    border: 2px solid var(--outline);
 }
 
-.review-author-link {
+.reviewAuthorLink {
     text-decoration: none;
-    display: inline-block;
-    transition: transform 0.2s ease;
 }
 
-.review-author-link .review-author {
+.reviewAuthor {
     color: var(--deep-green);
     font-weight: 900;
-    font-size: 1.6rem;
-    cursor: pointer;
-    transition: color 0.2s ease, text-decoration 0.2s;
+    font-size: 1.4rem;
 }
 
-.review-author-link:hover .review-author {
+.reviewAuthorLink:hover .reviewAuthor {
     color: var(--outline);
     text-decoration: underline;
-    text-decoration-thickness: 2px;
 }
 
-.review-author-link:hover {
-    transform: translateX(2px);
-}
-
-.review-vote {
+.reviewVote {
     background-color: var(--dark-green);
     color: var(--secondary-bg);
-    padding: 0.4rem 1rem;
-    border-radius: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.8rem;
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
-.review-text {
+.reviewText {
     font-style: italic;
     color: var(--dark-green);
-    font-size: 1.6rem;
-    margin-bottom: 2rem;
+    font-size: 1.4rem;
+    margin: 1rem 0;
     flex-grow: 1;
     font-weight: 500;
+    
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.review-date {
-    font-size: 1.2rem;
+.reviewDate {
+    font-size: 1.1rem;
     color: var(--outline);
     text-align: right;
-    display: block;
     font-weight: 700;
 }
 
-.no-reviews-msg {
+.noReviewsMsg {
+    grid-column: 1 / -1;
     background-color: var(--secondary-bg);
     color: var(--outline);
     font-size: 1.8rem;
@@ -573,7 +546,7 @@ button:focus-visible {
     gap: 1rem;
 }
 
-.no-reviews-msg span {
+.noReviewsMsg span {
     font-size: 3rem;
 }
 
@@ -591,6 +564,15 @@ button:focus-visible {
 }
 
 @media (max-width: 600px) {
+    .reviewsGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reviewCard {
+        aspect-ratio: auto; 
+        min-height: auto;
+    }
+
     .back-to-top {
         bottom: 2rem;
         right: 2rem;
@@ -603,5 +585,18 @@ button:focus-visible {
     .back-to-top .btn-text {
         max-width: 15rem;
         margin-left: 1rem;
+    }
+
+    .back-to-top::after {
+        max-width: 15rem;
+        margin-left: 1rem;
+        opacity: 1;
+        font-size: 1.4rem;
+    }
+    
+    .back-to-top::before {
+        width: 1rem;
+        height: 1rem;
+        border-width: 2.5px;
     }
 }
