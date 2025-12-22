@@ -1,6 +1,6 @@
 <?php
 require_once('db/include/functions.php');
-
+require_once('db/include/dbConnection.php');
 
 session_start();
 
