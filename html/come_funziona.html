@@ -1,12 +1,12 @@
 
-  <main>
+   <main>
         <section class="sez1-cf">
             <h1>Come funziona</h1>
             <p>In questa pagina troverai tutte le informazioni su come utilizzare volontarIO: come registrarti, come inviare una richiesta di aiuto e come offrire il tuo supporto ad altri utenti. Ti guideremo passo dopo passo per permetterti di usare la piattaforma in modo semplice e immediato.</p>   
         </section>
         <section class="sez2-cf">
             <h2>Guida <span lang="en">step-by-step</span></h2>
-             <div class="container-left">
+             <div class="container-cf">
                 <div class="container-text">
                     <h3>1. Esegui la registrazione o accedi</h3>
                     <p>Per iniziare a usare volontarIO bastano pochi passaggi.</p>
@@ -25,13 +25,13 @@
                 </div>
                 <img src="20251210_1129_Smiling at Laptop_remix_01kc3wvfj7ffqsbaab9ry6ayfq (6).png" alt="Step 1">
             </div>
-            <div class="container-left reverse">
+            <div class="container-cf reverse">
                 <div class="container-text">
                     <h3>2. Hai bisogno di una mano? Ecco come pubblicare una richiesta:</h3>
                         <ol>
                             <li>Nella tua area personale vai nella sezione "crea una richiesta"</li>
                             <li>complia i campi:
-                                <ul>
+                                <ul class="sotto_sez">
                                     <li>Titolo della richiesta</li>
                                     <li>Descrizione della richiesta d'aiuto</li>
                                     <li>Luogo e orario </li>
@@ -42,14 +42,14 @@
                 </div>
                 <img src="20251210_1627_Confused Handy Man_simple_compose_01kc4dw9nff6as2yyt4ftdp6fg (4).png" alt="Step 2">
             </div>
-            <div class="container-left">
+            <div class="container-cf">
                 <div class="container-text">
                     <h3>3. Offrire un Aiuto</h3>
                     <p> Se vuoi dare una mano:</p>
                     <ol>
                         <li>Entra nella sezione "Richieste d'aiuto"</li>
                         <li>Sfoglia le richieste disponibili filtrandole per:
-                        <ul>
+                        <ul class="sotto_sez">
                             <li>categoria</li>
                             <li>posizione</li>
                             <li>data</li>
@@ -68,6 +68,41 @@
             <a href="login.html">
                 <button>Registrati ora!</button>
             </a>
-        </section>
+            </section> 
+       <section class="contact-section" id="contatti">
+    <h2>Contattaci</h2>
+    <p>Hai dubbi o domande? Compila il form e mettiti in contatto con noi.</p>
+    
+    <form action="" method="post" aria-label="Modulo di contatto" class="contact-form">
+        <fieldset>
+            <legend class="legend-cont">Modulo di contatto</legend>
+
+            <div class="contenitore-form">
+                
+                <div class="form-input">
+                    <label for="nome_cognome">Inserisci nome e cognome</label> 
+                    <input type="text" id="nome_cognome" name="nome_cognome">
+                    
+                    <label for="email">Inserisci email</label> 
+                    <input type="email" id="email" name="email">
+                    
+                    <label for="tel">Inserisci numero di telefono</label> 
+                    <input type="tel" id="tel" name="tel">
+                </div>
+
+                <div class="form-textarea">
+                    <label for="descrizione">Inserisci il messaggio qui</label>
+                    <textarea id="descrizione" name="descrizione" rows="5"></textarea> 
+                </div>
+
+            </div > 
+            <div class="form-buttons">
+                <input type="submit" id="invia" name="invia" value="Invia" aria-label="Invia" class="btn-submit">
+                <input type="reset" id="reset" value="Cancella tutto" class="btn-delete">
+            </div>
+
+        </fieldset>
+    </form>
+</section>
     </main>
 </body>
