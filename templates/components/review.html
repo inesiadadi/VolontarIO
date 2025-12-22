@@ -1,0 +1,23 @@
+<article class="reviewCard" itemprop="review" itemscope itemtype="https://schema.org/Review">
+    <div class="reviewHeader">
+        <div class="reviewerIdentity">
+            <img src="[FotoAutore]" alt="Foto di [AutoreRecensione]" class="reviewerPfp" onerror="this.src='images/default_user.png'">    
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <a href="profilo.php?id=[IdAutore]" class="reviewAuthorLink" itemprop="url">
+                    <span class="reviewAuthor" itemprop="name">[AutoreRecensione]</span>
+                </a>
+            </span>
+        </div>    
+        <div class="reviewVote" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+            <meta itemprop="worstRating" content="1">
+            <meta itemprop="bestRating" content="10">
+            <span itemprop="ratingValue">[VotoRecensione]</span>/10
+        </div>
+    </div>
+    <p class="reviewText" itemprop="reviewBody">
+        "[TestoRecensione]"
+    </p>
+    <time class="reviewDate" itemprop="datePublished" datetime="[DataISO]">
+        [DataVisual]
+    </time>
+</article>
