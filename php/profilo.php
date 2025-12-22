@@ -2,14 +2,14 @@
 require_once('db/include/functions.php');
 require_once('db/include/dbConnection.php');
 
-session_start();
+include('php/header.php');
 
 $dati_utente = [
     'id'             => 10,
     'nome'           => 'Mario',
     'cognome'        => 'Rossi',
     'username'       => 'mariorossi99',
-    'foto'           => 'images/birbo.jpeg', 
+    'foto'           => 'src/images/birbo.jpeg', 
     'nascita'        => '1995-05-15', 
     'citta'          => 'Milano',
     'ruolo'          => 'Volontario',
@@ -23,7 +23,7 @@ $recensioni_db = [
         'id_autore' => 101,
         'autore'    => 'franchino17', 
         'voto'      => 9, 
-        'foto'      => 'images/birbo.jpeg',
+        'foto'      => 'src/images/birbo.jpeg',
         'testo'     => 'Puntuale e gentilissimo, consigliato!', 
         'data'      => '2023-10-12'
     ],
@@ -38,7 +38,7 @@ $recensioni_db = [
         'id_autore' => 103,
         'autore'    => 'birbo19a',  
         'voto'      => 2.5, 
-        'foto'      => 'images/logo_volontarIO.png',
+        'foto'      => 'src/images/logo_volontarIO.png',
         'testo'     => '', 
         'data'      => '2023-08-20'
     ],
@@ -46,7 +46,7 @@ $recensioni_db = [
         'id_autore' => 101,
         'autore'    => 'franchino17', 
         'voto'      => 9, 
-        'foto'      => 'images/birbo.jpeg',
+        'foto'      => 'src/images/birbo.jpeg',
         'testo'     => 'Puntuale e gentilissimo, consigliato!', 
         'data'      => '2023-10-12'
     ],
@@ -94,7 +94,7 @@ if (count($recensioni_db) > 0) {
     $template_item = file_get_contents('templates/components/review.html');
     
     foreach ($recensioni_db as $rec) {
-        $foto_autore = !empty($rec['foto']) ? $rec['foto'] : 'images/default.png';
+        $foto_autore = !empty($rec['foto']) ? $rec['foto'] : 'src/images/default.png';
         $date_rec_obj = new DateTime($rec['data']);
         
         $temp = $template_item;
@@ -134,11 +134,11 @@ foreach($placeholders_profilo as $chiave => $valore) {
 
 $pagina = file_get_contents('templates/blueprint.html');
 
-$header_html = file_exists('templates/components/header.html') ? file_get_contents('templates/components/header.html') : '';
 $footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
+include('php/header.php');
 
 $placeholders_layout = [
-    '[Titolo Pagina]' => 'VolontarIO | Profilo di ' . htmlspecialchars($dati_utente['username']),
+    '[Titolo Pagina]' => 'Profilo di ' . htmlspecialchars($dati_utente['username']),
     '[Description]'   => 'Visualizza il profilo di ' . htmlspecialchars($dati_utente['nome']) . ' su VolontarIO',
     '[Keywords]'      => 'volontariato, profilo, ' . htmlspecialchars($dati_utente['citta']),
     '[pageNameId]'    => 'accountPage', 

@@ -23,6 +23,9 @@ switch ($path) {
     case '/logout':
         include('php/logout.php');
         break;
+    case '/profilo':
+        include('php/profilo.php');
+        break;
     default:
         http_response_code(404);
         include('php/error_404.php');
