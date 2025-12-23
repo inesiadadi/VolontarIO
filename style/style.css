@@ -1,0 +1,716 @@
+:root {
+    --font-main: "Inclusive Sans", monospace;
+    --dark-green: #012713;
+    --deep-green: #043219;
+    --outline: #2B4225;
+    --main-bg: #FCF9F5;
+    --secondary-bg: #EFE7DE;
+    --white: #FFFFFF;
+    --warm-gray: #857F7A;
+    --warning-text: #043219;
+    --separator: #363737;
+    --star-filled: #8F5A00;
+    --radius: 2.5rem;
+    --shadow: 0 1rem 3rem rgba(1, 39, 19, 0.05);
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--main-bg);
+    color: var(--dark-green);
+    font-family: var(--font-main);
+    font-size: 1.6rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--deep-green);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--outline);
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--warning-text);
+    outline-offset: 4px;
+    border-radius: 0.5rem;
+}
+
+.skip-link {
+    position: absolute;
+    top: -400px;
+    left: 0;
+    background: var(--deep-green);
+    color: var(--white);
+    padding: 1rem;
+    z-index: 1000;
+    transition: top 0.3s;
+    font-weight: 700;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
+    z-index: 999;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 5rem;
+    min-width: 5rem;
+    padding: 0 1.3rem;
+    border-radius: 2.5rem;
+    
+    background-color: var(--deep-green);
+    text-decoration: none;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+    border: 2px solid transparent;
+    
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.back-to-top::before {
+    content: ''; 
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    
+    border-top: 3px solid var(--white);
+    border-left: 3px solid var(--white);
+    transform: rotate(45deg);
+    
+    flex-shrink: 0;
+}
+
+.back-to-top::after {
+    content: 'Ritorna in cima';
+    color: var(--white);
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 1.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    transition: max-width 0.3s ease, margin-left 0.3s ease, opacity 0.3s ease;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+    background-color: var(--dark-green);
+    padding-right: 2rem;
+}
+
+.back-to-top:hover::after,
+.back-to-top:focus-visible::after {
+    max-width: 15rem;
+    margin-left: 1rem;
+    opacity: 1;
+}
+
+.back-to-top:focus-visible {
+    outline: 3px solid var(--deep-green) !important;
+    outline-offset: 4px;
+    background-color: var(--dark-green);
+    max-width: 20rem; 
+}
+
+/* 
+   ========================
+
+        --- ANGELA ---      
+
+   ========================        
+
+*/
+
+
+
+/* 
+   ========================
+
+         --- INES ---      
+
+   ========================        
+
+*/
+
+
+
+/* 
+   ========================
+
+         --- AALA ---      
+
+   ========================        
+
+*/
+
+
+
+/* 
+   ========================
+
+         --- SUAR ---      
+
+   ========================        
+
+*/
+
+
+
+/* === PAGINA UTENTE === */
+
+
+.profileContainer {
+    width: 100%;
+    padding-bottom: 5rem;
+}
+
+.profileGrid {
+    display: grid;
+    grid-template-columns: 32rem 1fr;
+    gap: 3rem;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Probabilmente diventa quello per tutti i titoli!! */
+.profilePageTitle {
+    width: fit-content;
+    padding: 1rem 2rem;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--dark-green);
+    background-color: var(--secondary-bg);
+    border-radius: var(--radius);
+    border: 3px solid var(--outline);
+    grid-column: 1 / -1;
+    margin: 2rem auto 3rem auto;
+    text-align: left;
+}
+
+.profileInfoColumn {
+    background-color: var(--secondary-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 3px solid var(--outline);
+    padding: 3rem;
+    text-align: center;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.userMainInfo {
+    margin-bottom: 2.5rem;
+}
+
+.userPfP {
+    width: 16rem;
+    height: 16rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.6rem solid var(--deep-green);
+    margin-bottom: 2rem;
+    background-color: var(--secondary-bg);
+}
+
+.userIdentity {
+    font-size: 2.6rem;
+    font-weight: 900;
+    margin: 0.5rem 0;
+    color: var(--dark-green);
+    line-height: 1.2;
+}
+
+.userUsername {
+    font-size: 2.0rem;
+    color: var(--outline);
+    font-weight: 400;
+    margin-top: 0.5rem;
+}
+
+.userInformation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1.5rem;
+    border-bottom: 1px solid var(--separator);
+}
+
+.userInformation dt {
+    font-weight: 900;
+    color: var(--outline);
+}
+
+.userInformation dd {
+    font-weight: 500;
+    color: var(--dark-green);
+    text-align: right;
+}
+
+.userButtons {
+    margin-top: 2rem;
+}
+
+/* === Creati in profilo.php a seconda dello stato della sessione dell'utente === */
+
+.btn {
+    display: inline-block;
+    padding: 1.2rem 2.4rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    font-size: 1.8rem;
+}
+
+.modifyProfile {
+    background-color: var(--deep-green);
+    color: var(--white);
+}
+
+.contactUser {
+    background-color: var(--secondary-bg);
+    color: var(--dark-green);
+    border: 2px solid var(--outline);
+}
+
+.contactUser:hover {
+    background-color: var(--warm-gray);
+    color: var(--white);
+}
+
+.volunteerInformation {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.volunteerBiography, 
+.valuationSection {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 3px solid var(--outline);
+    padding: 3rem;
+}
+
+.cardTitle,
+.sectionTitle {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--dark-green);
+    margin-top: 0;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px solid var(--separator);
+    display: inline-block;
+    width: 100%;
+}
+
+.sectionHeader {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding-left: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    width: auto;
+}
+
+.biographyText p {
+    font-size: 1.8rem;
+    color: var(--dark-green);
+    line-height: 1.8;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* === Valuation.html === */
+
+.valuationContainer {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    flex-wrap: wrap; /* TODO: testare comportamento su schermi stretti */
+}
+
+.valuationScore {
+    display: flex;
+    align-items: baseline;
+}
+
+.valuationValue {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--dark-green); /* TODO: verificare contrasto con background */
+    line-height: 1;
+}
+
+.valuationMax {
+    font-size: 2rem;
+    color: var(--outline); /* TODO: verificare contrasto con background */
+    margin-left: 0.5rem;
+    font-weight: 700;
+}
+
+.valuationStars {
+    display: flex;
+    flex-direction: column;
+}
+
+.starsWrapper {
+    position: relative;
+    display: inline-block;
+    font-size: 3.5rem;
+    line-height: 1;
+    font-family: sans-serif;
+}
+
+.starsBackground {
+    color: #808080;
+}
+
+.starsColor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    color: var(--deep-green);
+    width: var(--percentuale, 0%);
+    overflow: hidden;
+    text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.1);
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.reviewsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+    gap: 2.5rem;
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.sectionHeader {
+    grid-column: 1 / -1; 
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-bottom: 2px solid var(--separator);
+    padding-bottom: 1rem;
+}
+
+.reviewCard {
+    background-color: var(--white);
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border: 3px solid var(--outline);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    aspect-ratio: 1 / 1.1;
+    min-height: 25rem;
+    
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.reviewCard:hover {
+    transform: translateY(-0.5rem);
+    box-shadow: 0 1.5rem 3rem rgba(1, 39, 19, 0.1);
+    border-color: var(--deep-green);
+}
+
+.reviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid var(--separator);
+    padding-bottom: 0.8rem;
+}
+
+.reviewerIdentity {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.reviewCategory {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--secondary-bg);
+    background-color: var(--dark-green);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.8rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.05rem;
+    width: fit-content;
+}
+
+.reviewerPfp {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--outline);
+}
+
+.reviewAuthorLink {
+    text-decoration: none;
+}
+
+.reviewAuthor {
+    color: var(--deep-green);
+    font-weight: 900;
+    font-size: 1.4rem;
+    display: block;
+}
+
+.reviewAuthorLink:hover .reviewAuthor {
+    color: var(--outline);
+    text-decoration: underline;
+}
+
+.reviewVote {
+    background-color: var(--dark-green);
+    color: var(--secondary-bg);
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.8rem;
+    font-weight: 900;
+    font-size: 1.3rem;
+}
+
+.reviewText {
+    font-style: italic;
+    color: var(--dark-green);
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    flex-grow: 1;
+    font-weight: 500;
+    
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.reviewDate {
+    font-size: 1.1rem;
+    color: var(--outline);
+    text-align: right;
+    font-weight: 700;
+}
+
+.noReviewsMsg {
+    grid-column: 1 / -1;
+    background-color: var(--secondary-bg);
+    color: var(--outline);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 4rem 2rem;
+    border-radius: var(--radius);
+    border: 3px dashed var(--outline);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.noReviewsMsg span {
+    font-size: 3rem;
+}
+
+.reviewsPageContainer {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    align-items: start;
+}
+
+.filterSidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+.filterBox {
+    background-color: var(--white);
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border: 3px solid var(--outline);
+}
+
+.filterTitle {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--dark-green);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--separator);
+}
+
+.filterGroup {
+    margin-bottom: 1.5rem;
+}
+
+.filterSubtitle {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--deep-green);
+    margin-bottom: 0.5rem;
+}
+
+.filterSelect {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid var(--outline);
+    background-color: var(--main-bg);
+    font-weight: 700;
+    color: var(--dark-green);
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231A3C34%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem top 50%;
+    background-size: 0.8rem auto;
+}
+
+.filterButton {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--dark-green);
+    color: var(--white);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.filterButton:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+.reviewContent {
+    background-color: var(--white); /* Sfondo bianco come la sidebar */
+    border-radius: 2rem;            /* Stessi angoli arrotondati */
+    padding: 3rem;                  /* Spazio interno abbondante */
+    border: 3px solid var(--outline); /* Stesso bordo spesso */
+    box-shadow: var(--shadow);      /* Stessa ombra */
+    
+    /* Per gestire il titolo e la griglia al suo interno */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .profileGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profileInfoColumn {
+        position: relative;
+        top: 0;
+        max-width: 50rem;
+        margin: 0 auto;
+    }
+    .reviewsPageContainer {
+        grid-template-columns: 1fr;
+    }
+    .filtersSidebar {
+        position: static;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .reviewsGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reviewCard {
+        aspect-ratio: auto; 
+        min-height: auto;
+    }
+
+    .back-to-top {
+        bottom: 2rem;
+        right: 2rem;
+        padding-right: 2rem;
+        min-width: auto; 
+        height: 4.5rem;
+        font-size: 1.4rem;
+    }
+
+    .back-to-top .btn-text {
+        max-width: 15rem;
+        margin-left: 1rem;
+    }
+
+    .back-to-top::after {
+        max-width: 15rem;
+        margin-left: 1rem;
+        opacity: 1;
+        font-size: 1.4rem;
+    }
+    
+    .back-to-top::before {
+        width: 1rem;
+        height: 1rem;
+        border-width: 2.5px;
+    }
+}
