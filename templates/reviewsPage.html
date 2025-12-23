@@ -1,0 +1,29 @@
+<main class="reviewsPageContainer">
+    <h2 class="profilePageTitle">Le mie recensioni</h2>
+    <aside class="filtersSidebar">
+        <div class="filterBox">
+            <h3 class="filterTitle">Filtra Recensioni</h3>
+            <form action="" method="GET">
+                <div class="filterGroup">
+                    <label for="votoFilter" class="filterSubtitle">
+                        Valutazione
+                    </label>
+                    <select name="minVote" id="voteFilter" class="filterSelect">
+                        <option value="0">Tutte le recensioni</option>
+                        <option value="2">Molto negative</option>
+                        <option value="4">Negative</option>
+                        <option value="6">Positive</option>
+                        <option value="8">Molto positive</option>
+                        <option value="10">Eccellenti</option>
+                    </select>
+                </div>
+                <button type="submit" class="filterButton">Applica filtro</button>
+            </form>
+        </div>
+    </aside>
+    <section class="reviewContent">
+        <div class="reviewsGrid">
+            [Recensioni]
+        </div>
+    </section>
+</main>

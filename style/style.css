@@ -465,7 +465,7 @@ button:focus-visible {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     border-bottom: 1px solid var(--separator);
     padding-bottom: 0.8rem;
 }
@@ -474,6 +474,20 @@ button:focus-visible {
     display: flex;
     align-items: center;
     gap: 1.2rem;
+}
+
+.reviewCategory {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--secondary-bg);
+    background-color: var(--dark-green);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.8rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.05rem;
+    width: fit-content;
 }
 
 .reviewerPfp {
@@ -492,6 +506,7 @@ button:focus-visible {
     color: var(--deep-green);
     font-weight: 900;
     font-size: 1.4rem;
+    display: block;
 }
 
 .reviewAuthorLink:hover .reviewAuthor {
@@ -550,6 +565,98 @@ button:focus-visible {
     font-size: 3rem;
 }
 
+.reviewsPageContainer {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    align-items: start;
+}
+
+.filterSidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+.filterBox {
+    background-color: var(--white);
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border: 3px solid var(--outline);
+}
+
+.filterTitle {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--dark-green);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--separator);
+}
+
+.filterGroup {
+    margin-bottom: 1.5rem;
+}
+
+.filterSubtitle {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--deep-green);
+    margin-bottom: 0.5rem;
+}
+
+.filterSelect {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid var(--outline);
+    background-color: var(--main-bg);
+    font-weight: 700;
+    color: var(--dark-green);
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231A3C34%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem top 50%;
+    background-size: 0.8rem auto;
+}
+
+.filterButton {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--dark-green);
+    color: var(--white);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.filterButton:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+.reviewContent {
+    background-color: var(--white); /* Sfondo bianco come la sidebar */
+    border-radius: 2rem;            /* Stessi angoli arrotondati */
+    padding: 3rem;                  /* Spazio interno abbondante */
+    border: 3px solid var(--outline); /* Stesso bordo spesso */
+    box-shadow: var(--shadow);      /* Stessa ombra */
+    
+    /* Per gestire il titolo e la griglia al suo interno */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 @media (max-width: 900px) {
     .profileGrid {
         grid-template-columns: 1fr;
@@ -560,6 +667,13 @@ button:focus-visible {
         top: 0;
         max-width: 50rem;
         margin: 0 auto;
+    }
+    .reviewsPageContainer {
+        grid-template-columns: 1fr;
+    }
+    .filtersSidebar {
+        position: static;
+        margin-bottom: 2rem;
     }
 }
 
