@@ -2,110 +2,92 @@
 require_once('db/include/functions.php');
 require_once('db/include/dbConnection.php');
 
+use DB\DBAccess;
+
 session_start();
 
+$id_visitatore = $_SESSION['user_id'] ?? 0;
+
+$id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
+if ($id_utente_target === 0) {
+    header("Location: login.php"); // O redirect alla Home
+    exit;
+}
+
+$dbAccess = new DBAccess();
+if (!$dbAccess->openDBConnection()) {
+    http_response_code(500);
+    include('templates/error500.html');
+    exit;
+}
+
+$rowUser = $dbAccess->getUtentePerId($id_utente_target);
+
+//Qui andrà caricata la pagina di errore 404
+if (!$rowUser) {
+    $dbAccess->closeDBConnection();
+    http_response_code(404);
+    echo "<h1>404 - Utente non trovato</h1>";
+    exit;
+}
+
+$rowStats = $dbAccess->getStatisticheRecensioni($id_utente_target);
+$resultRec = $dbAccess->getRecensioniRicevute($id_utente_target);
+
+$dbAccess->closeDBConnection();
+
 $dati_utente = [
-    'id'             => 10,
-    'nome'           => 'Mario',
-    'cognome'        => 'Rossi',
-    'username'       => 'mariorossi99',
-    'foto'           => 'images/birbo.jpeg', 
-    'nascita'        => '1995-05-15', 
-    'citta'          => 'Milano',
-    'ruolo'          => 'Volontario',
-    'descrizione'    => "Ciao! Sono Mario, amo aiutare nel trasporto di spesa per anziani.\nFaccio volontariato da 5 anni e sono sempre disponibile nel weekend.",
-    'media_voto'     => 4, 
-    'num_recensioni' => 19
+    'id'             => $rowUser['idPersona'],
+    'nome'           => $rowUser['nome'],
+    'cognome'        => $rowUser['cognome'],
+    'username'       => $rowUser['username'],
+    'foto'           => (!empty($rowUser['immagine']) && file_exists('images/' . $rowUser['immagine'])) ? 'images/' . $rowUser['immagine'] : 'images/default.png',
+    'nascita'        => $rowUser['dataNascita'],
+    'citta'          => !empty($rowUser['nome_citta']) ? $rowUser['nome_citta'] . " (" . $rowUser['provincia'] . ")" : "Non specificata",
+    'ruolo'          => ucfirst($rowUser['ruolo']),
+    'descrizione'    => $rowUser['descrizione'] ?? 'Nessuna descrizione inserita.',
+    'media_voto'     => round($rowStats['media_voto'] ?? 0, 1),
+    'num_recensioni' => $rowStats['num_recensioni']
 ];
-
-$recensioni_db = [
-    [
-        'id_autore' => 101,
-        'autore'    => 'franchino17', 
-        'voto'      => 9, 
-        'foto'      => 'images/birbo.jpeg',
-        'testo'     => 'Puntuale e gentilissimo, consigliato!', 
-        'data'      => '2023-10-12'
-    ],
-    [
-        'id_autore' => 102,
-        'autore'    => 'maurizia2',  
-        'voto'      => 8, 
-        'testo'     => 'Molto disponibile.', 
-        'data'      => '2023-09-05'
-    ],
-    [
-        'id_autore' => 103,
-        'autore'    => 'birbo19a',  
-        'voto'      => 2.5, 
-        'foto'      => 'images/logo_volontarIO.png',
-        'testo'     => '', 
-        'data'      => '2023-08-20'
-    ],
-        [
-        'id_autore' => 101,
-        'autore'    => 'franchino17', 
-        'voto'      => 9, 
-        'foto'      => 'images/birbo.jpeg',
-        'testo'     => 'Puntuale e gentilissimo, consigliato!', 
-        'data'      => '2023-10-12'
-    ],
-    [
-        'id_autore' => 102,
-        'autore'    => 'maurizia2',  
-        'voto'      => 8, 
-        'testo'     => 'Molto disponibile.', 
-        'data'      => '2023-09-05'
-    ]
-];
-
-# $recensioni_db = []; # decommentare per avere l'effetto no reviews
-
-$id_visitatore = $_SESSION['user_id'] ?? 0; 
 
 $data_obj = new DateTime($dati_utente['nascita']);
 $data_visual = $data_obj->format('d/m/Y');
-
 $descrizione_html = nl2br(htmlspecialchars($dati_utente['descrizione']));
 
 $azioni_html = "";
 if ($id_visitatore === $dati_utente['id']) {
-    $azioni_html = '<a href="modifica.php" class="btn modifyProfile">Modifica Profilo</a>';
-} else {
-    $azioni_html = '<a href="chat.php?uid='.$dati_utente['id'].'" class="btn contactUser">Contatta</a>';
+    $azioni_html = '<a href="modifica_profilo.php" class="btn modifyProfile">Modifica Profilo</a>';
 }
 
-if($dati_utente['media_voto']) {
+$html_reputazione = "";
+if($dati_utente['num_recensioni'] > 0) {
     $html_reputazione = file_get_contents('templates/components/valuation.html');
-
     $percentuale_stelle = ($dati_utente['media_voto'] * 10) . "%";
 
     $html_reputazione = str_replace('[MediaVoto]',         $dati_utente['media_voto'], $html_reputazione);
     $html_reputazione = str_replace('[NumRecensioni]',     $dati_utente['num_recensioni'], $html_reputazione);
     $html_reputazione = str_replace('[PercentualeStelle]', $percentuale_stelle, $html_reputazione);
-} else {
-    $html_reputazione = file_get_contents('templates/components/no_review.html');
 }
 
 $html_recensioni_output = "";
 
-if (count($recensioni_db) > 0) {
-    $html_recensioni_output = ""; // Nessun contenitore qui
+if (!empty($resultRec)) {
     $template_item = file_get_contents('templates/components/review.html');
     
-    foreach ($recensioni_db as $rec) {
-        $foto_autore = !empty($rec['foto']) ? $rec['foto'] : 'images/default.png';
-        $date_rec_obj = new DateTime($rec['data']);
+    foreach($resultRec as $rec) {
+        $foto_autore = (!empty($rec['foto_autore']) && file_exists('images/' . $rec['foto_autore'])) ? 'images/' . $rec['foto_autore'] : 'images/default.png';
+        $date_rec_obj = new DateTime($rec['dataRichiesta']);
         
         $temp = $template_item;
         $temp = str_replace('[IdAutore]',         $rec['id_autore'], $temp);
-        $temp = str_replace('[AutoreRecensione]', htmlspecialchars($rec['autore']), $temp);
+        $temp = str_replace('[AutoreRecensione]', htmlspecialchars($rec['nome_autore']), $temp);
         $temp = str_replace('[FotoAutore]',       $foto_autore, $temp);
         $temp = str_replace('[VotoRecensione]',   $rec['voto'], $temp);
-        $temp = str_replace('[TestoRecensione]',  htmlspecialchars($rec['testo']), $temp);
+        $temp = str_replace('[TestoRecensione]',  htmlspecialchars($rec['testo_recensione']), $temp);
         $temp = str_replace('[DataISO]',          $date_rec_obj->format('Y-m-d'), $temp);
-        $temp = str_replace('[DataVisual]',       formatDateItalian($rec['data']), $temp);
-        
+        $temp = str_replace('[DataVisual]',       $date_rec_obj->format('d/m/Y'), $temp); 
+        $temp = str_replace('[CategoriaServizio]', htmlspecialchars($rec['nome_categoria']), $temp);
+
         $html_recensioni_output .= $temp;
     }
 } else {
@@ -125,7 +107,7 @@ $placeholders_profilo = [
     '[Actions]'            => $azioni_html,
     '[Descrizione]'        => $descrizione_html,
     '[SezioneReputazione]' => $html_reputazione,
-    '[SezioneRecensioni]'  => $html_recensioni_output
+    '[SezioneRecensioni]'  => $html_recensioni_output 
 ];
 
 foreach($placeholders_profilo as $chiave => $valore) {
@@ -133,14 +115,13 @@ foreach($placeholders_profilo as $chiave => $valore) {
 }
 
 $pagina = file_get_contents('templates/blueprint.html');
-
 $header_html = file_exists('templates/components/header.html') ? file_get_contents('templates/components/header.html') : '';
 $footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
 
 $placeholders_layout = [
     '[Titolo Pagina]' => 'VolontarIO | Profilo di ' . htmlspecialchars($dati_utente['username']),
-    '[Description]'   => 'Visualizza il profilo di ' . htmlspecialchars($dati_utente['nome']) . ' su VolontarIO',
-    '[Keywords]'      => 'volontariato, profilo, ' . htmlspecialchars($dati_utente['citta']),
+    '[Description]'   => 'Visualizza il profilo di ' . htmlspecialchars($dati_utente['nome']),
+    '[Keywords]'      => 'volontariato, ' . htmlspecialchars($dati_utente['citta']),
     '[pageNameId]'    => 'accountPage', 
     '[onload]'        => '',            
     '[Header]'        => $header_html,

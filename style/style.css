@@ -418,14 +418,14 @@ button:focus-visible {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+
 }
 
 .reviewsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
     gap: 2.5rem;
-    width: 100%;
-    margin-bottom: 3rem;
+    width: 100%;;
 }
 
 .sectionHeader {
@@ -448,11 +448,12 @@ button:focus-visible {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
+    gap: 1rem;
+    width: 100%;
+    max-width: 35rem;
     aspect-ratio: 1 / 1.1;
-    min-height: 25rem;
-    
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    overflow: hidden;
+    margin-inline: auto;
 }
 
 .reviewCard:hover {
@@ -524,18 +525,27 @@ button:focus-visible {
 }
 
 .reviewText {
-    font-style: italic;
-    color: var(--dark-green);
-    font-size: 1.4rem;
-    margin: 1rem 0;
     flex-grow: 1;
-    font-weight: 500;
-    
-    display: -webkit-box;
-    line-clamp: 4;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    overflow-y: auto;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    padding-right: 0.5rem;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+.reviewText::-webkit-scrollbar {
+    width: 6px;
+}
+
+.reviewText::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.reviewText::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
 }
 
 .reviewDate {
@@ -563,6 +573,12 @@ button:focus-visible {
 
 .noReviewsMsg span {
     font-size: 3rem;
+}
+
+#filterEmptyState {
+    margin: auto;            /* Magia: centra sia verticalmente che orizzontalmente in un flex */
+    width: 100%;             /* O una larghezza fissa se preferisci, es. 80% */
+    display: none;
 }
 
 .reviewsPageContainer {
@@ -604,7 +620,7 @@ button:focus-visible {
 
 .filterSubtitle {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--deep-green);
     margin-bottom: 0.5rem;
@@ -618,7 +634,7 @@ button:focus-visible {
     background-color: var(--main-bg);
     font-weight: 700;
     color: var(--dark-green);
-    font-size: 1rem;
+    font-size: 1.4rem;
     cursor: pointer;
     appearance: none;
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231A3C34%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
@@ -634,7 +650,7 @@ button:focus-visible {
     color: var(--white);
     border: none;
     border-radius: 1rem;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 900;
     cursor: pointer;
     transition: opacity 0.2s, transform 0.2s;
@@ -644,6 +660,7 @@ button:focus-visible {
     opacity: 0.9;
     transform: translateY(-2px);
 }
+
 .reviewContent {
     background-color: var(--white); /* Sfondo bianco come la sidebar */
     border-radius: 2rem;            /* Stessi angoli arrotondati */

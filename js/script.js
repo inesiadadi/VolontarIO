@@ -1,27 +1,80 @@
-// File di JavaScript per la gestione della UI/UX
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Recupero Elementi
+    const voteSelect = document.getElementById('voteFilter');
+    const catSelect = document.getElementById('categoryFilter'); // Nuovo filtro
+    
+    // Fallback sicuro se l'ID manca
+    let reviewGrid = document.getElementById('grigliaRecensioni');
+    if (!reviewGrid) reviewGrid = document.querySelector('.reviewsGrid');
 
-function setVoto(container, value) {
-    if (value < 0 || value > 10) return;
+    const msgContainer = document.getElementById('filterEmptyState');
+    const cards = document.querySelectorAll('.reviewCard');
 
-    const filler = container.querySelector(".votoFiller");
-    const numero = container.querySelector(".votoNumeroContainer");
+    // Funzione unica di filtraggio
+    function filterReviews() {
+        // A. Leggi e prepara il Voto
+        const rangeValue = voteSelect ? voteSelect.value : "0-10";
+        const parts = rangeValue.split('-');
+        const minVote = parseInt(parts[0]);
+        const maxVote = parseInt(parts[1]);
 
-    numero.textContent = value.toFixed(1);
-    const percentuale = (value / 10) * 100;
+        // B. Leggi e prepara la Categoria (trasformata in minuscolo per confronto sicuro)
+        const selectedCat = catSelect ? catSelect.value.toLowerCase() : "all";
 
-    let colore;
-    if(value < 2) colore = "#8B0000";   // rosso scuro
-    else if(value < 3) colore = "#A80000"; 
-    else if(value < 4) colore = "#BF2C00"; // arancio scuro
-    else if(value < 5) colore = "#D64C00"; 
-    else if(value < 6) colore = "#E68000"; // giallo scuro/ocra
-    else if(value < 7) colore = "#C0A000"; 
-    else if(value < 8) colore = "#2E8B57"; // verde scuro
-    else if(value < 9) colore = "#3AAE6F"; 
-    else colore = "#0D6B39"; // verde molto scuro
+        let visibleCount = 0;
 
-    filler.style.background = `conic-gradient(from -90deg at 50% 50%, ${colore} ${percentuale}%, #e0e0e0 0)`;
-}
+        // C. Ciclo su tutte le card
+        cards.forEach(card => {
+            // --- CHECK 1: VOTO ---
+            const ratingSpan = card.querySelector('[itemprop="ratingValue"]');
+            let matchVote = false;
+            
+            if (ratingSpan) {
+                const vote = parseInt(ratingSpan.textContent.trim());
+                if (vote >= minVote && vote <= maxVote) {
+                    matchVote = true;
+                }
+            }
 
-// Esempio
-setVoto(document.querySelector(".valutazione"), 10);
+            // --- CHECK 2: CATEGORIA ---
+            // Cerchiamo il div .reviewCategory dentro la card
+            const catDiv = card.querySelector('.reviewCategory');
+            let matchCat = false;
+
+            // Se il filtro è "all", passa sempre. Altrimenti controlliamo il testo.
+            if (selectedCat === 'all') {
+                matchCat = true;
+            } else if (catDiv) {
+                // Prendiamo il testo (es: "Sanità "), togliamo spazi (.trim) e rendiamo minuscolo (.toLowerCase)
+                const cardCatText = catDiv.textContent.trim().toLowerCase();
+                
+                // Confrontiamo: "sanità" === "sanità"
+                if (cardCatText === selectedCat) {
+                    matchCat = true;
+                }
+            }
+
+            // --- DECISIONE FINALE (AND Logic) ---
+            // Deve passare ENTRAMBI i controlli
+            if (matchVote && matchCat) {
+                card.style.display = ''; 
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // D. Mostra/Nascondi Griglia o Messaggio Vuoto
+        if (visibleCount === 0) {
+            if (reviewGrid) reviewGrid.style.display = 'none';
+            if (msgContainer) msgContainer.style.display = 'flex';
+        } else {
+            if (reviewGrid) reviewGrid.style.display = 'grid';
+            if (msgContainer) msgContainer.style.display = 'none';
+        }
+    }
+
+    // 2. Attiva gli ascoltatori sugli eventi
+    if (voteSelect) voteSelect.addEventListener('change', filterReviews);
+    if (catSelect) catSelect.addEventListener('change', filterReviews);
+});
