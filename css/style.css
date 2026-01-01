@@ -91,7 +91,7 @@ img {
 }
 
 .main-nav a {
-    color: var(--outline);
+       color: var(--dark-green);
     font-weight: 500;
 }
 
@@ -192,6 +192,66 @@ img {
     flex-shrink: 0; 
 }
 
+
+
+
+.dropdown { 
+    position: relative; 
+    display: inline-block; 
+}
+
+.dropbtn {
+     height: 40px; 
+     width: 40px; 
+     cursor: pointer; 
+     object-fit: cover; 
+
+}
+
+.dropdown:hover .dropbtn {  
+    transform: scale(1.1); 
+}
+
+.dropdown-content {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    top: 70px; 
+    background-color: var(--secondary-bg);
+    min-width: 230px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    z-index: 1000;
+    overflow: visible; 
+}
+
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    top: -35px; 
+    left: 0;
+    width: 100%;
+    height: 35px; 
+    background: transparent;
+}
+
+.dropdown:hover .dropdown-content { 
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-content a {
+    color: var(--dark-green);
+    padding: 12px 20px;
+    display: block;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--main-bg);
+    color: var(--deep-green);
+}
 /*
 ======================================================================================================================================================
 
@@ -551,3 +611,9 @@ SEZIONE FOOTER
 .site-footer a:visited {
     color: var(--white);
 }
+
+
+
+
+
+
