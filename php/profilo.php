@@ -5,6 +5,7 @@ require_once('db/include/dbConnection.php');
 use DB\DBAccess;
 
 session_start();
+include('php/header.php');
 
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
@@ -117,11 +118,12 @@ foreach($placeholders_profilo as $chiave => $valore) {
 $pagina = file_get_contents('templates/blueprint.html');
 $header_html = file_exists('templates/components/header.html') ? file_get_contents('templates/components/header.html') : '';
 $footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
+include('php/header.php');
 
 $placeholders_layout = [
-    '[Titolo Pagina]' => 'VolontarIO | Profilo di ' . htmlspecialchars($dati_utente['username']),
-    '[Description]'   => 'Visualizza il profilo di ' . htmlspecialchars($dati_utente['nome']),
-    '[Keywords]'      => 'volontariato, ' . htmlspecialchars($dati_utente['citta']),
+    '[Titolo Pagina]' => 'Profilo di ' . htmlspecialchars($dati_utente['username']),
+    '[Description]'   => 'Visualizza il profilo di ' . htmlspecialchars($dati_utente['nome']) . ' su VolontarIO',
+    '[Keywords]'      => 'volontariato, profilo, ' . htmlspecialchars($dati_utente['citta']),
     '[pageNameId]'    => 'accountPage', 
     '[onload]'        => '',            
     '[Header]'        => $header_html,
