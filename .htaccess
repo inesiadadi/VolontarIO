@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /volontario/
+
+# Blocca accesso diretto ai file php
+RewriteRule ^php/ - [F,L]
+
+# Router
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]

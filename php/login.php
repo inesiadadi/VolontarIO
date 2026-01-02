@@ -1,14 +1,11 @@
 <?php 
 
-require_once('db/include/functions.php');
-require_once('db/include/dbConnection.php');
-
 include('header.php');
 
 use DB\DBAccess;
 $connection = new DBAccess();
 
-$html = file_get_contents(realpath(__DIR__ . '/' . '../src/html/login.html'));
+$html = file_get_contents(ROOT_PATH . '/templates/login.html');
 
 if(isset($_SESSION['logged'])) {
         $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";

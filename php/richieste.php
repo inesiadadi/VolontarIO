@@ -1,10 +1,8 @@
 <?php
-include_once('db/include/dbConnection.php');
-include_once('db/include/functions.php');
+
+include('header.php');
 
 use DB\DBAccess;
-
-session_start();
 
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
@@ -17,7 +15,7 @@ if ($id_utente_target === 0) {
 $dbAccess = new DBAccess();
 if(!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    include('templates/error500.html');
+    include(__ROOT_PATH__ . 'templates/error500.html');
     exit;
 }
 
@@ -26,7 +24,7 @@ $rowUser = $dbAccess->getUtentePerId($id_utente_target);
 if(!$rowUser) {
     $dbAccess->closeDBConnection();
     http_response_code(404);
-    include('templates/error404.html');
+    include(__ROOT_PATH__ . 'templates/error_404.html');
 }
 
 //servirà una query per ottenere tutte le richieste fatte da uno specifico utente
@@ -39,7 +37,7 @@ $html_richieste_output = "";
 
 // Bisogna creare tutta la griglia per richiesta che viene creata
 if(!empty($resultRec)) {
-    $template_item = file_get_contents('templates/components/myRequest.html');
+    $template_item = file_get_contents(ROOT_PATH . '/templates/components/myRequest.html');
 
     foreach($resultRec as $rec) {
         $temp = $template_item;

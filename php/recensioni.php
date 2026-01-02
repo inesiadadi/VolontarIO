@@ -17,16 +17,17 @@ if ($id_utente_target === 0) {
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    header('templates/error500.html');
+    include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
     exit;
 }
 
+// Ottieni dati utente
 $rowUser = $dbAccess->getUtentePerId($id_utente_target);
 
 if (!$rowUser) {
     $dbAccess->closeDBConnection();
     http_response_code(404);
-    header('templates/error404.html');
+    include ROOT_PATH . '/php/error_404.php'; // o templates/error_404.html
     exit;
 }
 
@@ -37,10 +38,10 @@ $dbAccess->closeDBConnection();
 $html_recensioni_output = "";
 
 if (!empty($resultRec)) {
-    $template_item = file_get_contents('templates/components/review.html');
+    $template_item = file_get_contents(ROOT_PATH . '/templates/components/review.html');
 
     foreach($resultRec as $rec) {
-        $foto_autore = (!empty($rec['foto_autore']) && file_exists('images/' . $rec['foto_autore'])) ? 'images/' . $rec['foto_autore'] : 'images/default.png';
+        $foto_autore = (!empty($rec['foto_autore']) && file_exists(BASE_PATH . '/src/images/' . $rec['foto_autore'])) ? BASE_PATH . '/src/images/' . $rec['foto_autore'] : BASE_PATH . '/src/images/default.png';
         $date_rec_obj = new DateTime($rec['dataRichiesta']);
         $data_visual = function_exists('formatDateItalian') ? formatDateItalian($rec['dataRichiesta']) : $date_rec_obj->format('d/m/Y');
 

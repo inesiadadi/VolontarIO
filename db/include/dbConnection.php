@@ -161,7 +161,6 @@ class DBAccess {
         }
     }
 
-
     public function registerAccount($username, $password, $email, $nome, $cognome, $birthdate) {
         
         //Il blocco qui sotto è fatto in modo da aver una query "safe" invece di avere $username direttamente sparato nella query, ancora manca qualche step per avere solo valori alfanumerici

@@ -24,4 +24,17 @@ function formatDateItalian($date) {
     return "$giorno $mese $anno";
 }
 
+function url(string $path = '', bool $preserveState = false): string {
+    $path = '/' . ltrim($path, '/');
+
+    if ($preserveState) {
+        $qs = $_SERVER['QUERY_STRING'] ?? '';
+        if ($qs) {
+            $path .= '?' . $qs;
+        }
+    }
+
+    return BASE_PATH . $path;
+}
+
 ?>

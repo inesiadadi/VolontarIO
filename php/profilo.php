@@ -1,48 +1,54 @@
 <?php
-require_once('db/include/functions.php');
-require_once('db/include/dbConnection.php');
 
 use DB\DBAccess;
 
-session_start();
-include('php/header.php');
-
+include ('header.php');
+// ID visitatore
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
+// ID utente target
 $id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
 if ($id_utente_target === 0) {
-    header("Location: login.php"); // O redirect alla Home
+    header("Location: " . url('login'));
     exit;
 }
 
+// Connessione DB
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    include('templates/error500.html');
+    include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
     exit;
 }
 
+// Ottieni dati utente
 $rowUser = $dbAccess->getUtentePerId($id_utente_target);
 
-//Qui andrà caricata la pagina di errore 404
 if (!$rowUser) {
     $dbAccess->closeDBConnection();
     http_response_code(404);
-    echo "<h1>404 - Utente non trovato</h1>";
+    include ROOT_PATH . '/php/error_404.php'; // o templates/error_404.html
     exit;
 }
 
+// Statistiche recensioni
 $rowStats = $dbAccess->getStatisticheRecensioni($id_utente_target);
 $resultRec = $dbAccess->getRecensioniRicevute($id_utente_target);
 
 $dbAccess->closeDBConnection();
+
+// Prepara dati utente
+$foto_fs = ROOT_PATH . '/src/images/' . ($rowUser['immagine'] ?? '');
+$foto_url = (!empty($rowUser['immagine']) && file_exists($foto_fs)) 
+    ? BASE_PATH . '/src/images/' . $rowUser['immagine'] 
+    : BASE_PATH . '/src/images/default.png';
 
 $dati_utente = [
     'id'             => $rowUser['idPersona'],
     'nome'           => $rowUser['nome'],
     'cognome'        => $rowUser['cognome'],
     'username'       => $rowUser['username'],
-    'foto'           => (!empty($rowUser['immagine']) && file_exists('images/' . $rowUser['immagine'])) ? 'images/' . $rowUser['immagine'] : 'images/default.png',
+    'foto'           => $foto_url,
     'nascita'        => $rowUser['dataNascita'],
     'citta'          => !empty($rowUser['nome_citta']) ? $rowUser['nome_citta'] . " (" . $rowUser['provincia'] . ")" : "Non specificata",
     'ruolo'          => ucfirst($rowUser['ruolo']),
@@ -55,14 +61,16 @@ $data_obj = new DateTime($dati_utente['nascita']);
 $data_visual = $data_obj->format('d/m/Y');
 $descrizione_html = nl2br(htmlspecialchars($dati_utente['descrizione']));
 
+// Pulsanti Azioni
 $azioni_html = "";
 if ($id_visitatore === $dati_utente['id']) {
-    $azioni_html = '<a href="modifica_profilo.php" class="btn modifyProfile">Modifica Profilo</a>';
+    $azioni_html = '<a href="' . url('modifica_profilo') . '" class="btn modifyProfile">Modifica Profilo</a>';
 }
 
+// Sezione reputazione
 $html_reputazione = "";
-if($dati_utente['num_recensioni'] > 0) {
-    $html_reputazione = file_get_contents('templates/components/valuation.html');
+if ($dati_utente['num_recensioni'] > 0) {
+    $html_reputazione = file_get_contents(ROOT_PATH . '/templates/components/valuation.html');
     $percentuale_stelle = ($dati_utente['media_voto'] * 10) . "%";
 
     $html_reputazione = str_replace('[MediaVoto]',         $dati_utente['media_voto'], $html_reputazione);
@@ -70,15 +78,19 @@ if($dati_utente['num_recensioni'] > 0) {
     $html_reputazione = str_replace('[PercentualeStelle]', $percentuale_stelle, $html_reputazione);
 }
 
+// Sezione recensioni
 $html_recensioni_output = "";
-
 if (!empty($resultRec)) {
-    $template_item = file_get_contents('templates/components/review.html');
-    
-    foreach($resultRec as $rec) {
-        $foto_autore = (!empty($rec['foto_autore']) && file_exists('images/' . $rec['foto_autore'])) ? 'images/' . $rec['foto_autore'] : 'images/default.png';
+    $template_item = file_get_contents(ROOT_PATH . '/templates/components/review.html');
+
+    foreach ($resultRec as $rec) {
+        $foto_fs = ROOT_PATH . '/src/images/' . ($rec['foto_autore'] ?? '');
+        $foto_autore = (!empty($rec['foto_autore']) && file_exists($foto_fs)) 
+            ? BASE_PATH . '/src/images/' . $rec['foto_autore'] 
+            : BASE_PATH . '/src/images/default.png';
+
         $date_rec_obj = new DateTime($rec['dataRichiesta']);
-        
+
         $temp = $template_item;
         $temp = str_replace('[IdAutore]',         $rec['id_autore'], $temp);
         $temp = str_replace('[AutoreRecensione]', htmlspecialchars($rec['nome_autore']), $temp);
@@ -86,16 +98,17 @@ if (!empty($resultRec)) {
         $temp = str_replace('[VotoRecensione]',   $rec['voto'], $temp);
         $temp = str_replace('[TestoRecensione]',  htmlspecialchars($rec['testo_recensione']), $temp);
         $temp = str_replace('[DataISO]',          $date_rec_obj->format('Y-m-d'), $temp);
-        $temp = str_replace('[DataVisual]',       $date_rec_obj->format('d/m/Y'), $temp); 
+        $temp = str_replace('[DataVisual]',       $date_rec_obj->format('d/m/Y'), $temp);
         $temp = str_replace('[CategoriaServizio]', htmlspecialchars($rec['nome_categoria']), $temp);
 
         $html_recensioni_output .= $temp;
     }
 } else {
-    $html_recensioni_output = file_get_contents('templates/components/no_review.html');
+    $html_recensioni_output = file_get_contents(ROOT_PATH . '/templates/components/no_review.html');
 }
 
-$html_profilo = file_get_contents('templates/profile.html');
+// Template profilo
+$html_profilo = file_get_contents(ROOT_PATH . '/templates/profile.html');
 
 $placeholders_profilo = [
     '[FotoProfilo]'        => $dati_utente['foto'],
@@ -111,27 +124,26 @@ $placeholders_profilo = [
     '[SezioneRecensioni]'  => $html_recensioni_output 
 ];
 
-foreach($placeholders_profilo as $chiave => $valore) {
+foreach ($placeholders_profilo as $chiave => $valore) {
     $html_profilo = str_replace($chiave, $valore, $html_profilo);
 }
 
-$pagina = file_get_contents('templates/blueprint.html');
-$header_html = file_exists('templates/components/header.html') ? file_get_contents('templates/components/header.html') : '';
-$footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
-include('php/header.php');
+// Layout generale
+$pagina = file_get_contents(realpath(__DIR__ . '/' . '../templates/blueprint.html'));
+$footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 
 $placeholders_layout = [
     '[Titolo Pagina]' => 'Profilo di ' . htmlspecialchars($dati_utente['username']),
     '[Description]'   => 'Visualizza il profilo di ' . htmlspecialchars($dati_utente['nome']) . ' su VolontarIO',
     '[Keywords]'      => 'volontariato, profilo, ' . htmlspecialchars($dati_utente['citta']),
-    '[pageNameId]'    => 'accountPage', 
-    '[onload]'        => '',            
+    '[pageNameId]'    => 'accountPage',
+    '[onload]'        => '',
     '[Header]'        => $header_html,
     '[Footer]'        => $footer_html,
-    '[MainContent]'   => $html_profilo 
+    '[MainContent]'   => $html_profilo
 ];
 
-foreach($placeholders_layout as $chiave => $valore) {
+foreach ($placeholders_layout as $chiave => $valore) {
     $pagina = str_replace($chiave, $valore, $pagina);
 }
 

@@ -1,9 +1,9 @@
 <?php 
 include('header.php');
 
-$html = file_get_contents(realpath(__DIR__ . '/' . '../src/html/home.html'));
-$pagina = file_get_contents('templates/blueprint.html');
-$footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
+$html = file_get_contents(ROOT_PATH . '/templates/home.html');
+$pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
+$footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 $placeholders_layout = [
     '[Titolo Pagina]' => 'Homepage',
     '[Description]'   => 'Homepage di VolontarIO',

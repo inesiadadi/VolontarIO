@@ -9,7 +9,7 @@ use DB\DBAccess;
 $connection = new DBAccess();
 
 
-$html = file_get_contents(realpath(__DIR__ . '/' . '../src/html/register.html'));
+$html = file_get_contents(realpath(ROOT_PATH . '/templates/register.html'));
 
 
 if(isset($_SESSION['logged'])) {
@@ -40,7 +40,7 @@ if(isset($_SESSION['logged'])) {
                     <input type='password' name='pass_again' id='pass_again' required value='[pass_again]'></input>
                     <button type='submit'>Registrati</button>
                 </form>
-                <p>Sei già registrato? Vai direttamente alla <a href='/login'>pagina di connessione</a></p>";
+                <p>Sei già registrato? Vai direttamente alla <a href='/volontario/login'>pagina di connessione</a></p>";
         $html = str_replace('[form]', $form, $html);
 
     }
