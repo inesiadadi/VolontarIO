@@ -26,6 +26,7 @@ class DBAccess {
         if($this->connection) mysqli_close($this->connection);
     }
 
+    //Scomoda, meglio definire una funzione per query, in modo da migliorarne la gestione
     public function executeQuery($query) {
         if($result = mysqli_query($this->connection, $query)) {
             if ($result === true) return true;
@@ -40,6 +41,7 @@ class DBAccess {
 
     public function getStateDBConnection() { return $this->connection; }
     
+    //Probabilmente devo definire una query per poter 
     public function getUtentePerId($idPersona) {
         $sql = "SELECT P.*, C.nome AS nome_citta, C.provincia 
                 FROM Persona P 
@@ -94,6 +96,55 @@ class DBAccess {
             $recensioni[] = $row;
         }
         return $recensioni;
+    }
+
+    public function getRichiesteEffettuate($idVolontario) {
+        $sql = "SELECT R.*, T.nome AS tipologia, C.nome as citta
+                FROM Richiesta R
+                JOIN Tipologia T ON R.idTipo = T.idTipo
+                JOIN Citta C ON R.idCitta = C.idCitta
+                WHERE idRichiedente = ?
+                ORDER BY dataRichiesta DESC";
+        
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bind_param("i", $idVolontario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $richieste = [];
+        while($row = $result->fetch_assoc()) {
+            $richieste[] = $row;
+        }
+        return $richieste;
+    }
+
+    public function checkUpdateRequests() {
+        $query = "SELECT codiceRichiesta, stato, dataRichiesta FROM Richiesta";
+        $result = $this->connection->query($query);
+
+        while ($rec = $result->fetch_assoc()) {
+            $aggiorna = false;
+            $nuovoStato = $rec['stato'];
+            $ora = new \DateTime();
+
+            $dataRichiesta = new \DateTime($rec['dataRichiesta']);
+
+            if ($rec['stato'] == 'aperta' && $dataRichiesta < $ora) {
+                $nuovoStato = 'scaduta';
+                $aggiorna = true;
+            }
+            else if ($rec['stato'] == 'in_carico' && $dataRichiesta < $ora) {
+                $nuovoStato = 'completata';
+                $aggiorna = true;
+            }
+
+            if ($aggiorna) {
+                $stmt = $this->connection->prepare("UPDATE Richiesta SET stato = ? WHERE codiceRichiesta = ?");
+                $stmt->bind_param("si", $nuovoStato, $rec['codiceRichiesta']);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
     }
     
 }

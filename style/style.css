@@ -421,7 +421,7 @@ button:focus-visible {
 
 }
 
-.reviewsGrid {
+.reviewsGrid, .requestGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
     gap: 2.5rem;
@@ -439,7 +439,7 @@ button:focus-visible {
     padding-bottom: 1rem;
 }
 
-.reviewCard {
+.reviewCard, .requestCard {
     background-color: var(--white);
     border-radius: 2rem;
     padding: 2rem;
@@ -450,13 +450,13 @@ button:focus-visible {
     justify-content: space-between;
     gap: 1rem;
     width: 100%;
-    max-width: 35rem;
-    aspect-ratio: 1 / 1.1;
+    max-width: 50rem;
+    max-height: 30rem;
     overflow: hidden;
     margin-inline: auto;
 }
 
-.reviewCard:hover {
+.reviewCard:hover, .requestCard:hover {
     transform: translateY(-0.5rem);
     box-shadow: 0 1.5rem 3rem rgba(1, 39, 19, 0.1);
     border-color: var(--deep-green);
@@ -477,8 +477,8 @@ button:focus-visible {
     gap: 1.2rem;
 }
 
-.reviewCategory {
-    font-size: 0.95rem;
+.reviewCategory, .requestCategory {
+    font-size: 1.25rem;
     font-weight: 700;
     text-transform: uppercase;
     color: var(--secondary-bg);
@@ -524,7 +524,7 @@ button:focus-visible {
     font-size: 1.3rem;
 }
 
-.reviewText {
+.reviewText, .requestText {
     flex-grow: 1;
     overflow-y: auto;
     font-size: 1.4rem;
@@ -535,27 +535,32 @@ button:focus-visible {
     scrollbar-color: #ccc transparent;
 }
 
-.reviewText::-webkit-scrollbar {
+.reviewText::-webkit-scrollbar, .requestText::-webkit-scrollbar {
     width: 6px;
 }
 
-.reviewText::-webkit-scrollbar-track {
+.reviewText::-webkit-scrollbar-track, .requestText::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.reviewText::-webkit-scrollbar-thumb {
+.reviewText::-webkit-scrollbar-thumb, .requestText::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 10px;
 }
 
-.reviewDate {
+.reviewDate, .requestDate {
     font-size: 1.1rem;
     color: var(--outline);
     text-align: right;
     font-weight: 700;
 }
 
-.noReviewsMsg {
+.requestLocation {
+    margin-right: 1rem; /* spazio tra luogo e data */
+    font-weight: 500;
+}
+
+.noReviewsMsg, .noRequestMsg {
     grid-column: 1 / -1;
     background-color: var(--secondary-bg);
     color: var(--outline);
@@ -581,7 +586,7 @@ button:focus-visible {
     display: none;
 }
 
-.reviewsPageContainer {
+.reviewsPageContainer, .requestPageContainer {
     display: grid;
     grid-template-columns: 260px 1fr;
     gap: 3rem;
@@ -661,17 +666,45 @@ button:focus-visible {
     transform: translateY(-2px);
 }
 
-.reviewContent {
+.reviewContent, .requestContent {
     background-color: var(--white); /* Sfondo bianco come la sidebar */
     border-radius: 2rem;            /* Stessi angoli arrotondati */
     padding: 3rem;                  /* Spazio interno abbondante */
     border: 3px solid var(--outline); /* Stesso bordo spesso */
     box-shadow: var(--shadow);      /* Stessa ombra */
-    
-    /* Per gestire il titolo e la griglia al suo interno */
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+}
+
+.disabledBtn {
+    background-color: #cccccc;   /* grigio chiaro */
+    color: #666666;              /* testo grigio scuro */
+    border: none;                /* nessun bordo */
+    padding: 0.8rem 1.2rem;      /* spaziatura interna */
+    border-radius: 1rem;         /* angoli arrotondati */
+    font-size: 1rem;
+    cursor: not-allowed;         /* indica che non è cliccabile */
+    opacity: 0.7;                /* leggermente trasparente */
+    pointer-events: none;        /* blocca ogni interazione */
+}
+
+.profileBtn {
+    display: inline-block;
+    background-color: var(--deep-green);
+    color: #ffffff;
+    text-decoration: none;      /* rimuove sottolineatura link */
+    padding: 0.8rem 1.2rem;
+    border-radius: 1rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.profileBtn:hover {
+    background-color: #06562a; /* leggero highlight al passaggio */
+}
+
+.profileBtn:active {
+    background-color: #032a13; /* scuro al click */
 }
 
 @media (max-width: 900px) {
@@ -685,21 +718,24 @@ button:focus-visible {
         max-width: 50rem;
         margin: 0 auto;
     }
-    .reviewsPageContainer {
+    .reviewsPageContainer, .requestPageContainer {
         grid-template-columns: 1fr;
     }
     .filtersSidebar {
         position: static;
         margin-bottom: 2rem;
     }
+    .filterSidebar {
+        position: static;
+    }
 }
 
 @media (max-width: 600px) {
-    .reviewsGrid {
+    .reviewsGrid, .requestGrid {
         grid-template-columns: 1fr;
     }
     
-    .reviewCard {
+    .reviewCard, .requestCard {
         aspect-ratio: auto; 
         min-height: auto;
     }

@@ -1,80 +1,163 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Recupero Elementi
+document.addEventListener('DOMContentLoaded', initReviewFilters);
+document.addEventListener('DOMContentLoaded', initRequestFilters);
+
+function initReviewFilters() {
     const voteSelect = document.getElementById('voteFilter');
-    const catSelect = document.getElementById('categoryFilter'); // Nuovo filtro
-    
-    // Fallback sicuro se l'ID manca
-    let reviewGrid = document.getElementById('grigliaRecensioni');
-    if (!reviewGrid) reviewGrid = document.querySelector('.reviewsGrid');
+    const catSelect  = document.getElementById('categoryFilter');
 
-    const msgContainer = document.getElementById('filterEmptyState');
-    const cards = document.querySelectorAll('.reviewCard');
+    if (voteSelect) voteSelect.addEventListener('change', applyReviewFilters);
+    if (catSelect)  catSelect.addEventListener('change', applyReviewFilters);
 
-    // Funzione unica di filtraggio
-    function filterReviews() {
-        // A. Leggi e prepara il Voto
-        const rangeValue = voteSelect ? voteSelect.value : "0-10";
-        const parts = rangeValue.split('-');
-        const minVote = parseInt(parts[0]);
-        const maxVote = parseInt(parts[1]);
+    applyReviewFilters();
+}
 
-        // B. Leggi e prepara la Categoria (trasformata in minuscolo per confronto sicuro)
-        const selectedCat = catSelect ? catSelect.value.toLowerCase() : "all";
+function initRequestFilters() {
+    const statSelect = document.getElementById('stateFilter');
+    const catSelect = document.getElementById('categoryFilter');
+
+    if(statSelect) statSelect.addEventListener('change', applyRequestFilters);
+    if(catSelect) catSelect.addEventListener('change', applyRequestFilters);
+}
+
+function getReviewFilterState() {
+    const voteValue =
+        document.getElementById('voteFilter')?.value ?? '0-10';
+
+    const [minVote, maxVote] = voteValue.split('-').map(Number);
+
+    const category = document.getElementById('categoryFilter')?.value?.toLowerCase() ?? 'all';
+
+    return { minVote, maxVote, category };
+}
+
+function getRequestFilterState() {
+    const status = document.getElementById('stateFilter')?.value?.toLowerCase() ?? 'all';
+    const category = document.getElementById('categoryFilter')?.value?.toLowerCase() ?? 'all';
+
+    return { status, category };
+}
+
+function getReviewCards() {
+    return document.querySelectorAll('.reviewCard');
+}
+
+function getRequestCards() {
+    return document.querySelectorAll('.requestCard');
+}
+
+function getReviewGrid() {
+    return (
+        document.getElementById('grigliaRecensioni') ?? document.querySelector('.reviewsGrid')
+    );
+}
+
+function getRequestGrid() {
+    return (
+        document.getElementById('grigliaRichieste') ?? document.querySelector('.requestGrid')
+    );
+}
+
+function getEmptyState() {
+    return document.getElementById('filterEmptyState');
+}
+
+function matchesReviewVote(card, { minVote, maxVote }) {
+    const rating = card.querySelector('[itemprop="ratingValue"]');
+    if (!rating) return false;
+
+    const vote = Number(rating.textContent.trim());
+    return vote >= minVote && vote <= maxVote;
+}
+
+function matchesReviewCategory(card, { category }) {
+    if (category === 'all') return true;
+
+    const cat = card.querySelector('.reviewCategory');
+    if (!cat) return false;
+
+    return cat.textContent.trim().toLowerCase() === category;
+}
+
+function matchesRequestStatus(card, { status }) {
+    if (status === 'all') return true;
+
+    const cardStatus = card.dataset.status;
+    if (!cardStatus) return false;
+
+    return cardStatus.toLowerCase() === status;
+}
+
+function matchesRequestCategory(card, { category }) {
+    if (category === 'all') return true;
+
+    const cat = card.querySelector('.requestCategory');
+    if (!cat) return false;
+
+    return cat.textContent.trim().toLowerCase() === category;
+}
+
+function applyReviewFilters() {
+    const state = getReviewFilterState();
+    const cards = getReviewCards();
+
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const isVisible =
+            matchesReviewVote(card, state) &&
+            matchesReviewCategory(card, state);
+
+        card.style.display = isVisible ? '' : 'none';
+        if (isVisible) visibleCount++;
+    });
+
+    updateReviewEmptyState(visibleCount);
+}
+
+function applyRequestFilters() {
+    const state = getRequestFilterState();
+    const cards = getRequestCards();
 
         let visibleCount = 0;
 
-        // C. Ciclo su tutte le card
-        cards.forEach(card => {
-            // --- CHECK 1: VOTO ---
-            const ratingSpan = card.querySelector('[itemprop="ratingValue"]');
-            let matchVote = false;
-            
-            if (ratingSpan) {
-                const vote = parseInt(ratingSpan.textContent.trim());
-                if (vote >= minVote && vote <= maxVote) {
-                    matchVote = true;
-                }
-            }
+    cards.forEach(card => {
+        const isVisible =
+            matchesRequestStatus(card, state) &&
+            matchesRequestCategory(card, state);
 
-            // --- CHECK 2: CATEGORIA ---
-            // Cerchiamo il div .reviewCategory dentro la card
-            const catDiv = card.querySelector('.reviewCategory');
-            let matchCat = false;
+        card.style.display = isVisible ? '' : 'none';
+        if (isVisible) visibleCount++;
+    });
 
-            // Se il filtro è "all", passa sempre. Altrimenti controlliamo il testo.
-            if (selectedCat === 'all') {
-                matchCat = true;
-            } else if (catDiv) {
-                // Prendiamo il testo (es: "Sanità "), togliamo spazi (.trim) e rendiamo minuscolo (.toLowerCase)
-                const cardCatText = catDiv.textContent.trim().toLowerCase();
-                
-                // Confrontiamo: "sanità" === "sanità"
-                if (cardCatText === selectedCat) {
-                    matchCat = true;
-                }
-            }
+    updateRequestEmptyState(visibleCount);
+}
 
-            // --- DECISIONE FINALE (AND Logic) ---
-            // Deve passare ENTRAMBI i controlli
-            if (matchVote && matchCat) {
-                card.style.display = ''; 
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
+function updateReviewEmptyState(visibleCount) {
+    const grid  = getReviewGrid();
+    const empty = getEmptyState();
 
-        // D. Mostra/Nascondi Griglia o Messaggio Vuoto
-        if (visibleCount === 0) {
-            if (reviewGrid) reviewGrid.style.display = 'none';
-            if (msgContainer) msgContainer.style.display = 'flex';
-        } else {
-            if (reviewGrid) reviewGrid.style.display = 'grid';
-            if (msgContainer) msgContainer.style.display = 'none';
-        }
+    if (!grid || !empty) return;
+
+    if (visibleCount === 0) {
+        grid.style.display  = 'none';
+        empty.style.display = 'flex';
+    } else {
+        grid.style.display  = 'grid';
+        empty.style.display = 'none';
     }
+}
 
-    // 2. Attiva gli ascoltatori sugli eventi
-    if (voteSelect) voteSelect.addEventListener('change', filterReviews);
-    if (catSelect) catSelect.addEventListener('change', filterReviews);
-});
+function updateRequestEmptyState(visibleCount) {
+    const grid  = getRequestGrid();
+    const empty = getEmptyState();
+
+    if (!grid || !empty) return;
+
+    if (visibleCount === 0) {
+        grid.style.display  = 'none';
+        empty.style.display = 'flex';
+    } else {
+        grid.style.display  = 'grid';
+        empty.style.display = 'none';
+    }
+}
