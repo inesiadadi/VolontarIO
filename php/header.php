@@ -1,5 +1,5 @@
 <?php 
-require_once "connessione.php";
+//require_once "connessione.php";
 session_start();
 
 $html_header = file_get_contents(realpath(__DIR__ . '/../src/html/header.html'));
@@ -12,6 +12,7 @@ if(isset($_SESSION['logged'])) {
             <a href='area_personale.php'>Area personale</a>
             <a href='recensioni.php'>Recensioni</a>
             <a href='richieste.php'>Richieste effettuate</a>
+            <a href='candidature.php'>Candidature</a>
             <a href='logout.php'>Log out</a>
         </div>
     </div>";
@@ -24,4 +25,3 @@ if(isset($_SESSION['logged'])) {
 }
 echo $html_header;
 ?>
-

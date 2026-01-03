@@ -1,0 +1,37 @@
+<main class="profileContainer" itemscope itemtype="https://schema.org/Person">
+    <div class="profileGrid">
+        <h1 class="profilePageTitle">L'Angolo del Volontario</h1>
+        <aside class="profileInfoColumn">
+            <div class="userMainInfo">
+                <img src="[FotoProfilo]" alt="Foto Profilo di [Nome] [Cognome]" class="userPfP" itemprop="image">
+                <h2 class="userIdentity" itemprop="name">[Nome] [Cognome]</h2>
+                <h3 class="userUsername" itemprop="alternateName">@[Username]</h3>
+            </div>
+            <dl class="userInformation">
+                <dt class="infoLabel">Nascita:</dt>
+                <dd class="infoValue">
+                    <time datetime="[DataISO]" itemprop="birthDate">[DataVisual]</time>
+                </dd>
+
+                <dt class="infoLabel">Città:</dt>
+                <dd class="infoValue" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <span itemprop="addressLocality">[Citta]</span>
+                </dd>
+            </dl>
+            <div class="userButtons">
+                [Actions]
+            </div>
+        </aside>
+        <div class="volunteerInformation">
+            <section class="volunteerBiography">
+                <h2 class="cardTitle">Chi sono</h2>
+                <span class="biographyText" itemprop="description">[Descrizione]</span>
+            </section>
+            [SezioneReputazione]
+            <section id="reviewsSection" class="reviewsGrid" aria-labelledby="reviewsTitle">
+                <h2 id="reviewsTitle" class="sectionHeader">Ultime Recensioni</h2>
+                [SezioneRecensioni]
+            </section>
+        </div>
+    </div> 
+</main>
