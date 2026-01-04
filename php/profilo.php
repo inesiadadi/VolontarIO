@@ -9,7 +9,7 @@ $id_visitatore = $_SESSION['user_id'] ?? 0;
 // ID utente target
 $id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
 if ($id_utente_target === 0) {
-    header("Location: " . url('login'));
+    header("Location: /volontario/login");
     exit;
 }
 
@@ -48,6 +48,7 @@ $dati_utente = [
     'nome'           => $rowUser['nome'],
     'cognome'        => $rowUser['cognome'],
     'username'       => $rowUser['username'],
+    'email'          => $rowUser['email'],
     'foto'           => $foto_url,
     'nascita'        => $rowUser['dataNascita'],
     'citta'          => !empty($rowUser['nome_citta']) ? $rowUser['nome_citta'] . " (" . $rowUser['provincia'] . ")" : "Non specificata",
@@ -64,7 +65,9 @@ $descrizione_html = nl2br(htmlspecialchars($dati_utente['descrizione']));
 // Pulsanti Azioni
 $azioni_html = "";
 if ($id_visitatore === $dati_utente['id']) {
-    $azioni_html = '<a href="' . url('modifica_profilo') . '" class="btn modifyProfile">Modifica Profilo</a>';
+    $azioni_html = '<a href="/volontario/modifica_profilo" class="btn modifyProfile">Modifica Profilo</a>';
+} else {
+    $azioni_html = '<a href="mailto:"' . $dati_utente['foto'] . ' class="btn contactUser">Contatta Utente</a>';
 }
 
 // Sezione reputazione

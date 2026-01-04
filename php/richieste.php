@@ -6,11 +6,12 @@ use DB\DBAccess;
 
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
-$id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
-if ($id_utente_target === 0) {
-    header("Location: login.php"); // O redirect alla Home
+if ($id_visitatore === 0) {
+    header("Location: /volontario/login"); // O redirect alla Home
     exit;
 }
+
+$id_utente_target = $id_visitatore;
 
 $dbAccess = new DBAccess();
 if(!$dbAccess->openDBConnection()) {
@@ -61,7 +62,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "in_carico") {
             // Stato in carico: pulsante cliccabile verso il profilo dell'offerente
-            $profiloUrl = "/volontario/profilo.php?id=" . urlencode($rec['idOfferente']); // sostituisci con il campo reale
+            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']); // sostituisci con il campo reale
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
@@ -71,7 +72,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "completata") {
             // Stato completata: pulsante cliccabile verso profilo dell'offerente per recensione
-            $profiloUrl = "/volontario/profilo.php?id=" . urlencode($rec['idOfferente']); // sostituisci con il campo reale
+            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']); // sostituisci con il campo reale
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',

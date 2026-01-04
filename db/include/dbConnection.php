@@ -146,7 +146,11 @@ class DBAccess {
             }
         }
     }
+
+    public function addRequest() {}
     
+    public function addReview() {}
+
     ## FUNZIONI DB ##
 
      public function loginAccount($username) {
