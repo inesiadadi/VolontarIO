@@ -17,6 +17,10 @@ switch ($path) {
         include('php/login.php');
         break;
     
+    case '/bacheca':
+        include('php/bacheca.php');
+        break;
+
     case '/come-funziona':
         include('php/come_funziona.php');
         break;    
