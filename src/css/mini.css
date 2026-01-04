@@ -1,0 +1,218 @@
+
+/* 
+   ========================
+
+        --- ANGELA ---      
+
+   ========================        
+
+*/
+
+/*  SEZIONE HEADER*/
+
+.site-header { 
+    flex-wrap: wrap; 
+    }
+
+#site-name { 
+    display: none; 
+    }
+
+.brand-wrapper { 
+    margin-right: auto; 
+    }
+
+.header-actions {
+     order: 2; margin-right: 15px; display: flex; 
+    }
+
+.menu-icon {
+    display: block; order: 3; width: 35px; height: 30px; 
+    position: relative; cursor: pointer; z-index: 1001;
+    }
+
+.menu-icon span {
+    background-color: #02381A; position: absolute; border-radius: 2px;
+    width: 100%; height: 4px; display: block;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    }
+
+.menu-icon span:nth-child(1) { 
+    top: 0px; 
+    }
+
+.menu-icon span:nth-child(2) { 
+    top: 13px; 
+    }
+
+.menu-icon span:nth-child(3) { 
+    bottom: 0px;   
+    }
+
+#menu-btn:checked ~ .menu-icon span:nth-child(1) { 
+    transform: rotate(90deg); top: 13px; width: 30px; left: 3px; 
+    }
+
+#menu-btn:checked ~ .menu-icon span:nth-child(2) { 
+    transform: rotate(45deg); width: 20px; left: 2px; top: 20px;
+    }
+
+#menu-btn:checked ~ .menu-icon span:nth-child(3) { 
+    transform: rotate(-45deg); width: 20px; left: 14px; top: 20px; 
+    }
+
+.main-nav, .auth-buttons {
+    display: none; width: 100%; order: 4; 
+    }
+    
+#menu-btn:checked ~ .main-nav,
+#menu-btn:checked ~ .auth-buttons {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    background-color: var(--secondary-bg);
+    border-top: 1px solid rgba(57, 87, 49, 0.1); 
+    }
+
+.main-nav ul {
+    flex-direction: column;
+    padding: 10px 0;
+    gap: 0; 
+    }
+
+.main-nav li {
+    width: 100%;
+    border: none;
+    }
+
+.main-nav a {
+    display: block;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-green); 
+    background: transparent;
+    }
+
+.main-nav a:hover {
+    color: var(--deep-green); 
+    background-color: transparent; 
+    }
+
+.auth-buttons {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 0;
+    }
+
+.dropdown-content a {
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 8px 0;
+    }
+
+.auth-buttons {
+    padding-bottom: 20px;
+    width: 100%;
+    border-top: 2px solid var(--outline); 
+    margin-top: 0;
+    }
+
+.dropdown {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+.dropbtn {
+    margin: 15px 0 10px 0; 
+    }
+
+.dropdown-content {
+    position: static; 
+    visibility: visible;
+    opacity: 1;
+    box-shadow: none;
+    background-color: transparent;
+    min-width: 100%;
+    text-align: center;
+    padding: 0;
+    }
+
+.dropdown-content::before {
+    display: none;
+    }
+
+.dropdown-content a {
+    padding: 10px 0;
+    color: var(--dark-green);
+    font-size: 0.95rem;
+    background-color: rgba(0,0,0,0.03); 
+    margin-bottom: 2px;
+    }
+/*SEZIONE COME_FUNZIONA*/
+
+.sez1-cf {
+    padding: 3rem 1rem 2rem;
+    }
+
+.sez1-cf h1 {
+    font-size: 2rem; 
+    margin-bottom: 1rem;
+    }
+
+.container-cf, 
+.container-cf.reverse {
+    flex-direction: column; 
+    height: auto;
+    min-height: auto;
+    }
+
+.container-cf img {
+    width: 100%;  
+    height: 250px;     
+    object-fit: cover; 
+    }
+
+.container-text {
+    padding: 2rem 1.5rem;
+    }
+
+.sez3-cf {
+    padding: 3rem 1rem;
+    }
+    
+.sez3-cf p:last-of-type {
+    font-size: 1.3rem; 
+    }
+
+.sez3-cf button {
+    width: 100%;       
+    padding: 1rem;   
+    font-size: 1.1rem;
+    }
+
+.contenitore-form {
+    flex-direction: column;
+    gap: 0;
+    }
+
+   
+textarea {
+    height: 150px; 
+    }
+
+.form-buttons {
+    flex-direction: column;
+    gap: 15px;
+    }
+
+.btn-submit, .btn-delete {
+    width: 100%;
+    text-align: center;
+    padding: 15px; 
+    }
+
+
