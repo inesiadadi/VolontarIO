@@ -1,9 +1,10 @@
 <?php
 
-include('header.php');
 
 use DB\DBAccess;
 
+include('header.php');
+/*
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
 if ($id_visitatore === 0) {
@@ -12,20 +13,39 @@ if ($id_visitatore === 0) {
 }
 
 $id_utente_target = $id_visitatore;
+*/
+// Rimuovere queste righe quando funziona il collegamento
+$id_visitatore = $_SESSION['user_id'] ?? 0;
 
-$dbAccess = new DBAccess();
-if(!$dbAccess->openDBConnection()) {
-    http_response_code(500);
-    include(__ROOT_PATH__ . 'templates/error500.html');
+// ID utente target
+$id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
+if ($id_utente_target === 0) {
+    header("Location: /volontario/login");
     exit;
 }
 
+$dbAccess = new DBAccess();
+if (!$dbAccess->openDBConnection()) {
+    http_response_code(500);
+    include ROOT_PATH . '/php/error_500.php';
+    exit;
+}
+
+$dbAccess = new DBAccess();
+if (!$dbAccess->openDBConnection()) {
+    http_response_code(500);
+    include ROOT_PATH . '/php/error_500.php';
+    exit;
+}
+
+// Ottieni dati utente
 $rowUser = $dbAccess->getUtentePerId($id_utente_target);
 
-if(!$rowUser) {
+if (!$rowUser) {
     $dbAccess->closeDBConnection();
     http_response_code(404);
-    include(__ROOT_PATH__ . 'templates/error_404.html');
+    include ROOT_PATH . '/php/error_404.php';
+    exit;
 }
 
 //servirà una query per ottenere tutte le richieste fatte da uno specifico utente
@@ -62,7 +82,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "in_carico") {
             // Stato in carico: pulsante cliccabile verso il profilo dell'offerente
-            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']); // sostituisci con il campo reale
+            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']);
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
@@ -72,7 +92,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "completata") {
             // Stato completata: pulsante cliccabile verso profilo dell'offerente per recensione
-            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']); // sostituisci con il campo reale
+            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']);
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',
@@ -91,17 +111,16 @@ if(!empty($resultRec)) {
         $html_richieste_output .= $temp;
     }
 } else {
-    $html_richieste_output = file_get_contents('templates/components/no_request.html');
+    $html_richieste_output = file_get_contents(ROOT_PATH . '/templates/components/no_request.html');
 }
 
-$html_pagina_richieste = file_get_contents('templates/requestsPage.html');
-$categorie = file_exists('templates/components/categories.html') ? file_get_contents('templates/components/categories.html') : '';
+$html_pagina_richieste = file_get_contents(ROOT_PATH . '/templates/requestsPage.html');
+$categorie = file_exists(ROOT_PATH . '/templates/components/categories.html') ? file_get_contents(ROOT_PATH . '/templates/components/categories.html') : '';
 $html_pagina_richieste = str_replace('[Categorie]', $categorie, $html_pagina_richieste);
 $html_pagina_richieste = str_replace('[Richieste]', $html_richieste_output, $html_pagina_richieste);
 
-$pagina = file_get_contents('templates/blueprint.html');
-$header_html = file_exists('templates/components/header.html') ? file_get_contents('templates/components/header.html') : '';
-$footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
+$pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
+$footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 
 $placeholders_layout = [
     '[Titolo Pagina]' => 'VolontarIO | Richieste di ' . htmlspecialchars($rowUser['username']),

@@ -21,6 +21,8 @@ if (!$dbAccess->openDBConnection()) {
     exit;
 }
 
+
+
 // Ottieni dati utente
 $rowUser = $dbAccess->getUtentePerId($id_utente_target);
 

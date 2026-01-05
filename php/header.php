@@ -1,23 +1,25 @@
-
 <?php 
 require_once ROOT_PATH . '/db/include/functions.php';
 require_once ROOT_PATH . '/db/include/dbConnection.php';
 // require_once "connessione.php";
-session_start(); // Per poter usare l'array $_SESSION
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $header_html = file_get_contents(ROOT_PATH . '/templates/components/header.html');
 
+
 if(isset($_SESSION['logged'])) {
-    $menu_utente = "
-    <div class='dropdown'>
-        <img src='profile_green.svg' alt='Menu Icona' class='dropbtn'>
-        <div class='dropdown-content'>
-            <a href='/volontario/profilo'>Area personale</a>
-            <a href='/volontario/recensioni'>Recensioni</a>
-            <a href='/volontario/richieste'>Richieste effettuate</a>
-            <a href='/volontario/candidature'>Candidature</a>
-            <a href='/volontario/logout'>Log out</a>
+    $menu_utente = '
+    <div class="dropdown">
+        <img src="profile_green.svg" alt="Menu Icona" class="dropbtn">
+        <div class="dropdown-content">
+            <a href="/volontario/profilo?id=' . $_SESSION['user_id'] . '">Area personale</a>
+            <a href="/volontario/recensioni?id=' . $_SESSION['user_id'] . '">Recensioni</a>
+            <a href="/volontario/richieste?id=' . $_SESSION['user_id'] . '">Richieste effettuate</a>
+            <a href="/volontario/candidature?id=' . $_SESSION['user_id'] . '">Candidature</a>
+            <a href="/volontario/logout?id=' . $_SESSION['user_id'] . '">Log out</a>
         </div>
-    </div>";
+    </div>';
     $header_html = str_replace("[accountAccess]", $menu_utente, $header_html);
 } else {
     $bottoni_ospite = "

@@ -57,6 +57,9 @@ switch ($path) {
     case '/richieste':
         include ROOT_PATH . '/php/richieste.php';
         break;
+    case '/candidature':
+        include ROOT_PATH . '/php/candidature.php';
+        break;    
 
     default:
         http_response_code(404);

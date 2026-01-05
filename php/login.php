@@ -12,7 +12,7 @@ if(isset($_SESSION['logged'])) {
         $html = str_replace('[form]', $already_logged, $html);
 } else {
         $form = "[error_message]
-                    <form id='logForm' action='/login' method='post'>        
+                    <form id='logForm' action='/volontario/login' method='post'>        
                     <label for='username'>Username:</label>
                     <input type='text' name='username' id='username'></input>
                     <label for='password'>Password:</label>
@@ -49,8 +49,8 @@ if ($connessioneOK && !$result) {
         session_regenerate_id(true);
         $_SESSION['logged'] = true;
         $_SESSION['username'] = $row['username'];
-        $_SESSION['user_id'] = $row['id'];
-        header('Location: /');
+        $_SESSION['user_id'] = $row['idPersona'];
+        header('Location: /volontario');
         exit();
     } else {
         $messaggio = "<p class='error'>La password o l'username non sono corretti</p>";
@@ -63,9 +63,9 @@ if ($connessioneOK && !$result) {
 
 }
 
-$pagina = file_get_contents('templates/blueprint.html');
+$pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 
-$footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
+$footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 
 $placeholders_layout = [
     '[Titolo Pagina]' => 'Login',

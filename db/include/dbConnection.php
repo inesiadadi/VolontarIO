@@ -147,6 +147,27 @@ class DBAccess {
         }
     }
 
+    public function getCandidatureEffettuate($idVolontario) {
+        $this->checkUpdateRequests();
+        $sql = "SELECT R.*, T.nome AS tipologia, C.nome as citta
+                FROM Richiesta R
+                JOIN Tipologia T ON R.idTipo = T.idTipo
+                JOIN Citta C ON R.idCitta = C.idCitta
+                WHERE idRichiedente = ?
+                ORDER BY dataRichiesta DESC";
+        
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bind_param("i", $idVolontario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $richieste = [];
+        while($row = $result->fetch_assoc()) {
+            $richieste[] = $row;
+        }
+        return $richieste;
+    }
+
     public function addRequest() {}
     
     public function addReview() {}

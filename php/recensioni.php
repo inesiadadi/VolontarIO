@@ -1,16 +1,14 @@
 <?php
-require_once('db/include/functions.php');
-require_once('db/include/dbConnection.php');
 
 use DB\DBAccess;
 
-session_start();
+include ('header.php');
 
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
 $id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
 if ($id_utente_target === 0) {
-    header("Location: login.php"); // O redirect alla Home
+    header("Location: /volontario/login"); // O redirect alla Home
     exit;
 }
 
