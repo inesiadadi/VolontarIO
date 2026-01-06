@@ -9,13 +9,12 @@ use DB\DBAccess;
 $connection = new DBAccess();
 
 $html = file_get_contents(realpath(__DIR__ . '/' . '../src/html/login.html'));
-
 if(isset($_SESSION['logged'])) {
         $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
         $html = str_replace('[form]', $already_logged, $html);
 } else {
         $form = "[error_message]
-                    <form id='logForm' action='/login' method='post'>        
+                    <form id='logForm' class='accessForm' action='/login' method='post'>        
                     <label for='username'>Username:</label>
                     <input type='text' name='username' id='username'></input>
                     <label for='password'>Password:</label>
@@ -35,13 +34,13 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
         $result = $connection->loginAccount($username);        
     } else {
         $messaggio = "<p class='error'>I sistemi sono momentamente fuori servizio, ci scusiamo per il disagio.</p>";
-        $html = str_replace('%error_message%', $messaggio, $html);
+        $html = str_replace('[error_message]', $messaggio, $html);
     }
     $connection->closeDBConnection();
 
 if ($connessioneOK && !$result) {
-    $messaggio = "<p class='error'>La password o l'username non sono corretti 1</p>";
-    $html = str_replace('%error_message%', $messaggio, $html);
+    $messaggio = "<p class='error'>La password o l'username non sono corretti</p>";
+    $html = str_replace('[error_message]', $messaggio, $html);
 
 } else {
     $row = $result->fetch_assoc();
