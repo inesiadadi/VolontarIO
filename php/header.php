@@ -19,8 +19,8 @@ if(isset($_SESSION['logged'])) {
     $html_header = str_replace("[accountAccess]", $menu_utente, $html_header);
 } else {
     $bottoni_ospite = "
-        <a href='login.php' class='btn btn-login'>Accedi</a>
-        <a href='register.php' class='btn btn-register'>Registrati</a>";
+        <a href='login.php' class='btnh btn-login-header'>Accedi</a>
+        <a href='register.php' class='btnh btn-register-header'>Registrati</a>";
     $html_header = str_replace("[accountAccess]", $bottoni_ospite, $html_header);
 }
 echo $html_header;
