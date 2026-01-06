@@ -4,8 +4,8 @@ namespace DB;
 class DBAccess {
     private const HOST_DB = "localhost";
     private const DATABASE_NAME = "volontario";
-    private const USERNAME = "user";
-    private const PASSWORD = "user";
+    private const USERNAME = "root";
+    private const PASSWORD = "root";
     private $connection;
 
     public function openDBConnection() {
