@@ -2,7 +2,7 @@
 
 use DB\DBAccess;
 
-include ('header.php');
+include('header.php');
 
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
