@@ -799,7 +799,7 @@ h2 {
 }
 
 /* Landing section */
-#landing button {
+#landing a {
     padding: 0.6rem 1.2rem;
     border-radius: 5px;
     font-weight: bold;
@@ -819,6 +819,7 @@ h2 {
 
 .get-started-btn:hover {
     background-color: var(--dark-green);
+    color: var(--white);
 }
 
 #landing .learn-more-btn {
@@ -827,10 +828,16 @@ h2 {
     border-color: var(--white);
 }
 
-.learn-more-btn:hover {
+#landing .learn-more-btn:hover {
     background-color: var(--white);
     color: var(--dark-green);
 }   
+
+.landing-buttons-wrapper {
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
 
 #landing {
     background: linear-gradient(#00000099, #000000b3), url('../images/background.jpg') center/cover no-repeat;
