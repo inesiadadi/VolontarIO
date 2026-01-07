@@ -5,7 +5,7 @@ class DBAccess {
     private const HOST_DB = "localhost";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
-    private const PASSWORD = "";
+    private const PASSWORD = "root";
     private $connection;
 
     public function openDBConnection() {
@@ -239,7 +239,9 @@ class DBAccess {
             $create_account = $this->connection->prepare("INSERT INTO Persona (username, email, password, nome, cognome, dataNascita) VALUES (?, ?, ?, ?, ?, ?)");
             $create_account->bind_param("ssssss", $username, $email, $password_hashed, $nome, $cognome, $birthdate);
             $create_account->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
-            return true;
+            $id = $this->connection->insert_id;
+            // DA RICORDARE: bisogna avere almeno un user nel database senno' return 0 = false
+            return $id;
         } else {
             return false;
         }

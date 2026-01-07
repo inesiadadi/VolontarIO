@@ -10,7 +10,7 @@
 
 /*  SEZIONE HEADER*/
 
-.site-header { 
+..site-header { 
     flex-wrap: wrap; 
     }
 
@@ -48,6 +48,21 @@
 .menu-icon span:nth-child(3) { 
     bottom: 0px;   
     }
+
+
+#menu-btn {
+    display: block; 
+    position: absolute;
+    opacity: 0; 
+    z-index: -1; 
+
+}
+
+#menu-btn:focus ~ .menu-icon {
+    outline: 2px solid var(--dark-green); 
+    outline-offset: 5px;
+    border-radius: 4px;
+}
 
 #menu-btn:checked ~ .menu-icon span:nth-child(1) { 
     transform: rotate(90deg); top: 13px; width: 30px; left: 3px; 
@@ -152,7 +167,13 @@
     background-color: rgba(0,0,0,0.03); 
     margin-bottom: 2px;
     }
-/*SEZIONE COME_FUNZIONA*/
+/*
+======================================================================================================================================================
+
+SEZIONE COME_FUNZIONA
+
+=======================================================================================================================================================
+*/
 
 .sez1-cf {
     padding: 3rem 1rem 2rem;
