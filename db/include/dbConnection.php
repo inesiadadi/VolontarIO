@@ -5,7 +5,7 @@ class DBAccess {
     private const HOST_DB = "localhost";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
-    private const PASSWORD = "";
+    private const PASSWORD = "root";
     private $connection;
 
     public function openDBConnection() {
@@ -146,7 +146,72 @@ class DBAccess {
             }
         }
     }
+    ##BACHECA##
+    public function accettaRichiesta($idRichiesta, $idOfferente) {
+        $sql = "UPDATE Richiesta 
+                SET idOfferente = ?, stato = 'in_carico' 
+                WHERE codiceRichiesta = ? 
+                AND idRichiedente != ? 
+                AND stato = 'aperta'";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bind_param("iii", $idOfferente, $idRichiesta, $idOfferente);
+        $stmt->execute();
+        return $stmt->affected_rows > 0;
+    }
     
+    public function getRichieste($date = null, $cittaNome = '', $catIds = []) {
+        $sql = "SELECT 
+                    R.codiceRichiesta AS id,
+                    R.descrizione,
+                    R.dataRichiesta AS data_pubblicazione,
+                    R.idRichiedente AS id_utente_creatore,
+                    P.username AS nome_utente,
+                    P.immagine AS foto_utente,
+                    T.nome AS nome_categoria,
+                    C.nome AS nome_citta
+                FROM Richiesta R
+                JOIN Persona P ON R.idRichiedente = P.idPersona
+                JOIN Tipologia T ON R.idTipo = T.idTipo
+                JOIN Citta C ON R.idCitta = C.idCitta
+                WHERE R.stato = 'aperta'";
+        $params = [];
+        $types = "";
+        if (!empty($date)) {
+            $sql .= " AND DATE(R.dataRichiesta) = ?";
+            $types .= "s";
+            $params[] = $date;
+        }
+        if (!empty($cittaNome)) {
+            $sql .= " AND C.nome LIKE ?";
+            $types .= "s";
+            $params[] = "%" . $cittaNome . "%"; 
+        }
+        if (!empty($catIds)) {
+            $placeholders = implode(',', array_fill(0, count($catIds), '?'));
+            
+            $sql .= " AND R.idTipo IN ($placeholders)";
+            $types .= str_repeat('i', count($catIds));
+            
+            foreach ($catIds as $id) {
+                $params[] = $id;
+            }
+        }
+        $sql .= " ORDER BY R.dataRichiesta DESC";
+        $stmt = $this->connection->prepare($sql);
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $richieste = [];
+        while($row = $result->fetch_assoc()) {
+            $row['luogo'] = $row['nome_citta']; 
+            $richieste[] = $row;
+        }
+        return $richieste;
+    }   
     ## FUNZIONI DB ##
 
      public function loginAccount($username) {
@@ -174,7 +239,9 @@ class DBAccess {
             $create_account = $this->connection->prepare("INSERT INTO Persona (username, email, password, nome, cognome, dataNascita) VALUES (?, ?, ?, ?, ?, ?)");
             $create_account->bind_param("ssssss", $username, $email, $password_hashed, $nome, $cognome, $birthdate);
             $create_account->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
-            return true;
+            $id = $this->connection->insert_id;
+            // DA RICORDARE: bisogna avere almeno un user nel database senno' return 0 = false
+            return $id;
         } else {
             return false;
         }
