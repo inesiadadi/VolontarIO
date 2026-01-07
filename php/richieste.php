@@ -3,7 +3,7 @@
 use DB\DBAccess;
 
 include('header.php');
-/*
+
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
 if ($id_visitatore === 0) {
@@ -12,8 +12,9 @@ if ($id_visitatore === 0) {
 }
 
 $id_utente_target = $id_visitatore;
-*/
+
 // Rimuovere queste righe quando funziona il collegamento
+/*
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
 // ID utente target
@@ -22,7 +23,7 @@ if ($id_utente_target === 0) {
     header("Location: /volontario/login");
     exit;
 }
-
+*/
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
