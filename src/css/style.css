@@ -1412,6 +1412,9 @@ color: var(--text-muted);
     margin-bottom: 1em;
 }
 
+#legendForm {
+    text-align: center;
+}
 /* 
    ========================
 
