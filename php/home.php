@@ -19,5 +19,6 @@ foreach($placeholders_layout as $chiave => $valore) {
     $pagina = str_replace($chiave, $valore, $pagina);
 }
 
+
 echo $pagina;
 ?>

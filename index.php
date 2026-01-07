@@ -48,8 +48,16 @@ switch ($path) {
     case '/richieste':
         include ROOT_PATH . '/php/richieste.php';
         break;
-    case '/candidature':
+    
+        case '/candidature':
         include ROOT_PATH . '/php/candidature.php';
+    
+        case '/bacheca':
+        include ROOT_PATH . 'php/bacheca.php';
+        break;
+
+    case '/come-funziona':
+        include ROOT_PATH . 'php/come_funziona.php';
         break;    
 
     default:

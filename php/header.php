@@ -23,8 +23,8 @@ if(isset($_SESSION['logged'])) {
     $header_html = str_replace("[accountAccess]", $menu_utente, $header_html);
 } else {
     $bottoni_ospite = "
-        <a href='/volontario/login' class='btn btn-login'>Accedi</a>
-        <a href='/volontario/register' class='btn btn-register'>Registrati</a>";
+        <a href='/volontario/login' class='btnh btn-login-header'>Accedi</a>
+        <a href='/volontario/register' class='btnh btn-register-header'>Registrati</a>";
     $header_html = str_replace("[accountAccess]", $bottoni_ospite, $header_html);
 }
 ?>
