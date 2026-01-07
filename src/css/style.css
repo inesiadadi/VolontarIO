@@ -16,7 +16,7 @@
 }
 
 html {
-    font-size: 85%;
+    font-size: 100%;
     scroll-behavior: smooth;
 }
 
@@ -28,6 +28,11 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 
@@ -167,6 +172,7 @@ button:focus-visible {
 
 */
 .site-header { 
+    display: flex;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -1393,7 +1399,7 @@ color: var(--text-muted);
     margin-top: 1em;
 }
 
-.accessForm {
+#logForm {
     background: var(--white);
     padding: 30px;
     border-radius: 8px;
@@ -1405,13 +1411,13 @@ color: var(--text-muted);
     margin: 1em;
 }
 
-.accessForm label {
+#logForm label {
     margin-bottom: 8px;
     font-weight: bold;
     color: var(--dark-green);
 }
 
-.accessForm input {
+#logForm input {
     padding: 12px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -1419,7 +1425,7 @@ color: var(--text-muted);
     font-size: 1em;
 }
 
-.accessForm button {
+#logForm button {
     background-color: var(--outline);
     color: var(--white);
     padding: 12px;
@@ -1429,7 +1435,7 @@ color: var(--text-muted);
     cursor: pointer;
 }
 
-.accessForm button:hover {
+#logForm button:hover {
     background-color: var(--deep-green);
 }
 

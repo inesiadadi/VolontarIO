@@ -1,15 +1,12 @@
 <?php
 
-require_once('db/include/functions.php');
-require_once('db/include/dbConnection.php');
-
 include('header.php');
 
 use DB\DBAccess;
 $connection = new DBAccess();
 
 
-$html = file_get_contents(realpath(ROOT_PATH . '/templates/register.html'));
+$html = file_get_contents(ROOT_PATH . '/templates/register.html');
 
 
 if(isset($_SESSION['logged'])) {
@@ -123,9 +120,9 @@ $html = str_replace("[cognome]", $cognome,$html);
 $html = str_replace("[password]", $password,$html);
 $html = str_replace("[pass_again]", $pass_again,$html);
 
-$pagina = file_get_contents('templates/blueprint.html');
+$pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 
-$footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
+$footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 
 $placeholders_layout = [
     '[Titolo Pagina]' => 'Registrazione',

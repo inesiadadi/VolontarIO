@@ -52,8 +52,8 @@ switch ($path) {
         case '/candidature':
         include ROOT_PATH . '/php/candidature.php';
     
-        case '/bacheca':
-        include ROOT_PATH . 'php/bacheca.php';
+        case '/bacheca-richieste':
+        include ROOT_PATH . '/php/bacheca.php';
         break;
 
     case '/come-funziona':

@@ -19,7 +19,7 @@ if(isset($_SESSION['logged'])) {
                     <input type='password' name='password' id='password'></input>
                     <button type='submit'>Accedi</button>
                 </form>
-                <p>Non sei registrato? <a href='/register'>Registrati!</a></p>";
+                <p>Non sei registrato? <a href='/volontario/register'>Registrati!</a></p>";
         $html = str_replace('[form]', $form, $html);
     }
 
