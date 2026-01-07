@@ -12,7 +12,7 @@ $is_logged_in = ($id_utente_loggato > 0);
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    echo file_get_contents('templates/error500.html');
+    echo file_get_contents('src/html/error_500.html');
     exit;
 }
 
@@ -71,12 +71,12 @@ if (!empty($richieste)) {
                 <button type="submit" class="btn-action btn-guest">Accedi per aiutare</button>
             </form>';
         } elseif (isset($req['stato']) && $req['stato'] === 'in_carico' && $req['idOfferente'] == $id_utente_loggato) {
-            $btn_html = '<button class="btn-action btn-booked" disabled>Prenotato!</button>';
+            $btn_html = '<button class="btn-action" disabled>Prenotato!</button>';
         } else {
             $btn_html = '
             <form action="bacheca.php" method="post">
                 <input type="hidden" name="accetta_id" value="' . $req['id'] . '">
-                <button type="submit" class="btn-action btn-volunteer">Offri Aiuto</button>
+                <button type="submit" class="btn-action">Offri Aiuto</button>
             </form>';
         }
         $temp = str_replace('[ActionButton]', $btn_html, $temp);
