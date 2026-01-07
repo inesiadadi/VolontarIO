@@ -1048,6 +1048,9 @@ footer p{
     margin-bottom: 1em;
 }
 
+#legendForm {
+    text-align: center;
+}
 /* 
    ========================
 
