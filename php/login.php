@@ -9,21 +9,27 @@ use DB\DBAccess;
 $connection = new DBAccess();
 
 $html = file_get_contents(realpath(__DIR__ . '/' . '../src/html/login.html'));
+
 if(isset($_SESSION['logged'])) {
-        $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
-        $html = str_replace('[form]', $already_logged, $html);
+    $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
+    $html = str_replace('[form]', $already_logged, $html);
 } else {
-        $form = "[error_message]
-                    <form id='logForm' class='accessForm' action='/login' method='post'>        
-                    <label for='username'>Username:</label>
-                    <input type='text' name='username' id='username'></input>
-                    <label for='password'>Password:</label>
-                    <input type='password' name='password' id='password'></input>
-                    <button type='submit'>Accedi</button>
-                </form>
-                <p>Non sei registrato? <a href='/register'>Registrati!</a></p>";
-        $html = str_replace('[form]', $form, $html);
-    }
+    $form = "
+        [error_message]
+        <form id='logForm' class='accessForm' action='/login' method='post'>
+                <legend id='legendForm'>Accedi al tuo account</legend>
+                <label for='username'><span lang='en'>Username</span>:</label>
+                <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' autocomplete='username'/>
+                <span id='aiuto-username' class='aiuto'>Inserisci il tuo <span lang='en'>username</span></span>
+                <label for='password'><span lang='en'>Password</span>:</label>
+                <input type='password' name='password' id='password' required aria-required='true' aria-describedby='aiuto-password' autocomplete='current-password' />
+                <span id='aiuto-password' class='aiuto'>Inserisci la tua <span lang='en'>password</span></span>
+                <button type='submit'>Accedi</button>
+        </form>
+        <p>Non sei registrato? <a href='/register'>Registrati!</a></p>";
+    
+    $html = str_replace('[form]', $form, $html);
+}
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     $username = $_POST['username'];
@@ -33,13 +39,13 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     if($connessioneOK) {
         $result = $connection->loginAccount($username);        
     } else {
-        $messaggio = "<p class='error'>I sistemi sono momentamente fuori servizio, ci scusiamo per il disagio.</p>";
+        $messaggio = "<div role='alert'><p class='error'>I sistemi sono momentamente fuori servizio, ci scusiamo per il disagio.</p></div>";
         $html = str_replace('[error_message]', $messaggio, $html);
     }
     $connection->closeDBConnection();
 
 if ($connessioneOK && $result === false) {
-    $messaggio = "<p class='error'>La password o l'username non sono corretti</p>";
+    $messaggio = "<div role='alert'><p class='error'>La password o l'username non sono corretti</p></div>";
     $html = str_replace('[error_message]', $messaggio, $html);
 
 } else if ($connessioneOK && $result !== null) {
@@ -55,7 +61,7 @@ if ($connessioneOK && $result === false) {
         header('Location: /');
         exit();
     } else {
-        $messaggio = "<p class='error'>La password o l'username non sono corretti</p>";
+        $messaggio = "<div role='alert'><p class='error'>La password o l'username non sono corretti</p></div>";
         $html = str_replace('[error_message]', $messaggio, $html);
 
     }
