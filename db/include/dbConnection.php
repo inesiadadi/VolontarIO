@@ -5,7 +5,8 @@ class DBAccess {
     private const HOST_DB = "localhost";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
-    private const PASSWORD = "";
+    private const PASSWORD = "root";
+    private const PORT = 8889;
     //private const PASSWORD = "root";
     private $connection;
 
@@ -16,7 +17,9 @@ class DBAccess {
         $this->connection = mysqli_connect(DBAccess::HOST_DB, 
                                            DBAccess::USERNAME, 
                                            DBAccess::PASSWORD, 
-                                           DBAccess::DATABASE_NAME);
+                                           DBAccess::DATABASE_NAME,
+                                           DBAccess::PORT
+        );
         if(mysqli_connect_errno()) return false;
 
         mysqli_set_charset($this->connection, "utf8mb4");

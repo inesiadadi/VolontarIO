@@ -71,7 +71,7 @@ if (!empty($richieste)) {
             $btn_html = '<button class="btn-action" disabled>Prenotato!</button>';
         } else {
             $btn_html = '
-            <form action="/volontario/bacheca" method="post">
+            <form action="/volontario/bacheca-richieste" method="post">
                 <input type="hidden" name="accetta_id" value="' . $req['id'] . '">
                 <button type="submit" class="btn-action">Offri Aiuto</button>
             </form>';
