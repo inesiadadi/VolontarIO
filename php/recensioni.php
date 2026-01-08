@@ -1,16 +1,16 @@
 <?php
-include('header.php');
 
 use DB\DBAccess;
 
+include('header.php');
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
-$id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
-if ($id_utente_target === 0) {
+if ($id_visitatore === 0) {
     header("Location: /volontario/login"); // O redirect alla Home
     exit;
 }
 
+$id_utente_target = $id_visitatore;
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);

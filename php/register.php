@@ -101,7 +101,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             $_SESSION['user_id'] = $result;
             $_SESSION['username'] = $username;
             
-            header('Location: /');
+            header('Location: /volontario/');
             exit();
 
         } else {

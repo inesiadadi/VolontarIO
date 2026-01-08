@@ -144,7 +144,7 @@ class DBAccess {
 
             if ($aggiorna) {
                 $stmt = $this->connection->prepare("UPDATE Richiesta SET stato = ? WHERE codiceRichiesta = ?");
-                $stmt->bind_param("si", $nuovoStato, $rec['codiceRichiesta']);
+                $stmt->bind_param("si", $nuovoStato, $rec['idRichiesta']);
                 $stmt->execute();
                 $stmt->close();
             }
