@@ -15,6 +15,9 @@ $path = rtrim($path, '/');
 if ($path === '') {
     $path = '/';
 }
+if (file_exists(ROOT_PATH . $path) && is_file(ROOT_PATH . $path)) {
+    return false;
+}
 
 switch ($path) {
     case '/':

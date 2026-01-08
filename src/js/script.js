@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('signForm')) {
         initValidations();
@@ -77,7 +75,6 @@ function initValidations() {
     });
 }
 
->>>>>>> origin/dev-aala
 document.addEventListener('DOMContentLoaded', initReviewFilters);
 document.addEventListener('DOMContentLoaded', initRequestFilters);
 
@@ -198,7 +195,7 @@ function applyRequestFilters() {
     const state = getRequestFilterState();
     const cards = getRequestCards();
 
-        let visibleCount = 0;
+    let visibleCount = 0;
 
     cards.forEach(card => {
         const isVisible =
@@ -240,9 +237,6 @@ function updateRequestEmptyState(visibleCount) {
         grid.style.display  = 'grid';
         empty.style.display = 'none';
     }
-<<<<<<< HEAD
-}
-=======
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -279,4 +273,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
->>>>>>> origin/dev-aala
