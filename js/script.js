@@ -1,10 +1,99 @@
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('signForm')) {
         initValidations();
-    }  
+    } 
+    if (document.getElementById('citta-input')) {
+        initCittaAutocomplete();
+    }
 });
 
-// VALIDAZIONE DEL FORM DI REGISTER
+function initCittaAutocomplete() {
+    const input = document.getElementById('citta-input');
+    const lista = document.getElementById('suggerimenti-citta');
+    const hiddenInput = document.getElementById('idCitta-input');
+    let timeout = null;
+    let indexCorrente = -1;
+
+    if (!input) return;
+
+    input.addEventListener('input', function () {
+        clearTimeout(timeout);
+        const termine = this.value.trim();
+        indexCorrente = -1; 
+
+        if (termine.length < 2) {
+            lista.innerHTML = '';
+            lista.style.display = 'none';
+            return;
+        }
+
+        timeout = setTimeout(() => {
+            fetch(`/volontario/db/include/comuni.php?q=${encodeURIComponent(termine)}`)
+                .then(response => response.json())
+                .then(comuni => {
+                    lista.innerHTML = '';
+                    if (comuni.length > 0) {
+                        comuni.forEach((comune) => {
+                            const li = document.createElement('li');
+                            li.textContent = comune.nome;
+                            li.onclick = function() {
+                                input.value = comune.nome;
+                                hiddenInput.value = comune.idCitta;
+                                lista.innerHTML = '';
+                                lista.style.display = 'none';
+                                indexCorrente = -1;
+                            };
+                            lista.appendChild(li);
+                        });
+                        lista.style.display = 'block';
+                    } else {
+                        lista.style.display = 'none';
+                    }
+                });
+        }, 300);
+    });
+
+    input.addEventListener('keydown', function (e) {
+        const items = lista.getElementsByTagName('li');
+        
+        if (lista.style.display === 'block' && items.length > 0) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                indexCorrente = (indexCorrente + 1) % items.length;
+                aggiornaEvidenziato(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                indexCorrente = (indexCorrente - 1 + items.length) % items.length;
+                aggiornaEvidenziato(items);
+            } else if (e.key === 'Enter') {
+                if (indexCorrente > -1) {
+                    e.preventDefault(); // Blocca l'invio del form
+                    items[indexCorrente].click();
+                }
+            }
+        } else if (e.key === 'Enter' && input.value.trim() === '') {
+            // Se preme invio a campo vuoto, evitiamo comportamenti anomali
+            e.preventDefault();
+        }
+    });
+
+    function aggiornaEvidenziato(items) {
+        Array.from(items).forEach((item, i) => {
+            if (i === indexCorrente) {
+                item.classList.add('active');
+                item.scrollIntoView({ block: 'nearest' });
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        if (e.target !== input) {
+            lista.style.display = 'none';
+        }
+    });
+}
 function initValidations() {
     const form = document.getElementById('signForm');
 
@@ -15,6 +104,7 @@ function initValidations() {
         ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
         ['password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Minimo 8 caratteri con almeno una maiuscola e un numero", "Password debole"],
         ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita", "Data non valida"]
+        ['idCitta-input', /^[0-9]+$/, "Seleziona una città valida dalla lista", "Città non valida"]
     ];
 
 

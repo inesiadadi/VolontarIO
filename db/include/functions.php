@@ -1,10 +1,5 @@
 <?php 
 
-// File per la gestione delle funzionalità di PhP
-
-use DB\DBAccess;
-require_once('dbConnection.php');
-
 
 function formatDateItalian($date) {
     // Mappa dei mesi in italiano
@@ -36,5 +31,29 @@ function url(string $path = '', bool $preserveState = false): string {
 
     return BASE_PATH . $path;
 }
+/**
+ * Salva l'immagine nella cartella rinominandola con l'ID utente.
+ * Ritorna il nome del file se caricato, altrimenti null.
+ */
+function aggiungiNuovaImmagineProfilo($file, $idUtente) {
+    $targetDir = __DIR__ . "/../../src/images/uploads/";
+    
+    if (isset($file) && $file['error'] === UPLOAD_ERR_OK) {
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        
+        if ($ext === 'png') {
+            $nuovoNome = $idUtente . ".png";
+            $targetPath = $targetDir . $nuovoNome;
 
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+                return $nuovoNome;
+            }
+        }
+    }
+    return null;
+}
 ?>

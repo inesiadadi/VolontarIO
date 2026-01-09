@@ -76,7 +76,7 @@ if(!empty($resultRec)) {
             // Stato aperto: pulsante disabilitato
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>Rimuovi richiesta</button>',
+                '<button class="profileBtn">Rimuovi richiesta</button>',
                 $temp
             );
         } 

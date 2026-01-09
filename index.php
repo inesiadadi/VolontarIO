@@ -49,16 +49,25 @@ switch ($path) {
         include ROOT_PATH . '/php/richieste.php';
         break;
     
-        case '/candidature':
+    case '/candidature':
         include ROOT_PATH . '/php/candidature.php';
-    
-        case '/bacheca-richieste':
+        break;
+
+    case '/bacheca-richieste':
         include ROOT_PATH . '/php/bacheca.php';
         break;
 
     case '/come-funziona':
-        include ROOT_PATH . 'php/come_funziona.php';
-        break;    
+        include ROOT_PATH . '/php/come_funziona.php';
+        break;   
+
+    case '/nuova-richiesta':
+        include ROOT_PATH . '/php/nuova-richiesta.php';
+        break;  
+    
+    case '/modifica-profilo':
+        include ROOT_PATH . '/php/modificaProfilo.php';
+        break;
 
     default:
         http_response_code(404);

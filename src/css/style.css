@@ -108,7 +108,7 @@ button:focus-visible {
     background-color: var(--deep-green);
     text-decoration: none;
     box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
-    border: 2px solid transparent;
+    border: 2px solid var(--secondary-bg);
     
     transition: all 0.3s ease;
     overflow: hidden;
@@ -1882,6 +1882,61 @@ color: var(--text-muted);
     font-weight: 500;
 }
 
+select#categoria {
+    font-size: 1em;
+    height: 3rem;
+    margin-bottom: 1rem;
+}
+
+textarea#descrizione {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    height: 5rem;
+}
+/* Posizionamento del contenitore */
+.autocomplete-container {
+    position: relative;
+    width: 100%;
+}
+
+/* La lista dei suggerimenti */
+.lista-suggerimenti {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--bg-color, white); /* Usa variabili se le hai, o bianco */
+    color: var(--text-color, black);
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    position: absolute;
+    top: 100%; /* Sotto l'input */
+    left: 0;
+    z-index: 1000;
+}
+
+.lista-suggerimenti li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.lista-suggerimenti li:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+.lista-suggerimenti li.active {
+    background-color: #007bff; /* Blu intenso */
+    color: white;              /* Testo bianco per contrasto */
+    outline: none;
+}
+/* Dark mode manuale se necessario */
+.dark-mode .lista-suggerimenti {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+}
 .noReviewsMsg, .noRequestMsg {
     grid-column: 1 / -1;
     background-color: var(--profile-bg);
@@ -1896,6 +1951,11 @@ color: var(--text-muted);
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+}
+
+#createRequest {
+    height: 3rem;
+    font-size: 1.2rem;
 }
 
 .noReviewsMsg span {
