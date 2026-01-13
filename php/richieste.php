@@ -82,7 +82,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "in_carico") {
             // Stato in carico: pulsante cliccabile verso il profilo dell'offerente
-            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']);
+            $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
@@ -92,7 +92,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "completata") {
             // Stato completata: pulsante cliccabile verso profilo dell'offerente per recensione
-            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']);
+            $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',
