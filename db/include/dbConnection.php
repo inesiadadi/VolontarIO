@@ -5,8 +5,8 @@ class DBAccess {
     private const HOST_DB = "localhost";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
-    private const PASSWORD = "root";
-    private const PORT = 8889;
+    private const PASSWORD = "";
+    private const PORT = 80;
     //private const PASSWORD = "root";
     private $connection;
 

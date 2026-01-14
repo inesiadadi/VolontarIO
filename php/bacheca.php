@@ -64,11 +64,9 @@ if (!empty($richieste)) {
 
         if (!$is_logged_in) {
             $btn_html = '
-            <form action="/volontario/login" method="get">
+            <form action="/volontario/login" method="post">
                 <button type="submit" class="btn-action btn-guest">Accedi per aiutare</button>
             </form>';
-        } elseif (isset($req['stato']) && $req['stato'] === 'in_carico' && $req['idOfferente'] == $id_utente_loggato) {
-            $btn_html = '<button class="btn-action" disabled>Prenotato!</button>';
         } else {
             $btn_html = '
             <form action="/volontario/bacheca-richieste" method="post">
