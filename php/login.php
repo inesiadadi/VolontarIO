@@ -83,7 +83,4 @@ foreach($placeholders_layout as $chiave => $valore) {
 }
 
 echo $pagina;
-
-
-
 ?>

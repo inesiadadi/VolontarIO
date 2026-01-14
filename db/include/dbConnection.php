@@ -2,10 +2,10 @@
 namespace DB;
 
 class DBAccess {
-    private const HOST_DB = "localhost";
+    private const HOST_DB = "127.0.0.1";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
-    private const PASSWORD = "";
+    private const PASSWORD = "root";
     private $connection;
 
     public function openDBConnection() {
