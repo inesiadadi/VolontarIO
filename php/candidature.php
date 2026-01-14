@@ -3,23 +3,17 @@ include('header.php');
 
 use DB\DBAccess;
 
-/*
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
-if ($id_visitatore === 0) {
-    header("Location: /volontario/login"); // O redirect alla Home
+if($id_visitatore === 0) {
+    header('Location: /volontario/login');
     exit;
 }
 
-$id_utente_target = $id_visitatore;
-*/
-// Rimuovere queste righe quando funziona il collegamento
-$id_visitatore = $_SESSION['user_id'] ?? 0;
+$id_utente_target = $_GET['id'] ?? 0;
 
-// ID utente target
-$id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
-if ($id_utente_target === 0) {
-    header("Location: /volontario/login");
+if($id_utente_target === 0 || $id_utente_target != $id_visitatore) {
+    header('Location: /volontario/');
     exit;
 }
 

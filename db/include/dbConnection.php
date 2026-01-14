@@ -2,7 +2,7 @@
 namespace DB;
 
 class DBAccess {
-    private const HOST_DB = "localhost";
+    private const HOST_DB = "127.0.0.1";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
     private const PASSWORD = "root";
@@ -171,10 +171,68 @@ class DBAccess {
         }
         return $richieste;
     }
+        
+    public function getTipologie() {
+        $sql = "SELECT * FROM Tipologia ORDER BY nome ASC";
+        $result = $this->connection->query($sql);
 
-    public function addRequest() {}
+        $categories = [];
+        while($row = $result->fetch_assoc()) {
+            $categories[] = $row;
+        }
+
+        return $categories;
+    }
+
+    public function aggiungiNuovaRichiesta($descrizione, $dataRichiesta, $idRichiedente, $idTipo, $idCitta) {
+        $sql = "INSERT INTO Richiesta (descrizione, dataRichiesta, stato, idRichiedente, idTipo, idCitta, created_at, updated_at) VALUES (?, ?, 'aperta', ?, ?, ?, NOW(), NOW())";
+
+        $query = $this->connection->prepare($sql);
+        $query->bind_param('ssiii', $descrizione, $dataRichiesta, $idRichiedente, $idTipo, $idCitta);
+        if (!$query->execute()) {
+                // Questo ti dirà l'errore esatto del database (es. "Incorrect datetime value")
+                error_log("Errore SQL: " . $this->connection->error);
+                return false;
+        }
+        return true;
+    }
+
+    public function rimuoviRichiesta() {}
     
     public function addReview() {}
+
+    public function modificaProfiloUtente($idPersona, $nome, $cognome, $dataNascita, $descrizione, $immagine, $idCitta, $email, $password) {
+        $sql = "UPDATE Persona 
+                SET nome = ?, 
+                    cognome = ?, 
+                    dataNascita = ?, 
+                    descrizione = ?, 
+                    immagine = ?, 
+                    idCitta = ?, 
+                    email = ?, 
+                    password = ?, 
+                    updated_at = NOW() 
+                WHERE idPersona = ?";
+
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bind_param("sssssissi", 
+            $nome, 
+            $cognome, 
+            $dataNascita, 
+            $descrizione, 
+            $immagine, 
+            $idCitta, 
+            $email, 
+            $password, 
+            $idPersona
+        );
+
+        $successo = $stmt->execute();
+        $stmt->close(); // Buona pratica chiudere lo statement
+        
+        return $successo;
+    }
 
     ##BACHECA##
     public function accettaRichiesta($idRichiesta, $idOfferente) {
@@ -241,7 +299,24 @@ class DBAccess {
             $richieste[] = $row;
         }
         return $richieste;
-    }   
+    }  
+
+    public function getComuniPerRichieste($char) {
+        $ricerca = $char . '%';
+        $query = "SELECT * FROM Citta WHERE nome LIKE ? ORDER BY nome ASC LIMIT 10";
+
+        $sql = $this->connection->prepare($query);
+        $sql->bind_param('s', $ricerca);
+        $sql->execute();
+        $result = $sql->get_result();
+
+        $comuni = [];
+        while($row = $result->fetch_assoc()) {
+            $comuni[] = $row;
+        }
+
+        return $comuni;
+    } 
     ## FUNZIONI DB ##
 
      public function loginAccount($username) {

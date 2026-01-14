@@ -87,5 +87,8 @@ foreach($placeholders_layout as $chiave => $valore) {
 }
 
 echo $pagina;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1c7ae6edc4a4f870862d1798decdc0fbc957911f
 ?>

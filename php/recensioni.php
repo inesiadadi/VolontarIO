@@ -64,7 +64,6 @@ $categorie = file_exists('templates/components/categories.html') ? file_get_cont
 $html_pagina_recensioni = str_replace('[Categorie]', $categorie, $html_pagina_recensioni);
 
 $pagina = file_get_contents('templates/blueprint.html');
-$header_html = file_exists('templates/components/header.html') ? file_get_contents('templates/components/header.html') : '';
 $footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
 
 $placeholders_layout = [

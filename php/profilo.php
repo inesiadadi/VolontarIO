@@ -21,8 +21,6 @@ if (!$dbAccess->openDBConnection()) {
     exit;
 }
 
-
-
 // Ottieni dati utente
 $rowUser = $dbAccess->getUtentePerId($id_utente_target);
 
@@ -40,9 +38,9 @@ $resultRec = $dbAccess->getRecensioniRicevute($id_utente_target);
 $dbAccess->closeDBConnection();
 
 // Prepara dati utente
-$foto_fs = ROOT_PATH . '/src/images/' . ($rowUser['immagine'] ?? '');
+$foto_fs = ROOT_PATH . '/src/images/uploads/' . ($rowUser['immagine'] ?? '');
 $foto_url = (!empty($rowUser['immagine']) && file_exists($foto_fs)) 
-    ? BASE_PATH . '/src/images/' . $rowUser['immagine'] 
+    ? BASE_PATH . '/src/images/uploads/' . $rowUser['immagine'] 
     : BASE_PATH . '/src/images/default.png';
 
 $dati_utente = [
@@ -67,9 +65,9 @@ $descrizione_html = nl2br(htmlspecialchars($dati_utente['descrizione']));
 // Pulsanti Azioni
 $azioni_html = "";
 if ($id_visitatore === $dati_utente['id']) {
-    $azioni_html = '<a href="/volontario/modifica_profilo" class="btn modifyProfile">Modifica Profilo</a>';
+    $azioni_html = '<a href="/volontario/modifica-profilo?id='. $dati_utente['id'] . '" class="btn modifyProfile">Modifica Profilo</a>';
 } else {
-    $azioni_html = '<a href="mailto:"' . $dati_utente['foto'] . ' class="btn contactUser">Contatta Utente</a>';
+    $azioni_html = '<a href="mailto:"' . $dati_utente['email'] . ' class="btn contactUser">Contatta Utente</a>';
 }
 
 // Sezione reputazione
