@@ -1,3 +1,171 @@
+document.addEventListener('DOMContentLoaded', function () {
+    if (document.getElementById('signForm')) {
+        initValidations();
+    }  
+    if (document.getElementById('citta-input')) {
+        initCittaAutocomplete();
+    }
+});
+
+function initCittaAutocomplete() {
+    const input = document.getElementById('citta-input');
+    const lista = document.getElementById('suggerimenti-citta');
+    const hiddenInput = document.getElementById('idCitta-input');
+    let timeout = null;
+    let indexCorrente = -1;
+
+    if (!input) return;
+
+    input.addEventListener('input', function () {
+        clearTimeout(timeout);
+        const termine = this.value.trim();
+        indexCorrente = -1; 
+
+        if (termine.length < 2) {
+            lista.innerHTML = '';
+            lista.style.display = 'none';
+            return;
+        }
+
+        timeout = setTimeout(() => {
+            fetch(`/volontario/db/include/comuni.php?q=${encodeURIComponent(termine)}`)
+                .then(response => response.json())
+                .then(comuni => {
+                    lista.innerHTML = '';
+                    if (comuni.length > 0) {
+                        comuni.forEach((comune) => {
+                            const li = document.createElement('li');
+                            li.textContent = comune.nome;
+                            li.onclick = function() {
+                                input.value = comune.nome;
+                                hiddenInput.value = comune.idCitta;
+                                lista.innerHTML = '';
+                                lista.style.display = 'none';
+                                indexCorrente = -1;
+                            };
+                            lista.appendChild(li);
+                        });
+                        lista.style.display = 'block';
+                    } else {
+                        lista.style.display = 'none';
+                    }
+                });
+        }, 300);
+    });
+
+    input.addEventListener('keydown', function (e) {
+        const items = lista.getElementsByTagName('li');
+        
+        if (lista.style.display === 'block' && items.length > 0) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                indexCorrente = (indexCorrente + 1) % items.length;
+                aggiornaEvidenziato(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                indexCorrente = (indexCorrente - 1 + items.length) % items.length;
+                aggiornaEvidenziato(items);
+            } else if (e.key === 'Enter') {
+                if (indexCorrente > -1) {
+                    e.preventDefault(); // Blocca l'invio del form
+                    items[indexCorrente].click();
+                }
+            }
+        } else if (e.key === 'Enter' && input.value.trim() === '') {
+            // Se preme invio a campo vuoto, evitiamo comportamenti anomali
+            e.preventDefault();
+        }
+    });
+
+    function aggiornaEvidenziato(items) {
+        Array.from(items).forEach((item, i) => {
+            if (i === indexCorrente) {
+                item.classList.add('active');
+                item.scrollIntoView({ block: 'nearest' });
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        if (e.target !== input) {
+            lista.style.display = 'none';
+        }
+    });
+};
+
+// VALIDAZIONE DEL FORM DI REGISTER
+function initValidations() {
+    const form = document.getElementById('signForm');
+
+    const regole = [
+        ['username', /^[a-zA-Z0-9_]{4,20}$/, "4-20 caratteri (lettere, numeri, underscore)", "Username non valido"],
+        ['email', /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
+        ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
+        ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
+        ['password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Minimo 8 caratteri con almeno una maiuscola e un numero", "Password debole"],
+        ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita", "Data non valida"]
+    ];
+
+
+    function validaCampo(id, regex, testoAiuto, testoErrore) {
+        const input = document.getElementById(id);
+        const span = document.getElementById('aiuto-' + id);
+    
+        if (input.value === "") {
+            span.textContent = testoAiuto;
+            span.className="aiuto";
+            input.classList.remove("input-error");
+        } else if (!regex.test(input.value)) {
+            span.textContent = testoErrore;
+            span.className = "aiuto error";
+            input.classList.add("input-error");
+        } else {
+            // Stato Valido
+            span.textContent = "";
+            span.className = ""; 
+            input.classList.remove("input-error");
+        }
+    }
+
+    regole.forEach(([id, regex, aiuto, errore]) => {
+        const input = document.getElementById(id);
+        if (input) {
+            validaCampo(id, regex, aiuto, errore);
+            input.addEventListener('input', () => validaCampo(id, regex, aiuto, errore));
+        }
+    });
+
+    const p2 = document.getElementById('pass_again');
+    const spanP2 = document.getElementById('aiuto-pass_again');
+    if (p2 && spanP2) {
+        p2.addEventListener('input', function() {
+            const p1 = document.getElementById('password');
+            if (this.value === "") {
+                spanP2.textContent = "Ripeti la password scelta";
+                spanP2.className = "aiuto";
+            } else if (this.value !== p1.value) {
+                p2.classList.add("input-error");
+                spanP2.textContent = "Le password non coincidono";
+                spanP2.className = "aiuto error";
+            } else {
+                p2.classList.remove("input-error");
+                spanP2.className = "";
+                spanP2.textContent = "";
+
+            }
+        });
+    }
+
+    form.addEventListener('submit', function(e) {
+        regole.forEach(campo => validaCampo(campo[0], campo[1], campo[2], campo[3], campo[4], campo[5]));
+        if (document.querySelectorAll('.aiuto.errore').length > 0) {
+            e.preventDefault();
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', initReviewFilters);
 document.addEventListener('DOMContentLoaded', initRequestFilters);
 
@@ -118,7 +286,7 @@ function applyRequestFilters() {
     const state = getRequestFilterState();
     const cards = getRequestCards();
 
-        let visibleCount = 0;
+    let visibleCount = 0;
 
     cards.forEach(card => {
         const isVisible =
@@ -161,3 +329,38 @@ function updateRequestEmptyState(visibleCount) {
         empty.style.display = 'none';
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    //GESTIONE MENU HAMBURGER
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuWrapper = document.getElementById('menuWrapper');
+
+    if (hamburgerBtn && menuWrapper) {
+        hamburgerBtn.addEventListener('click', () => {
+            menuWrapper.classList.toggle('active');
+
+            hamburgerBtn.classList.toggle('open');
+        });
+    }
+
+    //GESTIONE DARK MODE
+    const themeBtn = document.getElementById('themeBtn');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+    }
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+});

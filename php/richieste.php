@@ -1,10 +1,9 @@
 <?php
 
-
 use DB\DBAccess;
 
 include('header.php');
-/*
+
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
 if ($id_visitatore === 0) {
@@ -13,8 +12,9 @@ if ($id_visitatore === 0) {
 }
 
 $id_utente_target = $id_visitatore;
-*/
+
 // Rimuovere queste righe quando funziona il collegamento
+/*
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
 // ID utente target
@@ -23,7 +23,7 @@ if ($id_utente_target === 0) {
     header("Location: /volontario/login");
     exit;
 }
-
+*/
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
@@ -76,13 +76,13 @@ if(!empty($resultRec)) {
             // Stato aperto: pulsante disabilitato
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>Rimuovi richiesta</button>',
+                '<button class="profileBtn">Rimuovi richiesta</button>',
                 $temp
             );
         } 
         else if ($rec['stato'] == "in_carico") {
             // Stato in carico: pulsante cliccabile verso il profilo dell'offerente
-            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']);
+            $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
@@ -92,7 +92,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "completata") {
             // Stato completata: pulsante cliccabile verso profilo dell'offerente per recensione
-            $profiloUrl = "/volontario/profilo?id=" . urlencode($rec['idOfferente']);
+            $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',

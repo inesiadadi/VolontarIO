@@ -1,30 +1,24 @@
 <?php
-// Percorso base URL per il browser
-define('BASE_PATH', '/volontario'); // Modifica se cambi la cartella del progetto
-
-// Percorso root filesystem per includere file senza dipendere dal file corrente
+define('BASE_PATH', '/volontario');
 define('ROOT_PATH', __DIR__);
 
-// Include funzioni helper (contiene url(), formatDateItalian, ecc.)
 require_once ROOT_PATH . '/db/include/functions.php';
 
-// Prende la parte di URL dopo il dominio
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Rimuove BASE_PATH se presente (utile se il progetto è in sottocartella)
 if (BASE_PATH !== '/' && strpos($path, BASE_PATH) === 0) {
     $path = substr($path, strlen(BASE_PATH));
 }
 
-// Normalizza: rimuove slash finali
 $path = rtrim($path, '/');
 
-// Se è vuoto, diventa "/"
 if ($path === '') {
     $path = '/';
 }
-// Router funziona a metà, da mettere apposto quando si capirà meglio come funziona il server tecweb
-// GRANDISSIMO problema di sicurezza (Si puo' scaricare qualsiasi file della cartella, da capire come far funzionare tutto cio' con .htaccess)
+if (file_exists(ROOT_PATH . $path) && is_file(ROOT_PATH . $path)) {
+    return false;
+}
+
 switch ($path) {
     case '/':
         include ROOT_PATH . '/php/home.php';
@@ -57,9 +51,26 @@ switch ($path) {
     case '/richieste':
         include ROOT_PATH . '/php/richieste.php';
         break;
+    
     case '/candidature':
         include ROOT_PATH . '/php/candidature.php';
-        break;    
+        break;
+
+    case '/bacheca-richieste':
+        include ROOT_PATH . '/php/bacheca.php';
+        break;
+
+    case '/come-funziona':
+        include ROOT_PATH . '/php/come_funziona.php';
+        break;   
+
+    case '/nuova-richiesta':
+        include ROOT_PATH . '/php/nuova-richiesta.php';
+        break;  
+    
+    case '/modifica-profilo':
+        include ROOT_PATH . '/php/modificaProfilo.php';
+        break;
 
     default:
         http_response_code(404);

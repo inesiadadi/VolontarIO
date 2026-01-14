@@ -1,48 +1,60 @@
 <?php
 
-require_once('db/include/functions.php');
-require_once('db/include/dbConnection.php');
-
 include('header.php');
 
 use DB\DBAccess;
 $connection = new DBAccess();
 
 
-$html = file_get_contents(realpath(ROOT_PATH . '/templates/register.html'));
+$html = file_get_contents(ROOT_PATH . '/templates/register.html');
 
 
 if(isset($_SESSION['logged'])) {
     $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
     $html = str_replace('[form]', $already_logged, $html);
 } else {
-    $form = "    [error_message]
-    <form id='logForm' action='/volontario/register' method='post'>
+    $form = " <div id='error'>[error_message]</div>
+                <form class='accessForm' id='signForm' action='/volontario/register' method='post'>
+                    <legend id='legendForm'>Registra un account</legend>
                     <label for='username'>Username:</label>
-                    <input type='text' name='username' id='username' required value='[username]'></input>
+                    <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' value='[username]'></input>
+                    <span id='aiuto-username' class='aiuto'></span>
+
 
                     <label for='email'>Email:</label>
-                    <input type='email' name='email' id='email' required value='[email]'></input>                  
-                    
-                    <label for='birthdate'>Data di nascita:</label>
-                    <input type='date' name='dataNascita' id='dataNascita' required value='[dataNascita]'></input>
+                    <input type='email' name='email' id='email' required aria-required='true' aria-describedby='aiuto-email' value='[email]'></input>                  
+                    <span id='aiuto-email' class='aiuto'></span>
+
+
+                    <label for='dataNascita'>Data di nascita:</label>
+                    <input type='date' name='dataNascita' id='dataNascita' required aria-required='true' aria-describedby='aiuto-dataNascita' value='[dataNascita]'></input>
+                    <span id='aiuto-dataNascita' class='aiuto'></span>
 
                     
                     <label for='nome'>Nome:</label>
-                    <input type='text' name='nome' id='nome' required value='[nome]'></input>
-                    
-                    <label for='cognome'>Cognome:</label>
-                    <input type='text' name='cognome' id='cognome' required value='[cognome]'></input>
+                    <input type='text' name='nome' id='nome' required aria-required='true' aria-describedby='aiuto-nome' value='[nome]'></input>
+                    <span id='aiuto-nome' class='aiuto'>A</span>
 
-                    <label for='password'>Passowrd:</label>
-                    <input type='password' name='password' id='password' required value='[password]'></input>
+
+                    <label for='cognome'>Cognome:</label>
+                    <input type='text' name='cognome' id='cognome' required aria-required='true' aria-describedby='aiuto-cognome' value='[cognome]'></input>
+                    <span id='aiuto-cognome' class='aiuto'></span>
+
+
+                    <label for='password'>Password:</label>
+                    <input type='password' name='password' id='password' required aria-required='true' aria-describedby='aiuto-password' value='[password]'></input>
+                    <span id='aiuto-password' class='aiuto'></span>
+
+
                     <label for='pass_again'>Ripeti la password:</label>
-                    <input type='password' name='pass_again' id='pass_again' required value='[pass_again]'></input>
+                    <input type='password' name='pass_again' id='pass_again' required aria-required='true' aria-describedby='aiuto-pass_again' value='[pass_again]'></input>
+                    <span id='aiuto-pass_again' class=''></span>
+
+
                     <button type='submit'>Registrati</button>
                 </form>
                 <p>Sei già registrato? Vai direttamente alla <a href='/volontario/login'>pagina di connessione</a></p>";
         $html = str_replace('[form]', $form, $html);
-
     }
 
     $username = "";
@@ -86,10 +98,10 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             // Inizio della sessione, da vedere meglio ancora
             session_start();
             $_SESSION['logged'] = true;
-            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['user_id'] = $result;
             $_SESSION['username'] = $username;
             
-            header('Location: /');
+            header('Location: /volontario/');
             exit();
 
         } else {
@@ -108,9 +120,9 @@ $html = str_replace("[cognome]", $cognome,$html);
 $html = str_replace("[password]", $password,$html);
 $html = str_replace("[pass_again]", $pass_again,$html);
 
-$pagina = file_get_contents('templates/blueprint.html');
+$pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 
-$footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
+$footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 
 $placeholders_layout = [
     '[Titolo Pagina]' => 'Registrazione',

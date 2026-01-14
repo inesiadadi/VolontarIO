@@ -2,16 +2,15 @@
 
 use DB\DBAccess;
 
-include ('header.php');
-
+include('header.php');
 $id_visitatore = $_SESSION['user_id'] ?? 0;
 
-$id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
-if ($id_utente_target === 0) {
+if ($id_visitatore === 0) {
     header("Location: /volontario/login"); // O redirect alla Home
     exit;
 }
 
+$id_utente_target = $id_visitatore;
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
@@ -65,7 +64,6 @@ $categorie = file_exists('templates/components/categories.html') ? file_get_cont
 $html_pagina_recensioni = str_replace('[Categorie]', $categorie, $html_pagina_recensioni);
 
 $pagina = file_get_contents('templates/blueprint.html');
-$header_html = file_exists('templates/components/header.html') ? file_get_contents('templates/components/header.html') : '';
 $footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
 
 $placeholders_layout = [

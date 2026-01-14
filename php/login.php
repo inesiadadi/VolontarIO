@@ -6,41 +6,45 @@ use DB\DBAccess;
 $connection = new DBAccess();
 
 $html = file_get_contents(ROOT_PATH . '/templates/login.html');
-
 if(isset($_SESSION['logged'])) {
-        $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
-        $html = str_replace('[form]', $already_logged, $html);
+    $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
+    $html = str_replace('[form]', $already_logged, $html);
 } else {
-        $form = "[error_message]
-                    <form id='logForm' action='/volontario/login' method='post'>        
-                    <label for='username'>Username:</label>
-                    <input type='text' name='username' id='username'></input>
-                    <label for='password'>Password:</label>
-                    <input type='password' name='password' id='password'></input>
-                    <button type='submit'>Accedi</button>
-                </form>
-                <p>Non sei registrato? <a href='/register'>Registrati!</a></p>";
+    $form = "
+        [error_message]
+        <form id='logForm' class='accessForm' action='/volontario/login' method='post'>
+                <legend id='legendForm'>Accedi al tuo account</legend>
+                <label for='username'><span lang='en'>Username</span>:</label>
+                <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' autocomplete='username'/>
+                <span id='aiuto-username' class='aiuto'>Inserisci il tuo <span lang='en'>username</span></span>
+                <label for='password'><span lang='en'>Password</span>:</label>
+                <input type='password' name='password' id='password' required aria-required='true' aria-describedby='aiuto-password' autocomplete='current-password' />
+                <span id='aiuto-password' class='aiuto'>Inserisci la tua <span lang='en'>password</span></span>
+                <button type='submit'>Accedi</button>
+        </form>
+        <p>Non sei registrato? <a href='/volontario/register'>Registrati!</a></p>";
+    
         $html = str_replace('[form]', $form, $html);
     }
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $result = "";
+    $result = null;
     $connessioneOK = $connection->openDBConnection();
     if($connessioneOK) {
         $result = $connection->loginAccount($username);        
     } else {
-        $messaggio = "<p class='error'>I sistemi sono momentamente fuori servizio, ci scusiamo per il disagio.</p>";
-        $html = str_replace('%error_message%', $messaggio, $html);
+        $messaggio = "<div role='alert'><p class='error'>I sistemi sono momentamente fuori servizio, ci scusiamo per il disagio.</p></div>";
+        $html = str_replace('[error_message]', $messaggio, $html);
     }
     $connection->closeDBConnection();
 
-if ($connessioneOK && !$result) {
-    $messaggio = "<p class='error'>La password o l'username non sono corretti 1</p>";
-    $html = str_replace('%error_message%', $messaggio, $html);
+if ($connessioneOK && $result === false) {
+    $messaggio = "<div role='alert'><p class='error'>La password o l'username non sono corretti</p></div>";
+    $html = str_replace('[error_message]', $messaggio, $html);
 
-} else {
+} else if ($connessioneOK && $result !== null) {
     $row = $result->fetch_assoc();
     if(password_verify($password, $row['password'])) {
 
@@ -53,7 +57,7 @@ if ($connessioneOK && !$result) {
         header('Location: /volontario');
         exit();
     } else {
-        $messaggio = "<p class='error'>La password o l'username non sono corretti</p>";
+        $messaggio = "<div role='alert'><p class='error'>La password o l'username non sono corretti</p></div>";
         $html = str_replace('[error_message]', $messaggio, $html);
 
     }
@@ -83,4 +87,8 @@ foreach($placeholders_layout as $chiave => $valore) {
 }
 
 echo $pagina;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1c7ae6edc4a4f870862d1798decdc0fbc957911f
 ?>
