@@ -2,41 +2,38 @@
     <nav id="breadcrumb" aria-label="Percorso attuale del sito">
         <ul>
         <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
-        <li>Bacheca</li>
+        <li aria-current="page">Bacheca</li>
         </ul>
     </nav>
     <div class="container-requests">
-    <h1 id="accountTitle">La Bacheca</h1>
+        <h1 id="accountTitle">La Bacheca</h1>
         <div class="requests-layout-wrapper">
-        <aside class="filters-sidebar">
-            <div class="filter-header">
-                <h3>Filtra Richieste</h3>
-                <button type="reset" class="btn reset-link">Reset</button>
-            </div>
-            
-            <form action="/volontario/bacheca-richieste" method="get" class="filter-form">
-                <div class="form-group">
-                    <label for="filter-date">Data</label>
-                    <input type="date" id="filter-date" name="date" value="[ValoreData]">
-                </div>
+            <aside class="filters-sidebar">
+                <form action="/volontario/bacheca-richieste" method="get" class="filter-form">
+                    <div class="filter-header">
+                        <h3>Filtra Richieste</h3>
+                        <a href="/volontario/bacheca-richieste" class="btn reset-link">Reset</a>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-date">Data</label>
+                        <input type="date" id="filter-date" name="date" value="[ValoreData]">
+                    </div>
 
-                <div class="form-group">
-                    <label for="filter-city">Città</label>
-                    <input type="text" id="filter-city" name="city" placeholder="Es. Milano, Roma..." class="form-control"  value="[ValoreCitta]">
-                </div>
-                [CheckboxesCategorie]
+                    <div class="form-group">
+                        <label for="filter-city">Città</label>
+                        <input type="text" id="filter-city" name="city" placeholder="Es. Milano, Roma..." class="form-control"  value="[ValoreCitta]">
+                    </div>
+                    [CheckboxesCategorie]
 
-                <button type="submit" class="btn register full-width">Applica Filtri</button>
-            </form>
-        </aside>
+                    <button type="submit" class="btn apply-filters full-width">Applica Filtri</button>
+                </form>
+            </aside>
 
+            <div class="requests-list" aria-label="Lista delle richieste">
+                [ListaRichieste]
 
-        <div class="requests-list">
-
-            [ListaRichieste]
-
+                [MessaggioVuoto]
             </div> 
-        </div> 
-        [MessaggioVuoto]
+        </div>
     </div>
 </main>
