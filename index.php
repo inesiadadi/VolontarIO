@@ -63,6 +63,9 @@ switch ($path) {
         include ROOT_PATH . '/php/bacheca.php';
         break;
 
+    case '/pannello':
+        include ROOT_PATH . '/php/pannello.php';
+        break;
     default:
         http_response_code(404);
         include ROOT_PATH . '/php/error_404.php';

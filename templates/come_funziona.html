@@ -1,4 +1,11 @@
+<nav id="breadcrumb" aria-label="Percorso attuale del sito">
+        <ul>
+            <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
+            <li>Come funziona</li>
+        </ul>
+</nav>
 <main id="content">
+        [formMessage]
         <section class="sez1-cf" aria-labelledby="intestazione-come-funziona">
             <h1 class="accountTitle" id="intestazione-come-funziona">Come funziona</h1>
             <p>In questa pagina troverai tutte le informazioni su come utilizzare volontarIO: come registrarti, come inviare una richiesta di aiuto e come offrire il tuo supporto ad altri utenti. Ti guideremo passo dopo passo per permetterti di usare la piattaforma in modo semplice e immediato.</p>   
@@ -74,7 +81,7 @@
 
     <p>Hai dubbi o domande? Compila il form e mettiti in contatto con noi.</p>
     
-    <form action="" method="post" class="contact-form">
+    <form action="/volontario/come-funziona" method="post" class="contact-form">
         <fieldset class="form-cf">
             <legend class="legend-cont">Modulo di contatto</legend>
 
@@ -82,18 +89,18 @@
                 
                 <div class="form-input">
                     <label for="nome_cognome">Inserisci nome e cognome</label> 
-                    <input type="text" class="input-cf" id="nome_cognome" name="nome_cognome" autocomplete="name" required aria-required="true">
+                    <input type="text" class="input-cf" id="nome_cognome" name="nome_cognome" autocomplete="name" required aria-required="true" value="[nome_cognome]">
                     
                     <label for="email">Inserisci email</label> 
-                    <input type="email" class="input-cf" id="email" name="email" autocomplete="email" required aria-required="true">
+                    <input type="email" class="input-cf" id="email" name="email" autocomplete="email" required aria-required="true" value="[email]">
                     
                     <label for="tel">Inserisci numero di telefono</label> 
-                    <input type="tel" class="input-cf" id="tel" name="tel" autocomplete="tel">
+                    <input type="tel" class="input-cf" id="tel" name="tel" autocomplete="tel" value="[tel]">
                 </div>
 
                 <div class="form-textarea">
                     <label for="descrizione">Inserisci il messaggio qui</label>
-                    <textarea id="descrizione" class="textarea-cf" name="descrizione" rows="5" required aria-required="true"></textarea> 
+                    <textarea id="descrizione" class="textarea-cf" name="descrizione" rows="5" required aria-required="true" value="[messaggio]"></textarea> 
                 </div>
             </div > 
 

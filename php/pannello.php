@@ -1,0 +1,117 @@
+<?php
+
+use DB\DBAccess;
+
+include('header.php');
+$id_visitatore = $_SESSION['user_id'] ?? 0;
+
+if ($id_visitatore === 0) {
+    header("Location: /volontario/login"); // O redirect alla Home
+    exit;
+} else if($_SESSION['role'] == "user") {
+    header("Location: /volontario/");
+    exit;
+}
+
+// Connessione DB
+$dbAccess = new DBAccess();
+if (!$dbAccess->openDBConnection()) {
+    http_response_code(500);
+    include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
+    exit;
+}
+
+$html = file_get_contents(ROOT_PATH . '/templates/pannello.html');
+$table = "";
+
+$connessioneOK = $dbAccess->openDBConnection();
+
+if($connessioneOK) {
+    if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
+        $id = $_POST["id"];
+        $dbAccess->deleteMessaggio($id);
+        header("Location: /volontario/pannello");
+        exit;
+    }
+    $result = $dbAccess->getMessaggi();
+    if($result === false) {
+        $table = "
+        <div class='noReviewsMsg'>
+        <span aria-hidden='true'>🌱</span>
+        <p>Non ci sono richieste d'assistenza</p>
+        </div>
+        ";
+    } else {
+        $table = '<table class="contact-table">
+                <caption>Lista richieste di assistenza</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Messaggio</th>
+                        <th scope="col">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>';
+        while($row = $result->fetch_assoc()) {
+            $nome_cognome = htmlspecialchars($row['nome_cognome']);
+            $email = htmlspecialchars($row['email']);
+            $numero = htmlspecialchars($row['numero']);
+            $messaggio = nl2br(htmlspecialchars($row['messaggio']));
+            if($numero == 0) {
+                $numero = "Nessun numero";
+            }
+            $id = $row['id'];
+
+            $table .= '<tr>
+                    <th scope="row">' . $nome_cognome . '</th>
+                    <td>' . $email . '</td>
+                    <td>' . $numero . '</td>
+                    <td><div class="message-cell-content">'. $messaggio . '</div></td>
+                    <td>
+                        <div class="actions">
+                            <a href="mailto:' . $email . '?subject=Risposta assistenza VolontarIO" 
+                               class="btnh btn-login-header" title="Rispondi via email">
+                               <span aria-hidden="true">✉️</span> Rispondi
+                            </a>
+
+                            <form action="/volontario/pannello" method="POST">
+                                <input type="hidden" name="id" value="' . $id . '">
+                                <button type="submit" name="delete_btn" class="btnh btn-register-header">
+                                    <span aria-hidden="true">🗑️</span> Elimina
+                                </button>
+                            </form>
+                        </div>
+                    </td>   
+                  </tr>';
+        }
+        $table .= '</tbody></table>';
+    }
+} else {
+    # Errore da fare
+}
+
+$html = str_replace("[table]", $table,$html);
+
+// Layout generale
+$pagina = file_get_contents(realpath(__DIR__ . '/' . '../templates/blueprint.html'));
+$footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
+
+$placeholders_layout = [
+    '[Titolo Pagina]' => 'Pannello amministratore',
+    '[Description]'   => "Visualizza i messaggi d'assistenza degli utenti di VolontarIO",
+    '[Keywords]'      => 'volontariato, profilo, assistenza, pannello',
+    '[pageNameId]'    => 'pannelPage',
+    '[onload]'        => '',
+    '[Header]'        => $header_html,
+    '[Footer]'        => $footer_html,
+    '[MainContent]'   => $html
+];
+
+foreach ($placeholders_layout as $chiave => $valore) {
+    $pagina = str_replace($chiave, $valore, $pagina);
+}
+
+echo $pagina;
+?>
