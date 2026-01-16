@@ -6,7 +6,7 @@ class DBAccess {
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
     private const PASSWORD = "";
-    private const PORT = 80;
+    //private const PORT = 80;
     //private const PASSWORD = "root";
     private $connection;
 
@@ -18,7 +18,7 @@ class DBAccess {
                                            DBAccess::USERNAME, 
                                            DBAccess::PASSWORD, 
                                            DBAccess::DATABASE_NAME,
-                                           DBAccess::PORT
+                                           //DBAccess::PORT
         );
         if(mysqli_connect_errno()) return false;
 
