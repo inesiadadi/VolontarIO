@@ -65,13 +65,13 @@ if (!empty($richieste)) {
         if (!$is_logged_in) {
             $btn_html = '
             <form action="/volontario/login" method="post">
-                <button type="submit" class="btn-action btn-guest">Accedi per aiutare</button>
+                <button type="submit" class="btn-action btn-guest" aria-label="Accedi per aiutare">Accedi per aiutare</button>
             </form>';
         } else {
             $btn_html = '
             <form action="/volontario/bacheca-richieste" method="post">
                 <input type="hidden" name="accetta_id" value="' . $req['id'] . '">
-                <button type="submit" class="btn-action">Offri Aiuto</button>
+                <button type="submit" class="btn-action" aria-label="Accetta la richiesta di ' . $req['nome_utente'] . '">Offri Aiuto</button>
             </form>';
         }
         $temp = str_replace('[ActionButton]', $btn_html, $temp);
