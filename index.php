@@ -63,6 +63,18 @@ switch ($path) {
         include ROOT_PATH . '/php/bacheca.php';
         break;
 
+    case '/come-funziona':
+        include ROOT_PATH . '/php/come_funziona.php';
+        break;   
+
+    case '/nuova-richiesta':
+        include ROOT_PATH . '/php/nuova-richiesta.php';
+        break;  
+    
+    case '/modifica-profilo':
+        include ROOT_PATH . '/php/modificaProfilo.php';
+        break;
+
     case '/pannello':
         include ROOT_PATH . '/php/pannello.php';
         break;
@@ -71,3 +83,4 @@ switch ($path) {
         include ROOT_PATH . '/php/error_404.php';
         break;
 }
+?>
