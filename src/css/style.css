@@ -208,7 +208,7 @@ button:focus-visible {
     font-size: 2rem; 
     color: var(--dark-green); 
     margin: 0; 
-    font-weight: 700; 
+    font-weight: 700;
 }
 
 #menuWrapper {
@@ -910,8 +910,8 @@ img {
   border-radius: 1em;
   padding: 0.5rem 1.5rem;   
   display: block;           
-  width: fit-content;       
-  margin: 7rem auto 1rem auto;     
+  width: fit-content; 
+  margin: 2rem auto 1rem auto;     
   border: 1px solid var(--secondary-bg);
 }
 
@@ -934,6 +934,7 @@ img {
 #breadcrumb li  {
   color: var(--separator);
   font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 /* Landing section */
@@ -1022,6 +1023,9 @@ img {
     max-width: 600px;
 }
 
+.info-section h2, .features h2, .team-section h2{
+    text-align: center;
+}
 /*Info section */
 .info-section {
     padding: 5rem 2rem;
@@ -1065,7 +1069,7 @@ img {
     border-color: var(--main-bg);
 }
 
-.stat-number {
+.stat-number[aria-hidden="true"]{
     display: block;
     font-size: 3rem;
     font-weight: 800;
@@ -1223,9 +1227,8 @@ img {
     line-height: 1.5;
 }
 
-/*request page*/
 /* =========================================
-   RICHIESTE
+   PAGINA RICHIESTE
    ========================================= */
 #accountTitle {
     font-size: 3.5rem;
@@ -1273,7 +1276,7 @@ img {
     color: var(--main-text);
 }
 
-.filters-sidebar button, .requests-list button {
+.filters-sidebar button, .requests-list button, .requests-list a {
     padding: 0.6rem 1.2rem;
     border-radius: 1rem;
     font-weight: bold;
@@ -1291,7 +1294,7 @@ img {
     background: none;
     border: none;
     font-weight: 400;
-    color: var(--warm-gray);
+    color: var(--text-muted);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -1325,6 +1328,10 @@ img {
     border-radius: 6px;
     font-family: inherit;
     background-color: var(--main-bg);
+}
+/*finche non corrispondono le dimensioni del testo*/
+.filters-sidebar .lista-suggerimenti li{
+    font-size: 1rem;
 }
 
 .category-group {
@@ -1451,6 +1458,21 @@ align-items: center;
     justify-content: center;
     color: var(--white);
     background-color: var(--dark-green);
+}
+.no-request-msg {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    text-align: center;
+    min-height: 50vh;
+    width: 100%;
+    grid-column: 1 / -1;
+}
+.no-request-msg span {
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
 .visually-hidden {
