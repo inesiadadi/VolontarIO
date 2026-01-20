@@ -17,12 +17,12 @@ if($id_utente_target != $id_visitatore) {
 }
 
 $dbAccess = new DBAccess();
-
-if(!$dbAccess->openDBConnection()) {
+if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    include ROOT_PATH . '/php/error_500.php';
+    header('Location: error_500.php');
     exit;
 }
+
 $utente = $dbAccess->getUtentePerId($id_utente_target);
 $dbAccess->closeDBConnection();
 

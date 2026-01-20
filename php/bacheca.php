@@ -9,7 +9,7 @@ $is_logged_in = ($id_utente_loggato > 0);
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    echo file_get_contents(ROOT_PATH . '/templates/components/error_500.html');
+    header('Location: error_500.php');
     exit;
 }
 

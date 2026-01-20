@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll('.starsColor[data-percentuale]');
+    stars.forEach(star => {
+        // Legge il dato dall'HTML e lo applica come variabile CSS
+        star.style.setProperty('--percentuale', star.dataset.percentuale);
+    });
+});
+
 function initCittaAutocomplete() {
     const input = document.getElementById('citta-input');
     const lista = document.getElementById('suggerimenti-citta');
