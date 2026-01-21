@@ -1486,6 +1486,8 @@ align-items: center;
     white-space: nowrap;
     border: 0;
 }
+
+
 /* 
    ========================
 
@@ -1983,44 +1985,51 @@ textarea#descrizione {
 }
 /* Posizionamento del contenitore */
 .autocomplete-container {
-    position: relative;
-    width: 100%;
+    position: relative; /* necessario per posizionare il menu sotto l'input */
 }
 
-/* La lista dei suggerimenti */
-.lista-suggerimenti {
+#suggerimenti-citta {
     list-style: none;
     padding: 0;
-    margin: 0;
-    background-color: var(--bg-color, white); /* Usa variabili se le hai, o bianco */
-    color: var(--text-color, black);
+    margin: 4px 0 0 0;
+    background-color: #fff;
+    color: #000;
     border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
+    border-radius: 4px;
+    max-height: 200px;           /* mostra massimo tot voci */
     width: 100%;
+    overflow-y: auto;            /* scroll se troppe voci */
     position: absolute;
-    top: 100%; /* Sotto l'input */
+    top: 100%;                   /* subito sotto l'input */
     left: 0;
     z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: block;               /* rimane block, il JS gestisce hidden */
 }
 
-.lista-suggerimenti li {
-    padding: 10px;
+#suggerimenti-citta li {
+    padding: 8px 12px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.2s;
 }
 
-.lista-suggerimenti li:hover {
-    background-color: #f0f0f0;
-    color: #000;
+#suggerimenti-citta li:hover {
+    background-color: #e6f0ff;
 }
-.lista-suggerimenti li.active {
-    background-color: #007bff; /* Blu intenso */
-    color: white;              /* Testo bianco per contrasto */
-    outline: none;
+
+#suggerimenti-citta li.active {
+    background-color: #007bff;
+    color: white;
 }
+
+
+
 /* Dark mode manuale se necessario */
-.dark-mode .lista-suggerimenti {
+.dark-mode #suggerimenti-citta {
     background-color: #333;
     color: #fff;
     border-color: #555;
@@ -2189,6 +2198,19 @@ textarea#descrizione {
 
 .profileBtn:active {
     background-color: #032a13; /* scuro al click */
+}
+
+/* Nasconde alla vista ma lascia leggere allo Screen Reader */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media (max-width: 900px) {

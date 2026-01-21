@@ -9,7 +9,7 @@ $is_logged_in = ($id_utente_loggato > 0);
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    echo file_get_contents(ROOT_PATH . '/templates/components/error_500.html');
+    header('Location: error_500.php');
     exit;
 }
 
@@ -64,6 +64,10 @@ if (!empty($richieste)) {
 
         if (!$is_logged_in) {
             $btn_html = '<a href="/volontario/login" class="btn-action" aria-label="Accedi per aiutare">Accedi per aiutare</a>';
+            $btn_html = '
+            <form action="/volontario/login" method="post">
+                <button type="submit" class="btn-action btn-guest">Accedi per aiutare</button>
+            </form>';
         } else {
             $btn_html = '
             <form action="/volontario/bacheca-richieste" method="post">

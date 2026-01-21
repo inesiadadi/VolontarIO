@@ -7,93 +7,140 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll('.starsColor[data-percentuale]');
+    stars.forEach(star => {
+        // Legge il dato dall'HTML e lo applica come variabile CSS
+        star.style.setProperty('--percentuale', star.dataset.percentuale);
+    });
+});
+
 function initCittaAutocomplete() {
     const input = document.getElementById('citta-input');
     const lista = document.getElementById('suggerimenti-citta');
     const hiddenInput = document.getElementById('idCitta-input');
+    const statusBox = document.getElementById('status-citta');
+
     let timeout = null;
     let indexCorrente = -1;
 
-    if (!input) return;
+    function chiudiLista() {
+        lista.style.display = 'none';
+        lista.innerHTML = '';
+        indexCorrente = -1;
+        input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
+    }
 
     input.addEventListener('input', function () {
         clearTimeout(timeout);
         const termine = this.value.trim();
-        indexCorrente = -1; 
+
+        indexCorrente = -1;
+        input.removeAttribute('aria-activedescendant');
 
         if (termine.length < 2) {
-            lista.innerHTML = '';
-            lista.style.display = 'none';
+            chiudiLista();
             return;
         }
 
         timeout = setTimeout(() => {
             fetch(`/volontario/db/include/comuni.php?q=${encodeURIComponent(termine)}`)
-                .then(response => response.json())
+                .then(res => res.json())
                 .then(comuni => {
                     lista.innerHTML = '';
+
                     if (comuni.length > 0) {
-                        comuni.forEach((comune) => {
+                        lista.style.display = 'block';
+                        input.setAttribute('aria-expanded', 'true');
+                        statusBox.textContent = `${comuni.length} comuni trovati. Usa freccia su/giù.`;
+
+                        comuni.forEach((comune, idx) => {
                             const li = document.createElement('li');
+                            li.id = `citta-option-${idx}`;
                             li.textContent = comune.nome;
-                            li.onclick = function() {
-                                input.value = comune.nome;
-                                hiddenInput.value = comune.idCitta;
-                                lista.innerHTML = '';
-                                lista.style.display = 'none';
-                                indexCorrente = -1;
-                            };
+                            li.setAttribute('role', 'option');
+                            li.setAttribute('aria-selected', 'false');
+
+                            li.addEventListener('click', function() {
+                                selezionaComune(comune);
+                            });
+
                             lista.appendChild(li);
                         });
-                        lista.style.display = 'block';
                     } else {
-                        lista.style.display = 'none';
+                        chiudiLista();
+                        statusBox.textContent = "Nessun comune trovato.";
                     }
-                });
+                })
+                .catch(err => console.error(err));
         }, 300);
     });
 
-    input.addEventListener('keydown', function (e) {
-        const items = lista.getElementsByTagName('li');
-        
-        if (lista.style.display === 'block' && items.length > 0) {
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                indexCorrente = (indexCorrente + 1) % items.length;
-                aggiornaEvidenziato(items);
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                indexCorrente = (indexCorrente - 1 + items.length) % items.length;
-                aggiornaEvidenziato(items);
-            } else if (e.key === 'Enter') {
-                if (indexCorrente > -1) {
-                    e.preventDefault(); // Blocca l'invio del form
-                    items[indexCorrente].click();
-                }
-            }
-        } else if (e.key === 'Enter' && input.value.trim() === '') {
-            // Se preme invio a campo vuoto, evitiamo comportamenti anomali
+    input.addEventListener('keydown', function(e) {
+        const items = lista.querySelectorAll('li');
+        const isListOpen = lista.style.display === 'block' && items.length > 0;
+
+        if (!isListOpen) return;
+
+        if (e.key === 'ArrowDown') {
             e.preventDefault();
+            indexCorrente++;
+            if (indexCorrente >= items.length) indexCorrente = 0;
+            aggiornaEvidenziato(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            indexCorrente--;
+            if (indexCorrente < 0) indexCorrente = items.length - 1;
+            aggiornaEvidenziato(items);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (indexCorrente > -1 && items[indexCorrente]) {
+                items[indexCorrente].click();
+            }
+        } else if (e.key === 'Escape') {
+            chiudiLista();
+            statusBox.textContent = "Lista chiusa.";
         }
     });
 
     function aggiornaEvidenziato(items) {
-        Array.from(items).forEach((item, i) => {
-            if (i === indexCorrente) {
-                item.classList.add('active');
-                item.scrollIntoView({ block: 'nearest' });
-            } else {
-                item.classList.remove('active');
-            }
+        Array.from(items).forEach(item => {
+            item.classList.remove('active');
+            item.setAttribute('aria-selected', 'false');
         });
+
+        const attivo = items[indexCorrente];
+        if (!attivo) return;
+
+        attivo.classList.add('active');
+        attivo.setAttribute('aria-selected', 'true');
+
+        // scroll se fuori vista
+        attivo.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+
+        // aggiorna input con il testo completo della città
+        input.value = attivo.textContent;
+
+        // aggiorna aria-activedescendant per screen reader
+        input.setAttribute('aria-activedescendant', attivo.id);
     }
 
-    document.addEventListener('click', function (e) {
-        if (e.target !== input) {
-            lista.style.display = 'none';
+    function selezionaComune(comune) {
+        input.value = comune.nome;
+        hiddenInput.value = comune.idCitta;
+        statusBox.textContent = `Hai selezionato ${comune.nome}`;
+        chiudiLista();
+        input.focus();
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!input.contains(e.target) && !lista.contains(e.target)) {
+            chiudiLista();
         }
     });
-};
+}
+
 
 // VALIDAZIONE DEL FORM DI REGISTER
 function initValidations() {

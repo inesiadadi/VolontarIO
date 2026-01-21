@@ -8,24 +8,26 @@ class DBAccess {
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
     private const PASSWORD = "";
-    private const PORT = 80;
+    //private const PORT = 80;
     //private const PASSWORD = "root";
     private $connection;
 
     public function openDBConnection() {
-        // Da rimuovere quando si passerà al server di 
-        // TecWeb perché questa funzione mostra gli errori di Database
-        mysqli_report(MYSQLI_REPORT_ERROR);
-        $this->connection = mysqli_connect(DBAccess::HOST_DB, 
-                                           DBAccess::USERNAME, 
-                                           DBAccess::PASSWORD, 
-                                           DBAccess::DATABASE_NAME,
-                                           DBAccess::PORT
-        );
-        if(mysqli_connect_errno()) return false;
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        try {
+            $this->connection = mysqli_connect(
+                DBAccess::HOST_DB, 
+                DBAccess::USERNAME, 
+                DBAccess::PASSWORD, 
+                DBAccess::DATABASE_NAME
+            );
 
-        mysqli_set_charset($this->connection, "utf8mb4");
-        return true;
+            mysqli_set_charset($this->connection, "utf8mb4");
+            return true;
+
+        } catch (\mysqli_sql_exception $e) {
+            return false;
+        }
     }
 
     public function closeDBConnection() {
