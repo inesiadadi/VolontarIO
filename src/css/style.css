@@ -1601,12 +1601,6 @@ align-items: center;
 
 /* === PAGINA UTENTE === */
 
-
-.profilePageContainer {
-    width: 100%;
-    padding-bottom: 5rem;
-}
-
 .profileGrid {
     display: grid;
     grid-template-columns: 32rem 1fr;
@@ -1855,6 +1849,7 @@ align-items: center;
     background-color: var(--white);
     border-radius: 2rem;
     padding: 2rem;
+    margin-bottom: 1rem;
     box-shadow: var(--shadow);
     border: 3px solid var(--outline);
     display: flex;
@@ -2074,6 +2069,14 @@ textarea#descrizione {
     margin: 3rem auto;
     padding: 0 2rem;
     align-items: start;
+}
+
+.reviewsPageContainer  #breadcrumb,
+.requestPageContainer #breadcrumb, 
+.servicePageContainer #breadcrumb {
+    display: flex;
+    justify-content: center;
+    grid-column: 1 / -1;
 }
 
 .filterSidebar {
