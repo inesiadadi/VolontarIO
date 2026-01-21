@@ -2,6 +2,10 @@
 define('BASE_PATH', '/volontario');
 define('ROOT_PATH', __DIR__);
 
+// Debug: decommenta le righe sotto se vuoi vedere l'errore reale invece del 500
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 require_once ROOT_PATH . '/db/include/functions.php';
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -11,11 +15,10 @@ if (BASE_PATH !== '/' && strpos($path, BASE_PATH) === 0) {
 }
 
 $path = rtrim($path, '/');
+if ($path === '') { $path = '/'; }
 
-if ($path === '') {
-    $path = '/';
-}
-if (file_exists(ROOT_PATH . $path) && is_file(ROOT_PATH . $path)) {
+// Se il file esiste fisicamente (es. un'immagine o un CSS), lascia che il server lo serva
+if ($path !== '/' && file_exists(ROOT_PATH . $path) && is_file(ROOT_PATH . $path)) {
     return false;
 }
 
@@ -72,6 +75,9 @@ switch ($path) {
         include ROOT_PATH . '/php/modificaProfilo.php';
         break;
 
+    case '/pannello':
+        include ROOT_PATH . '/php/pannello.php';
+        break;
     default:
         http_response_code(404);
         include ROOT_PATH . '/php/error_404.php';

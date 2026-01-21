@@ -2,7 +2,7 @@
     <nav id="breadcrumb" aria-label="Percorso attuale del sito">
         <ul>
         <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
-        <li>Bacheca</li>
+        <li aria-current="page">Bacheca</li>
         </ul>
     </nav>
     <div class="container-requests">
@@ -12,6 +12,7 @@
                 <form action="/volontario/bacheca-richieste" method="get" class="filter-form">
                     <div class="filter-header">
                         <h3>Filtra Richieste</h3>
+                        <a href="/volontario/bacheca-richieste" class="btn reset-link">Reset</a>
                         <button type="reset" class="btn reset-link">Reset</button>
                     </div>
                     <div class="form-group">
@@ -19,6 +20,19 @@
                         <input type="date" id="filter-date" name="date" value="[ValoreData]">
                     </div>
 
+                    <div class="form-group autocomplete-container">
+                        <label for="citta-input">Città</label>
+                        <input type="text" id="citta-input" name="city" placeholder="Es. Milano, Roma..." class="form-control"  autocomplete='off' value="[ValoreCitta]">
+                        <ul id='suggerimenti-citta' class='lista-suggerimenti' role='listbox'></ul>
+                        <input type='hidden' name='idCitta' id='idCitta-input'>
+                    </div>
+                    [CheckboxesCategorie]
+
+                    <button type="submit" class="btn apply-filters full-width">Applica Filtri</button>
+                </form>
+            </aside>
+
+            <div class="requests-list" aria-label="Lista delle richieste">
                     <div class="form-group">
                         <label for="filter-city">Città</label>
                         <input type="text" id="filter-city" name="city" placeholder="Es. Milano, Roma..." class="form-control"  value="[ValoreCitta]">

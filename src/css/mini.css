@@ -254,15 +254,24 @@ SEZIONE COME_FUNZIONA
 
 */
 /*home page*/
+.landing-buttons-wrapper {
+        flex-direction: column; /* Forces vertical stacking */
+        align-items: center;    /* Keeps them centered */
+    }
+
+    /* Optional: Make buttons wider on phone screens for easier tapping */
+    .landing-buttons-wrapper a {
+        width: 100%;
+        text-align: center;
+        max-width: 300px;       /* Prevents them from getting too huge */
+    }
 /* Infographic Section Mobile Styles */
 .infographic-wrapper {
     flex-direction: column;
     gap: 3rem;
     margin-top: 2rem;
-    position: relative;
 }
 .connecting-line {
-    position: absolute;
     width: 2px;
     height: 100%;
     top: 0;
@@ -271,11 +280,9 @@ SEZIONE COME_FUNZIONA
     border-left: 2px dashed var(--outline);
 }
 .info-step {
-    display: flex;
     flex-direction: row;
-    align-items: flex-start;
     text-align: left;
-    position: relative;
+    padding-left: 0;
 }
 .step-icon {
     flex-shrink: 0;

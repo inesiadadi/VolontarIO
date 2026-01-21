@@ -100,6 +100,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             $_SESSION['logged'] = true;
             $_SESSION['user_id'] = $result;
             $_SESSION['username'] = $username;
+            $_SESSION['role'] = "user";
             
             header('Location: /volontario/');
             exit();

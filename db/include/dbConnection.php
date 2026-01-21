@@ -1,6 +1,8 @@
 <?php
 namespace DB;
 
+use mysqli;
+
 class DBAccess {
     private const HOST_DB = "127.0.0.1";
     private const DATABASE_NAME = "volontario";
@@ -322,7 +324,7 @@ class DBAccess {
     ## FUNZIONI DB ##
 
      public function loginAccount($username) {
-        $check_username = $this->connection->prepare("SELECT username, idPersona, password FROM Persona WHERE username =  ?");
+        $check_username = $this->connection->prepare("SELECT username, idPersona, ruolo, password FROM Persona WHERE username =  ?");
         $check_username->bind_param("s", $username);
         $check_username->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
         $result = $check_username->get_result();
@@ -352,5 +354,28 @@ class DBAccess {
             return false;
         }
     }
+    
+    ## PANNELLO ADMIN
+
+    public function getMessaggi() {
+        $query = $this->connection->prepare("SELECT id, nome_cognome, email, numero, messaggio FROM assistenza");
+        $query->execute() or die ("Errore in dbConnection" . mysqli_error($this->connection));
+        $result = $query->get_result();
+        if(mysqli_num_rows($result) == 0) {
+            $result = false;
+        }
+        return $result;
+    }
+    public function deleteMessaggio($idMessaggio) {
+        $query = $this->connection->prepare("DELETE FROM assistenza WHERE id = ?");
+        $query->bind_param("i", $idMessaggio);
+        $query->execute();
+        }
+    public function saveMessaggio($nome_cognome, $email, $numero, $messaggio) {
+        $query = $this->connection->prepare("INSERT INTO assistenza (nome_cognome, email, numero, messaggio) VALUES (?, ?, ?, ?)");
+        $query->bind_param("ssis", $nome_cognome, $email, $numero, $messaggio);
+        $query->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
+    }
 };
+
 ?>
