@@ -46,7 +46,7 @@ CREATE TABLE Richiesta (
     codiceRichiesta INT AUTO_INCREMENT PRIMARY KEY,
     descrizione TEXT,
     dataRichiesta DATETIME NOT NULL,
-    stato ENUM('aperta', 'completata', 'in_carico') NOT NULL DEFAULT 'aperta',
+    stato ENUM('aperta', 'completata', 'in_carico', 'scaduta') NOT NULL DEFAULT 'aperta',
     idRichiedente INT NOT NULL,
     idOfferente INT DEFAULT NULL,
     idTipo INT NOT NULL,

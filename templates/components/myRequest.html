@@ -1,15 +1,32 @@
-<article class="requestCard" itemprop="request" itemscope itemtype="https://schema.org/ServiceRequest" data-status="[StatoRichiesta]">
-    <span class="requestCategory" itemprop="category">
-        [CategoriaServizio]
-    </span>
-    <span class="requestLocation" itemprop="location">
-            [LuogoRichiesta]
-    </span>
-    <p class="requestText" itemprop="description">
-        [DescrizioneRichiesta]
-    </p>
-    <time class="requestDate" itemprop="dateCreated" datetime="[DataISO]">
-        [DataVisual]
-    </time>
-    [PulsantieraAzioni]
+<article class="request-card" itemprop="request" itemscope itemtype="https://schema.org/ServiceRequest" data-status="[StatoRichiesta]">
+    <div class="req-header">
+        <span class="visually-hidden">Categoria: </span>
+        <span class="category-tag" itemprop="category">
+            [CategoriaServizio]
+        </span>
+    </div>
+    <div class="req-body">
+        <p>[DescrizioneRichiesta]</p>
+    </div>
+    <div class="req-footer">
+        <div class="meta-item">
+            <img src="src/images/icon-location.svg" alt="" aria-hidden="true">
+            <span class="visually-hidden">Luogo: </span>
+            <span>[LuogoRichiesta]</span>
+        </div>
+        <div class="meta-item">
+            <img src="src/images/icon-calendar.svg" alt="" aria-hidden="true">
+            <span class="visually-hidden">Data: </span>
+            <span>[DataVisual]</span>
+        </div>
+        <div class="meta-item">
+            <img src="src/images/icon-time.svg" alt="" aria-hidden="true">
+            <span class="visually-hidden">Orario: </span>
+            <span>[OrarioRichiesta]</span>
+        </div>
+        <div class="action-button">
+        [PulsantieraAzioni]
+        </div>
+    </div>
+
 </article>

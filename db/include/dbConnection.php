@@ -148,7 +148,7 @@ class DBAccess {
 
             if ($aggiorna) {
                 $stmt = $this->connection->prepare("UPDATE Richiesta SET stato = ? WHERE codiceRichiesta = ?");
-                $stmt->bind_param("si", $nuovoStato, $rec['idRichiesta']);
+                $stmt->bind_param("si", $nuovoStato, $rec['codiceRichiesta']);
                 $stmt->execute();
                 $stmt->close();
             }
@@ -201,7 +201,17 @@ class DBAccess {
         return true;
     }
 
-    public function rimuoviRichiesta() {}
+    public function rimuoviRichiesta($idRichiesta) {
+        $sql = "DELETE FROM Richiesta WHERE codiceRichiesta = ?";
+        $query = $this->connection->prepare($sql);
+        $query->bind_param('i', $idRichiesta);
+        if (!$query->execute()) {
+                // Questo ti dirà l'errore esatto del database (es. "Incorrect datetime value")
+                error_log("Errore SQL: " . $this->connection->error);
+                return false;
+        }
+        return true;
+    }
     
     public function addReview() {}
 
