@@ -100,3 +100,12 @@ CREATE TABLE Valutazione (
         CHECK (voto >= 1 AND voto <= 10)
 
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE Assistenza (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_cognome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    numero VARCHAR(20),
+    messaggio TEXT NOT NULL,
+    data_invio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

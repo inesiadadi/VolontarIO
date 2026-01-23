@@ -8,7 +8,7 @@ class DBAccess {
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
     private const PASSWORD = "";
-    private const PORT = 80;
+    private const PORT = 3306;
     //private const PASSWORD = "root";
     private $connection;
 
@@ -356,7 +356,7 @@ class DBAccess {
     ## PANNELLO ADMIN
 
     public function getMessaggi() {
-        $query = $this->connection->prepare("SELECT id, nome_cognome, email, numero, messaggio FROM assistenza");
+        $query = $this->connection->prepare("SELECT id, nome_cognome, email, numero, messaggio, data_invio FROM assistenza");
         $query->execute() or die ("Errore in dbConnection" . mysqli_error($this->connection));
         $result = $query->get_result();
         if(mysqli_num_rows($result) == 0) {
