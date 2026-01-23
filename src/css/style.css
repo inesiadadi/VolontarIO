@@ -1254,24 +1254,22 @@ img {
 .filters-sidebar {
     background-color: var(--white);
     padding: 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     border: 1px solid var(--secondary-bg);
     position: sticky;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    font-size: 1.2rem;
 }
 
 .filter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
     border-bottom: 1px solid var(--main-bg);
 }
 
-.filter-header h3 {
+.filter-header h2 {
     font-size: 1.3rem;
-    margin-bottom: 0; 
     text-align: left;
     color: var(--main-text);
 }
@@ -1288,8 +1286,8 @@ img {
     padding: 1rem 2rem;
     border-radius: 1rem;
 }
+
 .btn.reset-link {
-    padding: 0rem 0rem 2rem 2rem;
     font-size: 1.1rem;
     background: none;
     border: none;
@@ -1299,11 +1297,17 @@ img {
     cursor: pointer;
 }
 
+.filter-sidebar .autocomplete-container {
+    margin-bottom: 1.2rem;   
+}
+
 .btn.apply-filters {
     background-color: var(--outline);
     color: var(--white);
     width: 100%;
 }
+
+
 .filter-form .form-group {
     margin-bottom: 1.2rem;
 }
@@ -1607,7 +1611,7 @@ align-items: center;
     gap: 3rem;
     max-width: 120rem;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 1rem 2rem;
 }
 
 /* Probabilmente diventa quello per tutti i titoli!! */
@@ -1989,7 +1993,6 @@ textarea#descrizione {
     margin: 4px 0 0 0;
     background-color: #fff;
     color: #000;
-    border: 1px solid #ccc;
     border-radius: 4px;
     max-height: 200px;           /* mostra massimo tot voci */
     width: 100%;
@@ -1998,7 +2001,6 @@ textarea#descrizione {
     top: 100%;                   /* subito sotto l'input */
     left: 0;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     display: block;               /* rimane block, il JS gestisce hidden */
 }
 
@@ -2216,7 +2218,7 @@ textarea#descrizione {
   border: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 970px) {
     .profileGrid {
         grid-template-columns: 1fr;
     }

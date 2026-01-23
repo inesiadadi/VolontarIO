@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbAccess->closeDBConnection();
         
         if($successo) {
-            header("Location: /volontario/profilo?id=$id_utente_target&msg=success");
+            header("Location: /volontario/profilo?id=$id_utente_target");
             exit;
         }
     }

@@ -116,6 +116,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
         header('Location: error_500.php');
         exit;
     }
+
+    $html = str_replace("[error_message]", "", $html);
 }
 $html = str_replace("[username]", $username,$html);
 $html = str_replace("[email]", $email,$html);
