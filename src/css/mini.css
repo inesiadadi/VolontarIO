@@ -326,3 +326,76 @@ SEZIONE COME_FUNZIONA
     width: 100%;
     text-align: center;
 }
+
+
+/* 
+   ========================
+
+         --- Aala ---      
+
+   ========================        
+
+*/
+
+/*Pannello amministrazione*/
+
+
+.contact-table thead {
+    display: none;
+}
+
+.contact-table, .contact-table tbody, .contact-table tr {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.contact-table td,
+.contact-table th[scope="row"] {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: none !important;
+    max-width: none;
+    overflow: visible;
+    height: auto !important;
+    padding: 1em !important;
+    line-height: 1.5em;
+    word-break: break-all;
+    white-space: normal;
+}
+
+.actions {
+    flex-direction: column;
+}
+.actions form {
+    display: block;
+    width: 100%;
+}
+
+
+.contact-table td::before, 
+.contact-table th[scope="row"]::before {
+    margin: -1em -1em 0.8em -1em;
+    padding: 0.6em 1em;
+    background-color: var(--dark-green);
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.3em;
+    font-weight: bold;
+    text-align: left;
+    color: var(--secondary-bg);
+    }
+
+.contact-table td:nth-child(4) {
+    max-width: none;
+
+}
+
+.message-cell-content {
+    max-height: none;
+    overflow: visible;
+    width: 100%;
+    margin-top: 0.3em;
+}
