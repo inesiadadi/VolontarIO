@@ -69,6 +69,8 @@ if ($connessioneOK && $result === false) {
         header('Location: error_500.php');
         exit;
     }
+
+    $html = str_replace("[error_message]", "", $html);
 }
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');

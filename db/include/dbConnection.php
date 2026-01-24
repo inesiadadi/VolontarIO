@@ -1,14 +1,13 @@
 <?php
 namespace DB;
 
-use mysqli;
 
 class DBAccess {
     private const HOST_DB = "127.0.0.1";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
     private const PASSWORD = "";
-    //private const PORT = 80;
+    //private const PORT = 8889;
     //private const PASSWORD = "root";
     private $connection;
 
@@ -19,7 +18,8 @@ class DBAccess {
                 DBAccess::HOST_DB, 
                 DBAccess::USERNAME, 
                 DBAccess::PASSWORD, 
-                DBAccess::DATABASE_NAME
+                DBAccess::DATABASE_NAME,
+                //DBAccess::PORT
             );
 
             mysqli_set_charset($this->connection, "utf8mb4");
@@ -148,7 +148,7 @@ class DBAccess {
 
             if ($aggiorna) {
                 $stmt = $this->connection->prepare("UPDATE Richiesta SET stato = ? WHERE codiceRichiesta = ?");
-                $stmt->bind_param("si", $nuovoStato, $rec['idRichiesta']);
+                $stmt->bind_param("si", $nuovoStato, $rec['codiceRichiesta']);
                 $stmt->execute();
                 $stmt->close();
             }
@@ -201,7 +201,17 @@ class DBAccess {
         return true;
     }
 
-    public function rimuoviRichiesta() {}
+    public function rimuoviRichiesta($idRichiesta) {
+        $sql = "DELETE FROM Richiesta WHERE codiceRichiesta = ?";
+        $query = $this->connection->prepare($sql);
+        $query->bind_param('i', $idRichiesta);
+        if (!$query->execute()) {
+                // Questo ti dirà l'errore esatto del database (es. "Incorrect datetime value")
+                error_log("Errore SQL: " . $this->connection->error);
+                return false;
+        }
+        return true;
+    }
     
     public function addReview() {}
 
