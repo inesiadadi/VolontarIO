@@ -17,12 +17,12 @@ if($id_utente_target != $id_visitatore) {
 }
 
 $dbAccess = new DBAccess();
-
-if(!$dbAccess->openDBConnection()) {
+if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    include ROOT_PATH . '/php/error_500.php';
+    header('Location: error_500.php');
     exit;
 }
+
 $utente = $dbAccess->getUtentePerId($id_utente_target);
 $dbAccess->closeDBConnection();
 
@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbAccess->closeDBConnection();
         
         if($successo) {
-            header("Location: /volontario/profilo?id=$id_utente_target&msg=success");
+            header("Location: /volontario/profilo?id=$id_utente_target");
             exit;
         }
     }
@@ -101,11 +101,35 @@ $form = "
 
     <div class='autocomplete-container'>
         <label for='citta-input'>Città di residenza:</label>
-        <input type='text' id='citta-input' autocomplete='off' aria-describedby='aiuto-citta'>
-        <ul id='suggerimenti-citta' class='lista-suggerimenti' role='listbox'></ul>
-        <input type='hidden' name='idCitta' id='idCitta-input' value='{$dati_utente['idCitta']}'>
+
+        <input
+            type='text'
+            id='citta-input'
+            name='citta_nome'
+            autocomplete='off'
+            role='combobox'
+            aria-autocomplete='list'
+            aria-expanded='false'
+            aria-controls='suggerimenti-citta'
+            aria-describedby='aiuto-citta'
+        >
+
+        <ul
+            id='suggerimenti-citta'
+            role='listbox'
+            tabindex='-1'
+            hidden
+        ></ul>
+
+        <input type='hidden' name='idCitta' id='idCitta-input'>
+
+        <div id='status-citta' class='sr-only' aria-live='polite'></div>
     </div>
-    <span id='aiuto-citta' class='aiuto'>Inizia a scrivere il nome del comune e selezionalo dalla lista</span>
+
+    <span id='aiuto-citta' class='aiuto'>
+        Digita il comune e usa le frecce su e giù per selezionare.
+    </span>
+
 
     <label for='email'>Email:</label>
     <input type='email' name='email' id='email' placeholder='{$dati_utente['email']}' aria-describedby='aiuto-email'>

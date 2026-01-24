@@ -1,31 +1,33 @@
 <?php
 namespace DB;
 
-use mysqli;
 
 class DBAccess {
     private const HOST_DB = "127.0.0.1";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
     private const PASSWORD = "";
-    private const PORT = 3306;
+    //private const PORT = 8889;
     //private const PASSWORD = "root";
     private $connection;
 
     public function openDBConnection() {
-        // Da rimuovere quando si passerà al server di 
-        // TecWeb perché questa funzione mostra gli errori di Database
-        mysqli_report(MYSQLI_REPORT_ERROR);
-        $this->connection = mysqli_connect(DBAccess::HOST_DB, 
-                                           DBAccess::USERNAME, 
-                                           DBAccess::PASSWORD, 
-                                           DBAccess::DATABASE_NAME,
-                                           DBAccess::PORT
-        );
-        if(mysqli_connect_errno()) return false;
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        try {
+            $this->connection = mysqli_connect(
+                DBAccess::HOST_DB, 
+                DBAccess::USERNAME, 
+                DBAccess::PASSWORD, 
+                DBAccess::DATABASE_NAME,
+                //DBAccess::PORT
+            );
 
-        mysqli_set_charset($this->connection, "utf8mb4");
-        return true;
+            mysqli_set_charset($this->connection, "utf8mb4");
+            return true;
+
+        } catch (\mysqli_sql_exception $e) {
+            return false;
+        }
     }
 
     public function closeDBConnection() {
@@ -146,7 +148,7 @@ class DBAccess {
 
             if ($aggiorna) {
                 $stmt = $this->connection->prepare("UPDATE Richiesta SET stato = ? WHERE codiceRichiesta = ?");
-                $stmt->bind_param("si", $nuovoStato, $rec['idRichiesta']);
+                $stmt->bind_param("si", $nuovoStato, $rec['codiceRichiesta']);
                 $stmt->execute();
                 $stmt->close();
             }
@@ -199,7 +201,17 @@ class DBAccess {
         return true;
     }
 
-    public function rimuoviRichiesta() {}
+    public function rimuoviRichiesta($idRichiesta) {
+        $sql = "DELETE FROM Richiesta WHERE codiceRichiesta = ?";
+        $query = $this->connection->prepare($sql);
+        $query->bind_param('i', $idRichiesta);
+        if (!$query->execute()) {
+                // Questo ti dirà l'errore esatto del database (es. "Incorrect datetime value")
+                error_log("Errore SQL: " . $this->connection->error);
+                return false;
+        }
+        return true;
+    }
     
     public function addReview() {}
 

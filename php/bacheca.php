@@ -9,7 +9,7 @@ $is_logged_in = ($id_utente_loggato > 0);
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    echo file_get_contents(ROOT_PATH . '/templates/components/error_500.html');
+    include ROOT_PATH . '/php/error_500.php';
     exit;
 }
 
@@ -63,9 +63,10 @@ if (!empty($richieste)) {
 
 
         if (!$is_logged_in) {
+            $btn_html = '<a href="/volontario/login" class="btn-action" aria-label="Accedi per aiutare">Accedi per aiutare</a>';
             $btn_html = '
             <form action="/volontario/login" method="post">
-                <button type="submit" class="btn-action btn-guest" aria-label="Accedi per aiutare">Accedi per aiutare</button>
+                <button type="submit" class="btn-action btn-guest">Accedi per aiutare</button>
             </form>';
         } else {
             $btn_html = '
@@ -77,17 +78,9 @@ if (!empty($richieste)) {
         $temp = str_replace('[ActionButton]', $btn_html, $temp);
         $html_richieste_output .= $temp;
     }
-} 
-
-if (empty($html_richieste_output)) {
-    $msg_vuoto = '
-    <div class="noRequestMsg" id="filterEmptyState">
-        <span aria-hidden="true">🌱</span>
-        <p>Non ci sono ancora richieste per questo filtro.</p>
-    </div>';
+} else {
+    $html_richieste_output = file_get_contents('templates/components/no-filtered-requests.html');
 }
-
-
 $html_bacheca_page = file_get_contents(ROOT_PATH . '/templates/bachecaPage.html'); 
 $html_bacheca_page = str_replace('[CheckboxesCategorie]', $html_categories, $html_bacheca_page);
 $html_bacheca_page = str_replace('[ValoreCitta]', htmlspecialchars($filtro_citta), $html_bacheca_page);

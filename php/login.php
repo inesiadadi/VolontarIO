@@ -64,8 +64,13 @@ if ($connessioneOK && $result === false) {
     }
 }
 } else {
-    $html = str_replace('[error_message]', '', $html);
+    if (!$connection->openDBConnection()) {
+        http_response_code(500);
+        header('Location: error_500.php');
+        exit;
+    }
 
+    $html = str_replace("[error_message]", "", $html);
 }
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
@@ -88,4 +93,5 @@ foreach($placeholders_layout as $chiave => $valore) {
 }
 
 echo $pagina;
+
 ?>

@@ -13,9 +13,9 @@ if($id_visitatore === 0) {
 $id_utente_target = $id_visitatore;
 
 $dbAccess = new DBAccess();
-if(!$dbAccess->openDBConnection()) {
+if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    include ROOT_PATH . '/php/error500.php';
+    header('Location: error_500.php');
     exit;
 }
 
@@ -54,14 +54,35 @@ if(!isset($_SESSION['logged'])) {
             <textarea name='descrizione' id='descrizione' maxlength='255' required aria-required='true' aria-describedby='aiuto-desc'></textarea>
             <span id='aiuto-desc' class='aiuto'>Spiegare brevemente di cosa si ha bisogno (massimo 255 caratteri)</span>
             <div class='autocomplete-container'>
-                <label for='citta-input'>Città di residenza:</label>
-                <input type='text' id='citta-input' autocomplete='off' required aria-required='true'>
-                
-                <ul id='suggerimenti-citta' class='lista-suggerimenti' role='listbox'></ul>
-                
-                <input type='hidden' name='idCitta' id='idCitta-input'>
-            </div>
-            <span class='aiuto'>Inizia a scrivere e seleziona il tuo comune</span>
+                    <label for='citta-input'>Città di residenza:</label>
+
+                    <input
+                        type='text'
+                        id='citta-input'
+                        name='citta_nome'
+                        autocomplete='off'
+                        role='combobox'
+                        aria-autocomplete='list'
+                        aria-expanded='false'
+                        aria-controls='suggerimenti-citta'
+                        aria-describedby='aiuto-citta'
+                    >
+
+                    <ul
+                        id='suggerimenti-citta'
+                        role='listbox'
+                        tabindex='-1'
+                        hidden
+                    ></ul>
+
+                    <input type='hidden' name='idCitta' id='idCitta-input'>
+
+                    <div id='status-citta' class='sr-only' aria-live='polite'></div>
+                </div>
+
+                <span id='aiuto-citta' class='aiuto'>
+                    Digita il comune e usa le frecce su e giù per selezionare.
+                </span>
             <label for='data'>Data dell'intervento:</label>
             <input type='date' name='dataRichiesta' id='data' min='$data_minima' required aria-required='true' />
             <span class='aiuto'>Specificare la data in cui si richiede il servizio</span>

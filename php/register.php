@@ -111,7 +111,13 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
         }
     }
 }  else {
-    $html = str_replace('[error_message]', '', $html);
+    if (!$connection->openDBConnection()) {
+        http_response_code(500);
+        header('Location: error_500.php');
+        exit;
+    }
+
+    $html = str_replace("[error_message]", "", $html);
 }
 $html = str_replace("[username]", $username,$html);
 $html = str_replace("[email]", $email,$html);

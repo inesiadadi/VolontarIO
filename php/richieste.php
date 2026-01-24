@@ -13,17 +13,6 @@ if ($id_visitatore === 0) {
 
 $id_utente_target = $id_visitatore;
 
-// Rimuovere queste righe quando funziona il collegamento
-/*
-$id_visitatore = $_SESSION['user_id'] ?? 0;
-
-// ID utente target
-$id_utente_target = isset($_GET['id']) ? intval($_GET['id']) : $id_visitatore;
-if ($id_utente_target === 0) {
-    header("Location: /volontario/login");
-    exit;
-}
-*/
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
@@ -31,11 +20,10 @@ if (!$dbAccess->openDBConnection()) {
     exit;
 }
 
-$dbAccess = new DBAccess();
-if (!$dbAccess->openDBConnection()) {
-    http_response_code(500);
-    include ROOT_PATH . '/php/error_500.php';
-    exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rimuovi'])) {
+    echo "Codice richiesta da eliminare: " . $_POST['codiceRichiesta'];
+    $dbAccess->rimuoviRichiesta($_POST['codiceRichiesta']);
+    header("Location: /volontario/richieste?id=" . $id_utente_target);
 }
 
 // Ottieni dati utente
@@ -65,8 +53,8 @@ if(!empty($resultRec)) {
         $date_rec_obj = new DateTime($rec['dataRichiesta']);
         $data_visual = function_exists('formatDateItalian') ? formatDateItalian($rec['dataRichiesta']) : $date_rec_obj->format('d/m/Y');
         
-        $temp = str_replace('[DataISO]',          $date_rec_obj->format('Y-m-d'), $temp);
         $temp = str_replace('[DataVisual]',       $data_visual, $temp); 
+        $temp = str_replace('[OrarioRichiesta]', date('H:i', strtotime($rec['dataRichiesta'])), $temp);
         $temp = str_replace('[CategoriaServizio]', htmlspecialchars($rec['tipologia']), $temp);
         $temp = str_replace('[DescrizioneRichiesta]', htmlspecialchars($rec['descrizione']), $temp);
         $temp = str_replace('[LuogoRichiesta]', htmlspecialchars($rec['citta']), $temp);
@@ -76,7 +64,10 @@ if(!empty($resultRec)) {
             // Stato aperto: pulsante disabilitato
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="profileBtn">Rimuovi richiesta</button>',
+                '<form action="/volontario/richieste?id="' . $id_utente_target . ' method="post" >
+                    <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
+                    <button type="submit" name="rimuovi" class="btn-action">Rimuovi richiesta</button>
+                 </form>',
                 $temp
             );
         } 
@@ -86,7 +77,10 @@ if(!empty($resultRec)) {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
-                 <button class="profileBtn">Elimina richiesta</button>',
+                <form action="/volontario/richieste?id="' . $id_utente_target . ' method="post" >
+                    <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
+                    <button type="submit" name="rimuovi" class="btn-action">Rimuovi richiesta</button>
+                 </form>',
                 $temp
             );
         } 
