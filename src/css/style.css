@@ -319,6 +319,7 @@ button:focus-visible {
 }
 
 .btnh {
+    width: 100%;
     padding: 0.6rem 1.2rem;
     border: 2px solid transparent;
     border-radius: 5px;
@@ -421,6 +422,7 @@ SEZIONE COME_FUNZIONA
 =======================================================================================================================================================
 */
 
+
 h2, h3 {
     color: var(--dark-green);
     font-weight: 800;
@@ -455,19 +457,19 @@ h2, h3 {
     margin: 0 auto;
     line-height: 1.6;
     font-weight: 500; 
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .sez2-cf {
-    padding: 2rem 2rem;
+    padding: 2rem 1rem;
     width: 100%;
-    max-width: 1600px;
+    max-width: 1400px; 
     margin: 0 auto;
 }
 
 .sez2-cf h2 {
     margin-bottom: 2rem;
-    font-size: 2rem;
+    font-size: 2.2rem;
     text-align: center;
     color: var(--deep-green);
     position: relative;  
@@ -479,11 +481,10 @@ h2, h3 {
 
 .container-cf {
     display: flex;
-    background-color: var(--white);
+    background-color: var(--white); 
     border-radius: 24px;
     margin-bottom: 3rem;
-    align-items: stretch;
-    min-height: 500px;
+    align-items: stretch; 
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(1, 39, 19, 0.08);
 }
@@ -493,11 +494,11 @@ h2, h3 {
 }
 
 .container-text {
+    flex: 1;
     display: flex;
-    flex: 2;
     flex-direction: column;
     justify-content: center; 
-    padding: 4rem;
+    padding: 2rem;  
 }
 
 .sez2-cf h2:hover {
@@ -506,25 +507,34 @@ h2, h3 {
 }
 
 .container-text h3 {
-    margin-bottom: 1.5rem;
-    line-height: 2rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
     color: var(--deep-green); 
-    font-size: 1.5rem;
+    font-size: 1.5rem; 
 }
 
-.container-text p, 
-.container-text li {
-    font-size: 1rem;
-    line-height: 1.6;
-    font-weight: 550; 
-    color: var(--text-muted);
+.container-text p {
+    margin-bottom: 0.3rem;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+    color: var(--warning-text); 
+    font-size: 1.2rem; 
 }
+
+.container-text li {
+    margin-bottom: 0.3rem;
+    padding-left: 0.3rem;
+    cursor: default;
+    font-size: 1.2rem; 
+}
+
 
 .container-text ol, 
 .container-text ul {
-   margin-top: 1rem; 
-   margin-left: 1.5rem;
-    
+   margin-top: 0rem; 
+   margin-bottom: 0rem;
+   margin-left: 1rem;
 }
 
 .container-text .sotto_sez {
@@ -533,11 +543,7 @@ h2, h3 {
     margin-top: 0.5rem; 
 }
 
-.container-text li {
-    margin-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    cursor: default;
-}
+
 
 .container-text li:hover {
     color: var(--dark-green);
@@ -545,10 +551,13 @@ h2, h3 {
 }
 
 .container-cf img {
-    flex: none;
-    width: 500px; 
-    height: auto;
-    object-fit: cover
+    flex: 0 0 500px; 
+    width: 500px;
+    height: auto;  
+    min-height: 100%; 
+    object-fit: cover; 
+    display: block;
+    object-position: center center; 
 }
 
 .sez3-cf {
@@ -565,7 +574,7 @@ h2, h3 {
     line-height: 1.6;
     color: var(--main-bg);
     margin: 0 auto 2rem auto;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
@@ -622,7 +631,7 @@ h2, h3 {
   margin-top: 20px;
   margin-bottom: 30px;
   color:var(--text-muted);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 500;
   line-height: 1.6;
 }
@@ -678,12 +687,12 @@ h2, h3 {
   color: var(--deep-green);
   font-weight: 600;
   margin-bottom: 6px;
-  font-size:1rem ;
+  font-size:1.1rem ;
 }
 
 .form-input input,
 .form-textarea textarea {
-  font-size: 1rem;
+  font-size: 1.1rem;
   border-radius: 8px;
   border: 2px solid var(--outline);
   padding: 20px;
@@ -767,7 +776,7 @@ ERRORE 404
 }
 
 .error-404 h1 .pun {
-  color: var(--star-filled); 
+  color: #78c798; 
   position: relative;
   display: inline-block;
 }
@@ -822,6 +831,60 @@ ERRORE 404
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(1, 39, 19, 0.2);
 }
+
+/*
+======================================================================================================================================================
+
+ERRORE 500
+
+=======================================================================================================================================================
+*/
+
+.error-500 {
+    margin: auto;
+    max-width: 640px;
+    text-align: center;
+    padding: 2rem 1.5rem;
+}
+
+.error-500 img {
+   display: block; 
+   margin: 10px auto 1.5rem auto;
+   width: 100%;            
+   max-width: 250px;    
+   height: auto;
+
+}
+
+.error-500 h1 {
+    font-size: 2.5rem;
+    color: var(--deep-green);
+    margin-bottom: 1rem;
+}
+
+.error-500 p {
+    font-size: 1.1rem;
+    color: var(--warning-text);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.error-500 .btn-primary {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--dark-green);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: var(--radius);
+}
+
+.error-500 .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.8rem 2rem rgba(1, 39, 19, 0.15);
+    background-color: var(--outline);
+}
+
 /*
 ======================================================================================================================================================
 
@@ -1523,6 +1586,7 @@ img {
     border-radius: 4px;
     font-weight: bold;
     cursor: pointer;
+    font-family: inherit;
 }
 
 .accessForm button:hover {
@@ -2250,6 +2314,11 @@ textarea#descrizione {
     }
 }
 
+@media (max-width: 1025px) {
+    #site-name { 
+    display: none; 
+}
+}
 /*
 
 SEZIONE PANNELLO AMMINISTRATORE
@@ -2260,6 +2329,10 @@ SEZIONE PANNELLO AMMINISTRATORE
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#pannelPage #content {
+    text-align: center;
 }
 
 .table-container {
@@ -2284,13 +2357,13 @@ SEZIONE PANNELLO AMMINISTRATORE
     padding: 15px;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #1a3a3a; 
+    color: var(--deep-green); 
     text-align: left;
 }
 
 .contact-table thead {
     background-color: var(--dark-green);
-    color: white;
+    color: var(--secondary-bg);
 }
 
 .contact-table th, 
@@ -2339,16 +2412,25 @@ SEZIONE PANNELLO AMMINISTRATORE
     background-color: #f1f1f1;
 }
 
+
 .actions {
+    width: 100%;
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 0.5em;
     align-items: center;
 }
  
+.actions form {
+    width: 100%;
+}
 
 span[aria-hidden="true"] {
     font-size: 1.1rem;
 }
+
+/* DARK MODE*/
+
 body.dark-mode {
     --main-bg: #050f0a;    
     --profile-bg: #0d1a14;    
@@ -2379,11 +2461,12 @@ body.dark-mode #landing h3 span{
 }
 
 body.dark-mode .get-started-btn {
-    color: var(--dark-green);
+    color: var(--main-bg);
 }
 
 body.dark-mode .get-started-btn:hover {
     background-color: var(--separator);
+    color: var(--dark-green);
 }
 
 body.dark-mode #landing .learn-more-btn{
@@ -2410,15 +2493,15 @@ body.dark-mode .info-step p {
 }
 
 body.dark-mode  .team-card .role {
-    color: var(--deep-green); 
+    color: var(--warning-text); 
 }
 
 body.dark-mode .team-card .bio {
-    color: var(--warning-text);
+    color: var(--dark-green);
 }
 
 body.dark-mode #breadcrumb li {
-  color: var(--deep-green);  
+  color: var(--dark-green);  
 }
 
 body.dark-mode  #breadcrumb a {
@@ -2587,9 +2670,62 @@ body.dark-mode #newRequest:hover {
 
 body.dark-mode .accessForm button {
     color: var(--main-bg);
-    font-family: c;
 }
 
 body.dark-mode .meta-item img{
     filter: invert(1);
+}
+body.dark-mode .req-footer {
+    border-top: 1px solid var(--outline);
+ 
+}
+
+body.dark-mode .category-tag {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
+body.dark-mode .error-500 p {
+    color: var(--dark-green);
+}
+
+body.dark-mode .error-500 .btn-primary {
+    color: var(--dark-green);
+}
+
+body.dark-mode  .error-500 .btn-primary:hover {
+    background-color: var(--deep-green);
+    color: var(--main-bg);
+}
+
+body.dark-mode .error-404 h1 .pun {
+  color: var(--dark-green); 
+  position: relative;
+  display: inline-block;
+}
+
+body.dark-mode .error-404 p {
+  color: var(--dark-green);
+  font-size: 1.3rem;
+  max-width: 450px;
+  margin: 0 auto 1.5rem auto;
+  line-height: 1.5;
+}
+
+body.dark-mode .btn-primary {
+  background-color: var(--main-bg);
+    border: 2px solid var(--dark-green);
+}
+
+body.dark-mode .btn-primary:hover {
+  background-color: var(--separator);
+  color:var(--dark-green);
+}
+
+body.dark-mode .btn-secondary {
+  color: var(--main-bg);
+}
+
+body.dark-mode .btn-secondary:hover {
+    border: 2px solid var(--outline);
 }
