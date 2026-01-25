@@ -133,7 +133,7 @@ button:focus-visible {
 
 .back-to-top::after {
     content: 'Ritorna in cima';
-    color: var(--white);
+    color: var(--dark-green);
     font-family: var(--font-main);
     font-weight: 700;
     font-size: 1.6rem;
@@ -2344,9 +2344,9 @@ SEZIONE PANNELLO AMMINISTRATORE
     width: 90%;
     table-layout: fixed;
     border-collapse: collapse;
-    background-color: #fff;
+    background-color: var(--white);
     font-family: sans-serif;
-    color: #333;
+    color: var();
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden; 
@@ -2370,7 +2370,7 @@ SEZIONE PANNELLO AMMINISTRATORE
 .contact-table td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--white);
 }
 
 
@@ -2405,11 +2405,11 @@ SEZIONE PANNELLO AMMINISTRATORE
 }
 
 .contact-table tbody tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: var(--main-bg);
 }
 
 .contact-table tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: var(--profile-bg);
 }
 
 
@@ -2427,6 +2427,10 @@ SEZIONE PANNELLO AMMINISTRATORE
 
 span[aria-hidden="true"] {
     font-size: 1.1rem;
+}
+
+#noContactTable {
+    margin-bottom: 1em;
 }
 
 /* DARK MODE*/

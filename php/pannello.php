@@ -36,8 +36,7 @@ if($connessioneOK) {
     $result = $dbAccess->getMessaggi();
     if($result === false) {
         $table = "
-        <div class='noReviewsMsg'>
-        <span aria-hidden='true'>🌱</span>
+        <div id='noContactTable' class='noReviewsMsg'>
         <p>Non ci sono richieste d'assistenza</p>
         </div>
         ";
