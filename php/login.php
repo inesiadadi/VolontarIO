@@ -12,7 +12,7 @@ if(isset($_SESSION['logged'])) {
 } else {
     $form = "
         [error_message]
-        <form id='logForm' class='accessForm' action='/volontario/login' method='post'>
+        <form id='logForm' class='accessForm form-input' action='/volontario/login' method='post'>
                 <legend id='legendForm'>Accedi al tuo account</legend>
                 <label for='username'><span lang='en'>Username</span>:</label>
                 <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' autocomplete='username'/>

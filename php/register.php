@@ -14,7 +14,7 @@ if(isset($_SESSION['logged'])) {
     $html = str_replace('[form]', $already_logged, $html);
 } else {
     $form = " <div id='error'>[error_message]</div>
-                <form class='accessForm' id='signForm' action='/volontario/register' method='post'>
+                <form class='accessForm form-input' id='signForm' action='/volontario/register' method='post'>
                     <legend id='legendForm'>Registra un account</legend>
                     <label for='username'>Username:</label>
                     <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' value='[username]'></input>
