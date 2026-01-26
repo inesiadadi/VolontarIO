@@ -2578,6 +2578,7 @@ body.dark-mode .sez3-cf .btn-registrati {
 body.dark-mode .form-input input,
 body.dark-mode .form-textarea textarea{
   background-color: var(--deep-green);
+    color: var(--main-bg);
    border: 2px solid var(--warning-text);
 }
 

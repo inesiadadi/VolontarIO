@@ -37,7 +37,7 @@ if($connessioneOK) {
     if($result === false) {
         $table = "
         <div id='noContactTable' class='noReviewsMsg'>
-        <p>Non ci sono richieste d'assistenza</p>
+        <p>Non ci sono richieste d'assistenza.</p>
         </div>
         ";
     } else {
