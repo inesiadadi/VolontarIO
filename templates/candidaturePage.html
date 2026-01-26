@@ -1,0 +1,37 @@
+<main class="requestPageContainer" id='content'>
+    <nav id="breadcrumb" aria-label="Percorso attuale del sito">
+        <ul>
+        <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
+        <li><a href="/volontario/profilo">Area Personale</a></li>
+        <li>Richieste</li>
+        </ul>
+    </nav>
+    <h1 class="profilePageTitle">Le mie candidature</h1>
+    <aside class="filtersSidebar">
+        <div class="filterBox">
+            <h2 class="filterTitle">Filtra candidature</h2>
+            <div class="filterGroup">
+                <label for="stateFilter" class="filterSubtitle">
+                    Stato
+                </label>
+                <select id="stateFilter" class="filterSelect">
+                    <option value="all">Tutti gli stati</option>
+                    <option value="aperta">Aperta</option>
+                    <option value="in_carico">In carico</option>
+                    <option value="completata">Completata</option>
+                    <option value="scaduta">Scaduta</option>
+                </select>
+            </div>
+            [Categorie]
+        </div>
+    </aside>
+    <section class="requestContent">
+        <div class="requestGrid" id="grigliaRichieste">
+            [Candidature]
+        </div>
+        <div class="noRequestMsg" id="filterEmptyState">
+            <span aria-hidden="true">🌱</span>
+            <p>Non ci sono ancora candidature per questo filtro.</p>
+        </div>
+    </section>
+</main>

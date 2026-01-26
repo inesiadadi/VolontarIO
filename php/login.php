@@ -7,7 +7,7 @@ $connection = new DBAccess();
 
 $html = file_get_contents(ROOT_PATH . '/templates/login.html');
 if(isset($_SESSION['logged'])) {
-    $already_logged = "<p>Sei già connesso, fai <a href='/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
+    $already_logged = "<p id='alreadyLogged'>Sei già connesso, fai <a href='/volontario/logout' lang='en'>logout</a> per poter registrare un altro account.</p>";
     $html = str_replace('[form]', $already_logged, $html);
 } else {
     $form = "
@@ -55,7 +55,7 @@ if ($connessioneOK && $result === false) {
         $_SESSION['username'] = $row['username'];
         $_SESSION['user_id'] = $row['idPersona'];
         $_SESSION['role'] = $row['ruolo'];
-        header('Location: /volontario');
+        header('Location: /volontario/');
         exit();
     } else {
         $messaggio = "<div role='alert'><p class='error'>La password o l'username non sono corretti</p></div>";

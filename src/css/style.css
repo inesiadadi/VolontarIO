@@ -1629,8 +1629,11 @@ img {
 }
 
 
-#legendForm {
+#legendForm, #alreadyLogged {
     text-align: center;
+}
+#alreadyLogged a {
+    text-decoration: underline;
 }
 /* 
    ========================
@@ -2221,8 +2224,9 @@ textarea#descrizione {
 
 .profileBtn {
     display: inline-block;
+    border: none;
     background-color: var(--deep-green);
-    color: #ffffff;
+    color: var(--white);
     text-decoration: none;      /* rimuove sottolineatura link */
     padding: 0.8rem 1.2rem;
     border-radius: 1rem;
@@ -2233,6 +2237,8 @@ textarea#descrizione {
 }
 
 .profileBtn:hover {
+    cursor: pointer;
+    color: var(--main-bg);
     background-color: #06562a; /* leggero highlight al passaggio */
 }
 
