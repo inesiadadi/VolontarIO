@@ -155,26 +155,27 @@ class DBAccess {
         }
     }
 
-    public function getCandidatureEffettuate($idVolontario) {
-        $this->checkUpdateRequests();
-        $sql = "SELECT R.*, T.nome AS tipologia, C.nome as citta
-                FROM Richiesta R
-                JOIN Tipologia T ON R.idTipo = T.idTipo
-                JOIN Citta C ON R.idCitta = C.idCitta
-                WHERE idRichiedente = ?
-                ORDER BY dataRichiesta DESC";
-        
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bind_param("i", $idVolontario);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        $richieste = [];
-        while($row = $result->fetch_assoc()) {
-            $richieste[] = $row;
-        }
-        return $richieste;
+public function getCandidatureEffettuate($idVolontario) {
+    $this->checkUpdateRequests(); 
+
+    $sql = "SELECT R.*, T.nome AS tipologia, C.nome as citta
+            FROM Richiesta R
+            JOIN Tipologia T ON R.idTipo = T.idTipo
+            JOIN Citta C ON R.idCitta = C.idCitta
+            WHERE R.idOfferente = ?
+            ORDER BY R.dataRichiesta DESC";
+    
+    $stmt = $this->connection->prepare($sql);
+    $stmt->bind_param("i", $idVolontario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $richieste = [];
+    while($row = $result->fetch_assoc()) {
+        $richieste[] = $row;
     }
+    return $richieste;
+}
         
     public function getTipologie() {
         $sql = "SELECT * FROM Tipologia ORDER BY nome ASC";
@@ -209,6 +210,17 @@ class DBAccess {
                 // Questo ti dirà l'errore esatto del database (es. "Incorrect datetime value")
                 error_log("Errore SQL: " . $this->connection->error);
                 return false;
+        }
+        return true;
+    }
+
+    public function rinunciaCandidatura($codiceRichiesta) {
+        $sql = "UPDATE Richiesta SET idOfferente = NULL, stato = 'aperta' WHERE codiceRichiesta = ?";
+        $query = $this->connection->prepare($sql);
+        $query->bind_param('i', $codiceRichiesta);
+        if (!$query->execute()) {
+            error_log("Errore SQL:" . $this->connection->error);
+            return false;
         }
         return true;
     }
@@ -368,7 +380,7 @@ class DBAccess {
     ## PANNELLO ADMIN
 
     public function getMessaggi() {
-        $query = $this->connection->prepare("SELECT id, nome_cognome, email, numero, messaggio, data_invio FROM assistenza");
+        $query = $this->connection->prepare("SELECT id, nome_cognome, email, numero, messaggio, data_invio FROM Assistenza");
         $query->execute() or die ("Errore in dbConnection" . mysqli_error($this->connection));
         $result = $query->get_result();
         if(mysqli_num_rows($result) == 0) {
@@ -377,12 +389,12 @@ class DBAccess {
         return $result;
     }
     public function deleteMessaggio($idMessaggio) {
-        $query = $this->connection->prepare("DELETE FROM assistenza WHERE id = ?");
+        $query = $this->connection->prepare("DELETE FROM Assistenza WHERE id = ?");
         $query->bind_param("i", $idMessaggio);
         $query->execute();
         }
     public function saveMessaggio($nome_cognome, $email, $numero, $messaggio) {
-        $query = $this->connection->prepare("INSERT INTO assistenza (nome_cognome, email, numero, messaggio) VALUES (?, ?, ?, ?)");
+        $query = $this->connection->prepare("INSERT INTO Assistenza (nome_cognome, email, numero, messaggio) VALUES (?, ?, ?, ?)");
         $query->bind_param("ssis", $nome_cognome, $email, $numero, $messaggio);
         $query->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
     }
