@@ -9,22 +9,22 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     $nome = trim(filter_input(INPUT_POST, 'nome_cognome', FILTER_SANITIZE_SPECIAL_CHARS));
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $numero = trim(filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_SPECIAL_CHARS));
-    $messaggio = trim(filter_input(INPUT_POST, 'descrizione', FILTER_SANITIZE_SPECIAL_CHARS));
+    $messaggio = trim(filter_input(INPUT_POST, 'messaggio', FILTER_SANITIZE_SPECIAL_CHARS));
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errore = "<div role='alert'><p class='error'>La email inserita nel form d'assistenza non è valida, riprovare</p></div>";
+        $errore = "<div role='alert'><p id='infoForm' class='error'>La email inserita nel form d'assistenza non è valida, riprovare</p></div>";
         $html = str_replace('[formMessage]', $errore,$html);
         $html = str_replace('[tel]', $numero, $html);
         $html = str_replace('[nome_cognome]', $nome, $html);
         $html = str_replace('[messaggio]', $messaggio, $html);
     } else if (strlen($nome) > 32) {
-        $errore = "<div role='alert'><p class='error'>Il nome inserito è troppo lungo, riprovare</p></div>";
+        $errore = "<div role='alert'><p id='infoForm' class='error'>Il nome inserito è troppo lungo, riprovare</p></div>";
         $html = str_replace('[formMessage]', $errore, $html);
         $html = str_replace('[email]', $email, $html);
         $html = str_replace('[tel]', $numero, $html);
         $html = str_replace('[messaggio]', $messaggio, $html);
-    } else if(strlen($numero) > 12) {
-        $errore = "<div role='alert'><p class='error'>Errore nel numero di telefono, riprovare</p></div>";
+    } else if(strlen($numero) > 13) {
+        $errore = "<div role='alert'><p id='infoForm' class='error'>Errore nel numero di telefono, riprovare</p></div>";
         $html = str_replace('[formMessage]', $errore,$html);
         $html = str_replace('[tel]', $numero, $html);
         $html = str_replace('[nome_cognome]', $nome, $html);
@@ -37,8 +37,14 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             exit;
             } else {
             $dbAccess->saveMessaggio($nome, $email, $numero, $messaggio);
-            $errore = "<div role='alert'><p class='success'>Richiesta d'assistenza inviata con successo</p></div>";
+            $errore = "<div role='alert'><p id='infoForm' class='success'>Richiesta d'assistenza inviata con successo</p></div>";
             $html = str_replace('[formMessage]', $errore,$html);
+            $html = str_replace('[formMessage]', "",$html);
+            $html = str_replace('[email]', "", $html);
+            $html = str_replace('[tel]', "", $html);
+            $html = str_replace('[nome_cognome]', "", $html);
+            $html = str_replace('[messaggio]', "", $html);
+
             
         }
     }
