@@ -8020,8 +8020,8 @@ INSERT INTO Richiesta (descrizione, dataRichiesta, stato, idRichiedente, idOffer
 ('Cerco aiuto per la spesa settimanale', NOW(), 'aperta', 5, NULL, 2, 14),
 ('Richiedo compagnia per passeggiata', NOW(), 'aperta', 3, NULL, 3, 40),
 ('Accompagnamento visita medica urgente', NOW(), 'in_carico', 4, 1, 4, 601),
-('Ripetizioni di matematica per esame', '2024-01-15 14:00:00', 'completata', 5, 2, 1, 14),
-('Aiuto trasporto pacchi pesanti', '2024-01-20 10:00:00', 'completata', 1, 3, 2, 14);
+('Ripetizioni di matematica per esame', '2026-01-15 14:00:00', 'in_carico', 5, 2, 1, 14),
+('Aiuto trasporto pacchi pesanti', '2024-01-20 10:00:00', 'in_carico', 1, 3, 2, 14);
 
 INSERT INTO Valutazione (descrizione, voto, idRichiesta) VALUES
 ('Alberto è stato chiarissimo e paziente.', 10, 4),

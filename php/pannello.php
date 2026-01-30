@@ -36,9 +36,8 @@ if($connessioneOK) {
     $result = $dbAccess->getMessaggi();
     if($result === false) {
         $table = "
-        <div class='noReviewsMsg'>
-        <span aria-hidden='true'>🌱</span>
-        <p>Non ci sono richieste d'assistenza</p>
+        <div id='noContactTable' class='noReviewsMsg'>
+        <p>Non ci sono richieste d'assistenza.</p>
         </div>
         ";
     } else {
@@ -47,10 +46,9 @@ if($connessioneOK) {
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Messaggio</th>
-                        <th scope="col">Azioni</th>
+                        <th data-label="Telefono" scope="col">Telefono</th>
+                        <th data-label="Messaggio" scope="col">Messaggio</th>
+                        <th data-label="Azioni" scope="col">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -65,11 +63,11 @@ if($connessioneOK) {
             $id = $row['id'];
 
             $table .= '<tr>
-                    <th scope="row">' . $nome_cognome . '</th>
-                    <td>' . $email . '</td>
-                    <td>' . $numero . '</td>
-                    <td><div class="message-cell-content">'. $messaggio . '</div></td>
-                    <td>
+                    <th data-label="Nome" scope="row">' . $nome_cognome . '</th>
+
+                    <td data-label="Numero">' . $numero . '</td>
+                    <td data-label="Messaggio"><div class="message-cell-content">'. $messaggio . '</div></td>
+                    <td data-label="Azioni">
                         <div class="actions">
                             <a href="mailto:' . $email . '?subject=Risposta assistenza VolontarIO" 
                                class="btnh btn-login-header" title="Rispondi via email">
