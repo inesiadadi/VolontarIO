@@ -133,7 +133,7 @@ button:focus-visible {
 
 .back-to-top::after {
     content: 'Ritorna in cima';
-    color: var(--dark-green);
+    color: var(--white);
     font-family: var(--font-main);
     font-weight: 700;
     font-size: 1.6rem;
@@ -543,13 +543,6 @@ h2, h3 {
     margin-top: 0.5rem; 
 }
 
-
-
-.container-text li:hover {
-    color: var(--dark-green);
-    font-weight: 600;
-}
-
 .container-cf img {
     flex: 0 0 500px; 
     width: 500px;
@@ -586,20 +579,16 @@ h2, h3 {
 }
 
 .sez3-cf .btn-registrati {
-    background-color: var(--secondary-bg);
-    color: var(--dark-green);
-    border-radius: 60px;
-    cursor: pointer;
-    padding: 1.2rem 4rem;
-    font-size: 1.3rem;
-    font-weight: 800;
-    border: 3px solid transparent;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    display: inline-block; 
-    text-decoration: none; 
-    text-align: center;    
-    line-height: normal; 
+  display: inline-block;
+  padding: 1.2rem 4rem;  
+  border-radius: 60px;
+  background-color: var(--secondary-bg);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: 0.3s;     
+  color: var(--dark-green);
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-decoration: none; 
 }
 
 .sez3-cf .btn-registrati:hover {
@@ -620,10 +609,6 @@ h2, h3 {
   margin: 40px auto;
   padding: 20px;
 }
-.contact-section p#infoForm{
-    color: var(--dark-green);
-
-}
 .contact-section h2 {
   color:var(--deep-green);
   font-size: 2rem;
@@ -633,11 +618,17 @@ h2, h3 {
 
 .contact-section p {
   margin-top: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   color:var(--text-muted);
   font-size: 1.1rem;
   font-weight: 500;
-  line-height: 1.6;
+  line-height: 1;
+}
+
+.contact-section p.note-form {
+  font-size: 0.9rem; 
+  margin-top: -10px; 
+  font-weight: 500;
 }
 
 .form-cf {
@@ -658,17 +649,22 @@ h2, h3 {
 }
 
 .contenitore-form {
-    display: flex;        
-    justify-content: space-between; 
-    gap: 20px;            
-    width: 100%;
+  display: flex;        
+  justify-content: space-between; 
+  gap: 20px;            
+  width: 100%;
 }
 
-.form-input, 
+.form-input {
+  display: flex;   
+  flex: 1;             
+  flex-direction: column;
+}
+
 .form-textarea {
   display: flex;   
-  flex: 1;               
-  flex-direction: column;
+  flex: 1;              
+  flex-direction: column; 
 }
 
 .input-cf {
@@ -678,20 +674,21 @@ h2, h3 {
   padding: 10px;
 }
 
-.textarea-cf{
-  box-sizing: border-box;
+.textarea-cf {
   width: 100%;
+  height: 100%;         
+  flex-grow: 1;         
+  resize: vertical;    
   padding: 10px;
-  height: 273px; 
-  margin-bottom: 15px; 
+  box-sizing: border-box; 
 }
 
 .form-input label,
- .form-textarea label{
+.form-textarea label {
   color: var(--deep-green);
   font-weight: 600;
   margin-bottom: 6px;
-  font-size:1.1rem ;
+  font-size: 1.1rem;
 }
 
 .form-input input,
@@ -699,9 +696,11 @@ h2, h3 {
   font-size: 1.1rem;
   border-radius: 8px;
   border: 2px solid var(--outline);
-  padding: 20px;
+  padding: 20px;   
   background-color: var(--white);
   color: var(--deep-green);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-input input:focus,
@@ -2466,65 +2465,96 @@ body.dark-mode {
 
 body.dark-mode #landing h2,
 body.dark-mode #landing h3,
-body.dark-mode #landing p{
-   color:var(--dark-green);
+body.dark-mode #landing p,
+body.dark-mode .team-card .bio,
+body.dark-mode #breadcrumb li,
+body.dark-mode #breadcrumb a,
+body.dark-mode .site-footer a,
+body.dark-mode .sez1-cf h1,
+body.dark-mode .sez1-cf p,
+body.dark-mode .sez2-cf h2,
+body.dark-mode .container-text p,
+body.dark-mode .container-text li,
+body.dark-mode .contact-section p,
+body.dark-mode .form-input label,
+body.dark-mode .form-textarea label,
+body.dark-mode .biographyText p,
+body.dark-mode .error-500 p,
+body.dark-mode .error-500 .btn-primary,
+body.dark-mode .error-404 h1 .pun,
+body.dark-mode .error-404 p {
+    color: var(--dark-green);
 }
 
-body.dark-mode #landing h3 span{
-   color:var(--deep-green);
+body.dark-mode #landing h3 span,
+body.dark-mode .site-footer a:visited,
+body.dark-mode .container-text h3,
+body.dark-mode .sez3-cf .btn-registrati,
+body.dark-mode .btn.reset-link,
+body.dark-mode .userUsername,
+body.dark-mode .userInformation dt,
+body.dark-mode .noReviewsMsg,
+body.dark-mode .noRequestMsg,
+body.dark-mode .filterSubtitle {
+    color: var(--deep-green);
 }
 
-body.dark-mode .get-started-btn {
+body.dark-mode .get-started-btn,
+body.dark-mode .stat-label,
+body.dark-mode .stat-number,
+body.dark-mode .form-input input,
+body.dark-mode .form-textarea textarea,
+body.dark-mode #newRequest,
+body.dark-mode .accessForm button,
+body.dark-mode .category-tag,
+body.dark-mode .btn-secondary {
     color: var(--main-bg);
 }
 
-body.dark-mode .get-started-btn:hover {
+body.dark-mode .info-step p,
+body.dark-mode .team-card .role,
+body.dark-mode .contact-section h2 {
+    color: var(--warning-text);
+}
+
+body.dark-mode #landing .learn-more-btn,
+body.dark-mode .btn-login-header {
+    color: var(--dark-green);
+    border-color: var(--dark-green);
+}
+
+body.dark-mode .form-input input,
+body.dark-mode .form-textarea textarea {
+    background-color: #e8fff2;
+    border: 2px solid var(--outline);
+}
+
+body.dark-mode .form-input input:focus,
+body.dark-mode .form-textarea textarea:focus {
+    border-color: var(--dark-green);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-glow);
+}
+
+body.dark-mode .get-started-btn:hover,
+body.dark-mode .btn-primary:hover {
     background-color: var(--separator);
     color: var(--dark-green);
 }
 
-body.dark-mode #landing .learn-more-btn{
-    color: var(--dark-green);
-    border-color: var(--dark-green);
+body.dark-mode .btn-register-header:hover,
+body.dark-mode .btn-submit:hover,
+body.dark-mode #newRequest:hover {
+    background-color: var(--outline);
 }
 
 body.dark-mode #landing .learn-more-btn:hover {
     background-color: var(--dark-green);
     color: var(--separator);
-}   
-
-body.dark-mode .stat-label,
-body.dark-mode .stat-number {
-    color: var(--main-bg);
 }
 
 body.dark-mode .step-icon {
     background-color: var(--white);
-}
-
-body.dark-mode .info-step p {
-    color: var(--warning-text);
-}
-
-body.dark-mode  .team-card .role {
-    color: var(--warning-text); 
-}
-
-body.dark-mode .team-card .bio {
-    color: var(--dark-green);
-}
-
-body.dark-mode #breadcrumb li {
-  color: var(--dark-green);  
-}
-
-body.dark-mode  #breadcrumb a {
-  color: var(--dark-green);  
-}
-
-body.dark-mode .btn-login-header {
-    color: var(--dark-green);
-    border-color: var(--dark-green);
 }
 
 body.dark-mode .btn-login-header:hover {
@@ -2537,96 +2567,24 @@ body.dark-mode .btn-register-header {
     color: var(--white);
     border-color: var(--deep-green);
 }
-
 body.dark-mode .btn-register-header:hover {
-    background-color:var(--outline);
-    border-color:var(--outline);
+    border-color: var(--outline); 
 }
 
-body.dark-mode .site-footer{
+body.dark-mode .site-footer {
     background-color: var(--secondary-bg);
-    color:var(--dark-green);
+    color: var(--dark-green);
 }
-
-body.dark-mode .site-footer a{
-    color:var(--dark-green);
-}
-
-body.dark-mode .site-footer a:hover{
+body.dark-mode .site-footer a:hover {
     color: var(--outline);
 }
 
-body.dark-mode .site-footer a:visited {
-    color: var(--deep-green);
-}
-
-body.dark-mode .sez1-cf h1 {
-    color: var(--dark-green);
-}
-
-body.dark-mode .sez1-cf p {
-    color: var(--dark-green);
-}
-
-body.dark-mode .sez2-cf h2{
-     color: var(--dark-green);
-}
-
-body.dark-mode .container-text h3{
-    color: var(--deep-green);
-}
-
-body.dark-mode .container-text p, 
-body.dark-mode .container-text li{
-    color: var(--dark-green);
-}
-
-body.dark-mode .sez3-cf .btn-registrati {
-    color: var(--deep-green);
-}
-
-body.dark-mode .form-input input,
-body.dark-mode .form-textarea textarea{
-  background-color: var(--deep-green);
-    color: var(--main-bg);
-   border: 2px solid var(--warning-text);
-}
-
-body.dark-mode .contact-section h2{
-  color:var(--warning-text);
-}
-
-body.dark-mode .form-input input:focus,
-body.dark-mode .form-textarea textarea:focus {
-    border-color: var(--dark-green);
-    outline: none; 
-    box-shadow: 0 0 0 3px var(--focus-glow); 
-}
-
-body.dark-mode .contact-section p {
-  color:var(--dark-green);
-}
-
-body.dark-mode .form-input label,
-body.dark-mode .form-textarea label{
-  color: var(--dark-green);
-}
-
-body.dark-mode .btn-submit:hover {
-    background-color: var(--outline);
-}
-
 body.dark-mode .btn-delete {
-    background-color:var(--main-bg);
+    background-color: var(--main-bg);
 }
-
-body.dark-mode .btn-delete:hover{
-    background-color:var(--outline);
-    color:var(--main-bg)
-}
-
-body.dark-mode .btn.reset-link {
-    color: var(--deep-green);
+body.dark-mode .btn-delete:hover {
+    background-color: var(--outline);
+    color: var(--main-bg);
 }
 
 body.dark-mode .filter-form input[type="date"],
@@ -2637,33 +2595,16 @@ body.dark-mode .filter-form input[type="text"] {
 body.dark-mode .btn.apply-filters {
     background-color: var(--deep-green);
     color: var(--white);
-
-}
-
-body.dark-mode  .biographyText p{
-    color: var(--dark-green);
-}
-
-body.dark-mode .userUsername,
- body.dark-mode .userInformation dt
-{
-    color: var(--deep-green);
 }
 
 body.dark-mode .modifyProfile {
     color: var(--secondary-bg);
 }
 
-body.dark-mode .noReviewsMsg,
-body.dark-mode .noRequestMsg {
-    color: var(--deep-green);
-}
-
 body.dark-mode .filterSubtitle {
     display: block;
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--deep-green);
     margin-bottom: 0.5rem;
 }
 
@@ -2673,78 +2614,42 @@ body.dark-mode .filterSelect {
     color: var(--secondary-bg);
 }
 
-
-body.dark-mode  #newRequest {
-    color: var(--main-bg);
+body.dark-mode #newRequest {
     background-color: var(--deep-green);
 }
 
-body.dark-mode #newRequest:hover {
-    background-color:var(--outline);
-}
-
-body.dark-mode .accessForm button {
-    color: var(--main-bg);
-}
-
-body.dark-mode .meta-item img{
+body.dark-mode .meta-item img {
     filter: invert(1);
 }
 body.dark-mode .req-footer {
     border-top: 1px solid var(--outline);
- 
 }
 
 body.dark-mode .category-tag {
     background-color: var(--dark-green);
-    color: var(--main-bg);
 }
 
-body.dark-mode .error-500 p {
-    color: var(--dark-green);
-}
-
-body.dark-mode .error-500 .btn-primary {
-    color: var(--dark-green);
-}
-
-body.dark-mode  .error-500 .btn-primary:hover {
+body.dark-mode .error-500 .btn-primary:hover {
     background-color: var(--deep-green);
     color: var(--main-bg);
 }
 
-body.dark-mode .error-404 h1 .pun {
-  color: var(--dark-green); 
-  position: relative;
-  display: inline-block;
-}
-
-body.dark-mode .error-404 p {
-  color: var(--dark-green);
-  font-size: 1.3rem;
-  max-width: 450px;
-  margin: 0 auto 1.5rem auto;
-  line-height: 1.5;
-}
-
 body.dark-mode .btn-primary {
-  background-color: var(--main-bg);
+    background-color: var(--main-bg);
     border: 2px solid var(--dark-green);
 }
 
-body.dark-mode .btn-primary:hover {
-  background-color: var(--separator);
-  color:var(--dark-green);
-}
-
-body.dark-mode .btn-secondary {
-  color: var(--main-bg);
-}
-
 body.dark-mode .btn-secondary:hover {
-    border: 2px solid var(--outline);
+    border: 2px solid var(--main-bg);
 }
 
-body.dark-mode .success {
-    background-color: #305121;
+body.dark-mode .back-to-top {
+    border: 2px solid var(--white);
+}
+body.dark-mode .back-to-top::after {
+    color: var(--white);
+}
+body.dark-mode .back-to-top:hover,
+body.dark-mode .back-to-top:focus-visible {
+    background-color: var(--deep-green);
 }
