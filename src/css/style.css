@@ -1003,7 +1003,7 @@ SEZIONE FOOTER
     border-color: var(--white);
 }
 
-#landing .get-started-btn:hover {
+#landing .get-started-btn:hover ,.btn.apply-filters:hover{
     background-color: var(--dark-green);
     color: var(--white);
 }
@@ -1052,10 +1052,9 @@ SEZIONE FOOTER
 }
 
 #landing h3 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    opacity: 0.9;
     color: var(--secondary-bg);
 }
 
@@ -1222,7 +1221,7 @@ SEZIONE FOOTER
 
 .team-card .role {
     display: block;
-    font-size: 0.9rem;
+    font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--outline); 
@@ -1231,7 +1230,7 @@ SEZIONE FOOTER
 }
 
 .team-card .bio {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--separator);
     line-height: 1.5;
 }
@@ -1272,13 +1271,13 @@ SEZIONE FOOTER
 
 .filter-header {
     align-items: center;
-    border-bottom: 1px solid var(--main-bg);
+    border-bottom: 1px solid var(--outline);
 }
 
 .filter-header h2 {
     font-size: 1.5rem;
     text-align: left;
-    color: var(--outline);
+    color: var(--dark-green);
 }
 
 .filters-sidebar button, .btn.reset-link ,.requests-list button, .requests-list a {
@@ -1294,11 +1293,15 @@ SEZIONE FOOTER
 
 .btn.reset-link {
     margin: 1rem 0;
-    background-color: #e1a5a5;
-    color: #811d1d;
+    color: var(--white);
     cursor: pointer;
     padding: 0.8rem;
     width: 100%;
+    background-color:#AA4E4E;
+}
+
+.btn.reset-link:hover {
+    background-color: #833333;
 }
 
 .filter-sidebar .autocomplete-container {
@@ -1319,7 +1322,7 @@ SEZIONE FOOTER
 .filter-form label , .form-label{
     display: block;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin: 0.5rem 0;
 }
 
 .form-group .checkbox-label{
@@ -1469,15 +1472,15 @@ SEZIONE FOOTER
     align-items: center;
     justify-content: center;
     padding: 4rem 1rem;
+    margin-top: 5rem;
     text-align: center;
-    min-height: 50vh;
     width: 100%;
     grid-column: 1 / -1;
 }
-.no-request-msg span {
-    display: block;
-    font-size: 3rem;
-    margin-bottom: 1rem;
+.no-request-msg img{
+    width: 16rem;
+    height: auto;
+    margin-bottom: 1.5rem;
 }
 
 

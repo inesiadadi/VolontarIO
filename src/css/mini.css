@@ -325,7 +325,9 @@ SEZIONE COME_FUNZIONA
     text-align: center;
 }
 
-
+.no-request-msg {
+    margin-top: 0rem;
+    }
 /* 
    ========================
 
