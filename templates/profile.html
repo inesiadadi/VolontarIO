@@ -1,43 +1,43 @@
-<main class="profilePageContainer" id="content" itemscope itemtype="https://schema.org/Person">
+<main class="profilePageContainer" id="content" tabindex="-1">
     <nav id="breadcrumb" aria-label="Percorso attuale del sito">
         <ul>
-        <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
-        <li>Area Personale</li>
+        <li><a href="/volontario/">Home</a></li>
+        <li aria-current="page">Area Personale</li>
         </ul>
     </nav>
     <div class="profileGrid">
         <h1 class="profilePageTitle">L'Angolo del Volontario</h1>
-        <aside class="profileInfoColumn">
+        <section class="profileInfoColumn" aria-labelledby="profileInfoTitle">
+            <h2 id='profileInfoTitle' class='srOnly'>Informazioni generali di [Nome] [Cognome]</h2>
             <div class="userMainInfo">
-                <img src="[FotoProfilo]" alt="Foto Profilo di [Nome] [Cognome]" class="userPfP" itemprop="image">
-                <h2 class="userIdentity" itemprop="name">[Nome] [Cognome]</h2>
-                <h3 class="userUsername" itemprop="alternateName">@[Username]</h3>
+                <img src="[FotoProfilo]" alt="Foto Profilo di [Nome] [Cognome]" class="userPfP">
+                <p class="userIdentity">[Nome] [Cognome]</p>
+                <p class="userUsername">@[Username]</p>
             </div>
             <dl class="userInformation">
                 <dt class="infoLabel">Nascita:</dt>
                 <dd class="infoValue">
-                    <time datetime="[DataISO]" itemprop="birthDate">[DataVisual]</time>
+                    <time datetime="[DataISO]">[DataVisual]</time>
                 </dd>
-
                 <dt class="infoLabel">Città:</dt>
-                <dd class="infoValue" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                    <span itemprop="addressLocality">[Citta]</span>
+                <dd class="infoValue">
+                    <span>[Citta]</span>
                 </dd>
             </dl>
             <div class="userButtons">
                 [Actions]
             </div>
-        </aside>
+        </section>
         <div class="volunteerInformation">
-            <section class="volunteerBiography">
-                <h2 class="cardTitle">Chi sono</h2>
-                <span class="biographyText" itemprop="description">[Descrizione]</span>
-            </section>
-            [SezioneReputazione]
-            <section id="reviewsSection" class="reviewsGrid" aria-labelledby="reviewsTitle">
-                <h2 id="reviewsTitle" class="sectionHeader">Ultime Recensioni</h2>
+          <section class="volunteerBiography">
+            <h2 class="cardTitle">Chi sono</h2>
+            <p class="biographyText">[Descrizione]</p>
+          </section>
+          [SezioneReputazione]
+          <section id="reviewsSection" class="reviewsGrid" aria-labelledby="reviewsTitle">
+              <h2 id="reviewsTitle" class="sectionHeader">Ultime Recensioni</h2>
                 [SezioneRecensioni]
-            </section>
+          </section>
         </div>
     </div> 
 </main>

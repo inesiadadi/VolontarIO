@@ -1,17 +1,18 @@
-<section class="valuationSection" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
-    <h2 class="cardTitle">Reputazione</h2>
-    <meta itemprop="ratingValue" content="[MediaVoto]">
-    <meta itemprop="reviewCount" content="[NumRecensioni]">
-    <div class="valuationContainer">
-        <div class="valuationScore">
-            <span class="valuationValue">[MediaVoto]</span>
-            <span class="valuationMax">/10</span>
-            <p class="srOnly">Voto basato su [NumRecensioni] recensioni</p> 
-        </div>
-        <div class="valuationStars">
-            <div class="starsWrapper" role="img" aria-hidden="true">
-                <div class="starsBackground">★★★★★</div>
-                <div class="starsColor" data-percentuale="[PercentualeStelle]">★★★★★</div>
-            </div>
-        </div>
+<section class="valuationSection" aria-labelledby="reputationTitle">
+  <h2 id="reputationTitle" class="cardTitle">Reputazione</h2>
+  <div class="valuationContainer">
+    <div class="valuationScore">
+      <span class="valuationValue">[MediaVoto]</span>
+      <span class="valuationMax">/10</span>
+      <p class="srOnly">
+        Valutazione media: [MediaVoto] su 10, basata su [NumRecensioni] [NumeroRecensioni].
+      </p>
+    </div>
+    <div class="valuationStars" aria-hidden="true">
+      <div class="starsWrapper">
+        <div class="starsBackground">★★★★★</div>
+        <div class="starsColor" data-percentuale="[PercentualeStelle]">★★★★★</div>
+      </div>
+    </div>
+  </div>
 </section>

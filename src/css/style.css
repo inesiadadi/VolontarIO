@@ -21,25 +21,28 @@
 html {
     font-size: 100%;
     scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
     background-color: var(--main-bg);
     color: var(--dark-green);
     font-family: var(--font-main);
-    font-size: 1.6rem;
+    font-size: 1rem;
     margin: 0;
     padding-top: 80px;
     line-height: 1.6;
     transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
 }
 
 html, body {
     max-width: 100%;
-    overflow-x: hidden;
 }
 
-* {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
@@ -51,10 +54,18 @@ a {
 
 ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 a:hover {
     color: var(--outline);
+}
+
+a:focus, button:focus {
+    outline: 3px solid var(--warning-text);
+    outline-offset: 4px;
+    border-radius: 0.5rem;
 }
 
 a:focus-visible,
@@ -65,32 +76,21 @@ button:focus-visible {
 }
 
 .skip-link {
-    position: fixed;       /* sempre visibile in alto a sinistra */
+    position: fixed;       
     top: 1rem;
     left: 1rem;
     background-color: var(--deep-green);
-    color: white;
+    color: var(--white);
     padding: 0.8rem 1.2rem;
     border-radius: 4px;
     font-weight: 700;
     text-decoration: none;
     z-index: 10000;
-
-    /* Invisibile ma selezionabile dai lettori schermo */
-    clip: rect(0 0 0 0);   /* taglia fuori dal viewport */
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    
+    transform: translateY(-200%);
 }
 
-.skip-link:focus-visible {
-    /* Rende il link visibile quando ha il focus */
-    clip: auto;
-    width: auto;
-    height: auto;
-    overflow: visible;
-
+.skip-link:focus, .skip-link:focus-visible {
+    transform: translateY(0);
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
@@ -133,10 +133,10 @@ button:focus-visible {
 
 .back-to-top::after {
     content: 'Ritorna in cima';
-    color: var(--dark-green);
+    color: var(--white);
     font-family: var(--font-main);
     font-weight: 700;
-    font-size: 1.6rem;
+    font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
     
@@ -160,7 +160,7 @@ button:focus-visible {
 }
 
 .back-to-top:focus-visible {
-    outline: 3px solid var(--deep-green) !important;
+    outline: 3px solid var(--deep-green);
     outline-offset: 4px;
     background-color: var(--dark-green);
     max-width: 20rem; 
@@ -1650,9 +1650,9 @@ img {
 
 .profileGrid {
     display: grid;
-    grid-template-columns: 32rem 1fr;
-    gap: 3rem;
-    max-width: 120rem;
+    grid-template-columns: 26rem 1fr;
+    gap: 2rem;
+    max-width: 80rem;
     margin: 0 auto;
     padding: 1rem 2rem;
 }
@@ -1660,12 +1660,12 @@ img {
 /* Probabilmente diventa quello per tutti i titoli!! */
 .profilePageTitle {
     width: fit-content;
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.25rem;
     font-size: 3.2rem;
     font-weight: 700;
     color: var(--dark-green);
     grid-column: 1 / -1;
-    margin: 2rem auto 3rem auto;
+    margin: 0 auto 3rem auto;
     text-align: left;
 }
 
@@ -1674,7 +1674,7 @@ img {
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     border: 3px solid var(--outline);
-    padding: 3rem;
+    padding: 2rem;
     text-align: center;
     position: static;
     top: 2rem;
@@ -1682,13 +1682,13 @@ img {
 }
 
 .userMainInfo {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .userPfP {
     display: block;
-    width: 16rem;
-    height: 16rem;
+    width: 12rem;
+    height: 12rem;
     border-radius: 50%;
     object-fit: cover;
     border: 0.6rem solid var(--deep-green);
@@ -1696,15 +1696,15 @@ img {
 }
 
 .userIdentity {
-    font-size: 2.6rem;
-    font-weight: 900;
+    font-size: 1.6rem;
+    font-weight: 800;
     margin: 0.5rem 0;
     color: var(--dark-green);
     line-height: 1.2;
 }
 
 .userUsername {
-    font-size: 2.0rem;
+    font-size: 1.2rem;
     color: var(--outline);
     font-weight: 400;
     margin-top: 0.5rem;
@@ -1712,37 +1712,42 @@ img {
 
 .userInformation {
     display: grid;
+    margin: 1rem 0 0;
+    padding-bottom: 1rem;
     grid-template-columns: 1fr 1fr;
-    row-gap: 1.5rem;
+    row-gap: 0.75rem;
     border-bottom: 1px solid var(--separator);
 }
 
-.userInformation dt {
-    font-weight: 900;
+.userInformation dt, .userInformation dd {
+    font-weight: 700;
+    font-size: 1.3rem;
     color: var(--outline);
+    margin: 0;
 }
 
 .userInformation dd {
     font-weight: 500;
     color: var(--dark-green);
     text-align: right;
+    margin: 0;
 }
 
 .userButtons {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 /* === Creati in profilo.php a seconda dello stato della sessione dell'utente === */
 
 .btn {
     display: inline-block;
-    padding: 1.2rem 2.4rem;
+    padding: 0.9rem 1.4rem;
     border-radius: 2rem;
     font-weight: 700;
     text-align: center;
     cursor: pointer;
     border: none;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
 }
 
 .modifyProfile, .contactUser {
@@ -1754,15 +1759,50 @@ img {
 }
 
 .modifyProfile:hover, .contactUser:hover {
-    box-shadow: 0 20px 30px rgba(0,0,0,0.15);
-    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 12px 18px rgba(0,0,0,0.15);
+    transform: translateY(-4px) scale(1.03);
     color: var(--white);
+}
+
+@media (max-width: 600px) {
+    .profileGrid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    .profilePageTitle {
+        font-size: 1.6rem;
+        margin: 1rem 0 1.25rem;
+    }
+
+    .profileInfoColumn {
+        padding: 1.5rem;
+    }
+
+    .volunteerBiography, .valuationSection {
+        padding: 1.5rem;
+    }
+
+    .valutationValue {
+        font-size: 2.5rem;
+    }
+
+    .reviewHeader {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .reviewVote {
+        align-self: flex-start;
+    }
+
 }
 
 .volunteerInformation {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
 }
 
 .volunteerBiography, 
@@ -1771,19 +1811,17 @@ img {
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     border: 3px solid var(--outline);
-    padding: 3rem;
+    padding: 2rem;
 }
 
 .cardTitle,
 .sectionTitle {
-    font-size: 2.4rem;
-    font-weight: 900;
+    font-size: 1.6rem;
+    font-weight: 800;
     color: var(--dark-green);
-    margin-top: 0;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 3px solid var(--separator);
-    display: inline-block;
+    margin: 0 0 1.25rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--separator);
     width: 100%;
 }
 
@@ -1797,10 +1835,10 @@ img {
     width: auto;
 }
 
-.biographyText p {
-    font-size: 1.8rem;
+p.biographyText {
+    font-size: 1.3rem;
     color: var(--dark-green);
-    line-height: 1.8;
+    line-height: 1.75;
     margin: 0;
     font-weight: 500;
 }
@@ -1810,7 +1848,7 @@ img {
 .valuationContainer {
     display: flex;
     align-items: center;
-    gap: 4rem;
+    gap: 2rem;
     flex-wrap: wrap; /* TODO: testare comportamento su schermi stretti */
 }
 
@@ -1820,14 +1858,14 @@ img {
 }
 
 .valuationValue {
-    font-size: 5rem;
+    font-size: 3rem;
     font-weight: 900;
     color: var(--dark-green); /* TODO: verificare contrasto con background */
     line-height: 1;
 }
 
 .valuationMax {
-    font-size: 2rem;
+    font-size: 1.2rem;
     color: var(--outline); /* TODO: verificare contrasto con background */
     margin-left: 0.5rem;
     font-weight: 700;
@@ -1841,7 +1879,7 @@ img {
 .starsWrapper {
     position: relative;
     display: inline-block;
-    font-size: 3.5rem;
+    font-size: 2.2rem;
     line-height: 1;
     font-family: sans-serif;
 }
@@ -1877,41 +1915,38 @@ img {
 .reviewsGrid, .requestGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
-    gap: 2.5rem;
+    gap: 1.5rem;
     width: 100%;;
 }
 
 .sectionHeader {
     grid-column: 1 / -1; 
-    font-size: 2.4rem;
-    font-weight: 900;
+    font-size: 1.6rem;
+    font-weight: 800;
     color: var(--dark-green);
-    margin-bottom: 1rem;
-    padding-left: 1rem;
     border-bottom: 2px solid var(--separator);
-    padding-bottom: 1rem;
+    padding: 0 0 0.75rem 0;
+    margin: 0.5rem 0 0.75rem;
 }
 
 .reviewCard, .requestCard {
     background-color: var(--white);
-    border-radius: 2rem;
-    padding: 2rem;
-    margin-bottom: 1rem;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
     box-shadow: var(--shadow);
     border: 3px solid var(--outline);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 1rem;
     width: 100%;
-    max-width: 50rem;
-    max-height: 30rem;
-    overflow: hidden;
-    margin-inline: auto;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+    margin: 0;
 }
 
 .reviewCard:hover, .requestCard:hover {
-    transform: translateY(-0.5rem);
+    transform: translateY(-0.25rem);
     box-shadow: 0 1.5rem 3rem rgba(1, 39, 19, 0.1);
     border-color: var(--deep-green);
 }
@@ -1920,28 +1955,28 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.8rem;
+    margin: 0;
     border-bottom: 1px solid var(--separator);
-    padding-bottom: 0.8rem;
+    padding-bottom: 0.75rem;
 }
 
 .reviewerIdentity {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 0.75rem;
+    min-width: 0;
 }
 
 .reviewCategory, .requestCategory {
-    font-size: 1.25rem;
+    font-size: 0.9rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--secondary-bg);
+    color: var(--white);
     background-color: var(--dark-green);
-    padding: 0.2rem 0.6rem;
-    border-radius: 0.8rem;
-    margin-top: 0.2rem;
-    margin-bottom: 0.2rem;
-    letter-spacing: 0.05rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.75rem;
+    margin: 0.25rem 0;
+    letter-spacing: 0.04rem;
     width: fit-content;
 }
 
@@ -1960,7 +1995,7 @@ img {
 .reviewAuthor {
     color: var(--deep-green);
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     display: block;
 }
 
@@ -1979,14 +2014,14 @@ img {
 }
 
 .reviewText, .requestText {
-    flex-grow: 1;
     overflow-y: auto;
-    font-size: 1.4rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.6;
     padding-right: 0.5rem;
-    min-height: 0;
     scrollbar-width: thin;
     scrollbar-color: #ccc transparent;
+    margin: 0;
+    max-height: 10rem;
 }
 
 .reviewText::-webkit-scrollbar, .requestText::-webkit-scrollbar {
@@ -2003,7 +2038,7 @@ img {
 }
 
 .reviewDate {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: var(--outline);
     text-align: right;
     font-weight: 700;
@@ -2106,7 +2141,7 @@ textarea#descrizione {
     gap: 3rem;
     width: 100%;
     max-width: 1400px;
-    margin: 3rem auto;
+    margin: 0 auto;
     padding: 0 2rem;
     align-items: start;
 }

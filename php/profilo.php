@@ -63,47 +63,83 @@ $data_visual = $data_obj->format('d/m/Y');
 $descrizione_html = nl2br(htmlspecialchars($dati_utente['descrizione']));
 
 // Pulsanti Azioni
-$azioni_html = "";
-if ($id_visitatore === $dati_utente['id']) {
-    $azioni_html = '<a href="/volontario/modifica-profilo?id='. $dati_utente['id'] . '" class="btn modifyProfile">Modifica Profilo</a>';
+$id = (int) $dati_utente['id'];
+$email = htmlspecialchars($dati_utente['email'], ENT_QUOTES, 'UTF-8');
+
+if ($id_visitatore === $id) {
+    $azioni_html = '<a href="/volontario/modifica-profilo?id=' . $id . '" class="btn modifyProfile">Modifica profilo</a>';
 } else {
-    $azioni_html = '<a href="mailto:"' . $dati_utente['email'] . ' class="btn contactUser">Contatta Utente</a>';
+    $azioni_html = '<a href="mailto:' . $email . '" class="btn contactUser">Contatta utente</a>';
 }
 
 // Sezione reputazione
-$html_reputazione = "";
-if ($dati_utente['num_recensioni'] > 0) {
-    $html_reputazione = file_get_contents(ROOT_PATH . '/templates/components/valuation.html');
-    $percentuale_stelle = ($dati_utente['media_voto'] * 10) . "%";
+$html_reputazione = '';
+$numRec = (int) ($dati_utente['num_recensioni'] ?? 0);
+if ($numRec > 0) {
+    $tpl = file_get_contents(ROOT_PATH . '/templates/components/valuation.html');
+    $media = (float) ($dati_utente['media_voto'] ?? 0);
+    if ($media < 0) $media = 0;
+    if ($media > 10) $media = 10;
+    
+    $percent = $media * 10;
+    if ($percent < 0) $percent = 0;
+    if ($percent > 100) $percent = 100;
 
-    $html_reputazione = str_replace('[MediaVoto]',         $dati_utente['media_voto'], $html_reputazione);
-    $html_reputazione = str_replace('[NumRecensioni]',     $dati_utente['num_recensioni'], $html_reputazione);
-    $html_reputazione = str_replace('[PercentualeStelle]', $percentuale_stelle, $html_reputazione);
+    $mediaStr   = htmlspecialchars(number_format($media, 1, '.', ''), ENT_QUOTES, 'UTF-8');
+    $numRecStr  = htmlspecialchars((string)$numRec, ENT_QUOTES, 'UTF-8');
+    $percentStr = htmlspecialchars(number_format($percent, 0, '.', '') . '%', ENT_QUOTES, 'UTF-8');
+
+    $tpl = str_replace('[MediaVoto]', $mediaStr, $tpl);
+    $tpl = str_replace('[NumRecensioni]', $numRecStr, $tpl);
+    $tpl = str_replace('[PercentualeStelle]', $percentStr, $tpl);
+
+    if($numRec == 1) {
+        $tpl = str_replace('[NumeroRecensioni]', 'recensione', $tpl);
+    } else {
+        $tpl = str_replace('[NumeroRecensioni]', 'recensioni', $tpl);
+    }
+    $html_reputazione = $tpl;
 }
 
 // Sezione recensioni
 $html_recensioni_output = "";
 if (!empty($resultRec)) {
     $template_item = file_get_contents(ROOT_PATH . '/templates/components/review.html');
-
     foreach ($resultRec as $rec) {
-        $foto_fs = ROOT_PATH . '/src/images/' . ($rec['foto_autore'] ?? '');
-        $foto_autore = (!empty($rec['foto_autore']) && file_exists($foto_fs)) 
-            ? BASE_PATH . '/src/images/' . $rec['foto_autore'] 
+        $foto_file = $rec['foto_autore'] ?? '';
+        $foto_fs = ROOT_PATH . '/src/images/' . $foto_file;
+        $foto_autore = (!empty($foto_file) && file_exists($foto_fs))
+            ? BASE_PATH . '/src/images/' . rawurlencode($foto_file)
             : BASE_PATH . '/src/images/default.png';
 
-        $date_rec_obj = new DateTime($rec['dataRichiesta']);
+        try {
+            $date_rec_obj = new DateTime($rec['dataRichiesta'] ?? 'now');
+        } catch (Exception $e) {
+            $date_rec_obj = new DateTime('now');
+        }
+
+        $reviewKey = (int)($rec['id_autore'] ?? 0) . '-' . $date_rec_obj->format('Ymd');
+        $reviewKeyEsc = htmlspecialchars($reviewKey, ENT_QUOTES, 'UTF-8');
+
+        $idAutore   = (string)(int)($rec['id_autore'] ?? 0);
+        $autore     = htmlspecialchars($rec['nome_autore'] ?? 'Utente', ENT_QUOTES, 'UTF-8');
+        $testo      = htmlspecialchars($rec['testo_recensione'] ?? '', ENT_QUOTES, 'UTF-8');
+        $categoria  = htmlspecialchars($rec['nome_categoria'] ?? '', ENT_QUOTES, 'UTF-8');
+        $voto = htmlspecialchars((string)($rec['voto'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+        $dataISO    = htmlspecialchars($date_rec_obj->format('Y-m-d'), ENT_QUOTES, 'UTF-8');
+        $dataVisual = htmlspecialchars($date_rec_obj->format('d/m/Y'), ENT_QUOTES, 'UTF-8');
 
         $temp = $template_item;
-        $temp = str_replace('[IdAutore]',         $rec['id_autore'], $temp);
-        $temp = str_replace('[AutoreRecensione]', htmlspecialchars($rec['nome_autore']), $temp);
-        $temp = str_replace('[FotoAutore]',       $foto_autore, $temp);
-        $temp = str_replace('[VotoRecensione]',   $rec['voto'], $temp);
-        $temp = str_replace('[TestoRecensione]',  htmlspecialchars($rec['testo_recensione']), $temp);
-        $temp = str_replace('[DataISO]',          $date_rec_obj->format('Y-m-d'), $temp);
-        $temp = str_replace('[DataVisual]',       $date_rec_obj->format('d/m/Y'), $temp);
-        $temp = str_replace('[CategoriaServizio]', htmlspecialchars($rec['nome_categoria']), $temp);
-
+        $temp = str_replace('[ReviewKey]',        $reviewKeyEsc, $temp);
+        $temp = str_replace('[IdAutore]',         $idAutore, $temp);
+        $temp = str_replace('[AutoreRecensione]', $autore, $temp);
+        $temp = str_replace('[FotoAutore]',       htmlspecialchars($foto_autore, ENT_QUOTES, 'UTF-8'), $temp);
+        $temp = str_replace('[VotoRecensione]',   $voto, $temp);
+        $temp = str_replace('[TestoRecensione]',  $testo, $temp);
+        $temp = str_replace('[DataISO]',          $dataISO, $temp);
+        $temp = str_replace('[DataVisual]',       $dataVisual, $temp);
+        $temp = str_replace('[CategoriaServizio]', $categoria, $temp);
         $html_recensioni_output .= $temp;
     }
 } else {
