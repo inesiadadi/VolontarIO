@@ -270,8 +270,9 @@ button:focus-visible {
   justify-content: center;
 }
 
-.dropdown:hover .dropbtn {
-  background-color:var(--profile-bg);
+.dropdown:hover .dropdown-content,
+.dropdown-content.show {
+  display: block;
 }
 
 .dropdown-content {
