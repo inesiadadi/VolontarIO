@@ -6,13 +6,12 @@
         </ul>
     </nav>
     <div class="container-requests">
-        <h1 id="accountTitle">La Bacheca</h1>
+        <h1 id="accountTitle">Bacheca</h1>
         <div class="requests-layout-wrapper">
             <aside class="filters-sidebar">
                 <form action="/volontario/bacheca-richieste" method="get" class="filter-form">
                     <div class="filter-header">
                         <h2>Filtra Richieste</h2>
-                        <a href="/volontario/bacheca-richieste" class="btn reset-link">Reimposta Filtri</a>
                     </div>
                     <div class="form-group">
                         <label for="filter-date">Data</label>
@@ -28,6 +27,7 @@
                             name='citta_nome'
                             autocomplete='off'
                             role='combobox'
+                            placeholder="Inserisci la città..."
                             aria-autocomplete='list'
                             aria-expanded='false'
                             aria-controls='suggerimenti-citta'
@@ -48,10 +48,11 @@
                     [CheckboxesCategorie]
 
                     <button type="submit" class="btn apply-filters full-width">Applica Filtri</button>
+                    <a href="/volontario/bacheca-richieste" class="btn reset-link">Cancella Filtri</a>
                 </form>
             </aside>
 
-            <div class="requests-list">
+            <div class="requests-list" aria-label="Elenco delle richieste disponibili">
                 [ListaRichieste]
 
                 [MessaggioVuoto]

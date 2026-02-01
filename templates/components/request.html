@@ -1,29 +1,29 @@
-<article class="request-card">
+<article class="request-card" aria-labelledby="user">
     <div class="req-header">
         <div class="user-info">
             <img src="[FotoCreatore]" alt="" class="user-avatar">
-            <span class="user-name">[NomeCreatore]</span>
+            <span id="user" class="user-name">[NomeCreatore]</span>
         </div>
-        <span class="visually-hidden">Categoria: </span>
-        <span class="category-tag">[Categoria]</span>
+        <span class="category-tag" aria-label="Categoria: [Categoria]">[Categoria]</span>
     </div>
     <div class="req-body">
+        <span class="sr-only">Descrizione: </span>
         <p>[Descrizione]</p>
     </div>
     <div class="req-footer">
         <div class="meta-item">
             <img src="src/images/icon-location.svg" alt="" aria-hidden="true">
-            <span class="visually-hidden">Luogo: </span>
+            <p>Luogo:</p>
             <span>[Luogo]</span>
         </div>
         <div class="meta-item">
             <img src="src/images/icon-calendar.svg" alt="" aria-hidden="true">
-            <span class="visually-hidden">Data: </span>
+            <p>Data:</p>
             <span>[DataVisual]</span>
         </div>
         <div class="meta-item">
             <img src="src/images/icon-time.svg" alt="" aria-hidden="true">
-            <span class="visually-hidden">Orario: </span>
+            <p>Orario:</p>
             <span>[Orario]</span>
         </div>
         <div class="action-button">
