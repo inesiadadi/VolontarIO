@@ -1033,7 +1033,7 @@ SEZIONE FOOTER
     width: 100%;
     min-height: 75vh;
     overflow: hidden;
-    background: linear-gradient(#00000099, #000000dc), url('../images/background.jpg') center/cover no-repeat;
+    background: linear-gradient(#00000099, #000000dc), url('../images/background.webp') center/cover no-repeat;
     background-attachment: fixed;
 }
 
