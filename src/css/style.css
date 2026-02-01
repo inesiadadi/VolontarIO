@@ -2597,6 +2597,10 @@ body.dark-mode .back-to-top {
 body.dark-mode .back-to-top::after {
     color: var(--white);
 }
+
+body.dark-mode #infoForm {
+    color: var(--main-bg);
+}
 body.dark-mode .back-to-top:hover,
 body.dark-mode .back-to-top:focus-visible {
     background-color: var(--deep-green);

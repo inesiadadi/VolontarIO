@@ -2,7 +2,6 @@
 
 use DB\DBAccess;
 include('header.php');
-
 $html = file_get_contents(ROOT_PATH .'/templates/come_funziona.html');
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
@@ -40,7 +39,11 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             $errore = "<div role='alert'><p id='infoForm' class='success'>Richiesta d'assistenza inviata con successo</p></div>";
             $html = str_replace('[formMessage]', $errore,$html);
             $html = str_replace('[formMessage]', "",$html);
-            $html = str_replace('[email]', "", $html);
+            if(isset($_SESSION['logged'])) {
+                $html = str_replace('[email]', $_SESSION['email'], $html);
+            } else {
+                $html = str_replace('[email]', "", $html);
+            }
             $html = str_replace('[tel]', "", $html);
             $html = str_replace('[nome_cognome]', "", $html);
             $html = str_replace('[messaggio]', "", $html);
@@ -50,7 +53,11 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     }
     } else {
         $html = str_replace('[formMessage]', "",$html);
-        $html = str_replace('[email]', "", $html);
+        if(isset($_SESSION['logged'])) {
+            $html = str_replace('[email]', $_SESSION['email'], $html);
+        } else {
+            $html = str_replace('[email]', "", $html);
+        }
         $html = str_replace('[tel]', "", $html);
         $html = str_replace('[nome_cognome]', "", $html);
         $html = str_replace('[messaggio]', "", $html);
