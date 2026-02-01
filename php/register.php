@@ -15,43 +15,45 @@ if(isset($_SESSION['logged'])) {
 } else {
     $form = " <div id='error'>[error_message]</div>
                 <form class='accessForm form-input' id='signForm' action='/volontario/register' method='post'>
-                    <legend id='legendForm'>Registra un account</legend>
-                    <label for='username'>Username:</label>
-                    <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' value='[username]'></input>
-                    <span id='aiuto-username' class='aiuto'></span>
+                    <fieldset>
+                        <legend id='legendForm'>Registra un account</legend>
+                        <label for='username'>Username:</label>
+                        <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' value='[username]'>
+                        <span id='aiuto-username' class='aiuto'>4-20 caratteri (lettere, numeri, underscore)</span>
 
 
-                    <label for='email'>Email:</label>
-                    <input type='email' name='email' id='email' required aria-required='true' aria-describedby='aiuto-email' value='[email]'></input>                  
-                    <span id='aiuto-email' class='aiuto'></span>
+                        <label for='email'>Email:</label>
+                        <input type='email' name='email' id='email' required aria-required='true' aria-describedby='aiuto-email' value='[email]'>          
+                        <span id='aiuto-email' class='aiuto'>Inserisci un'email valida, es: aala@ajmai.me</span>
 
 
-                    <label for='dataNascita'>Data di nascita:</label>
-                    <input type='date' name='dataNascita' id='dataNascita' required aria-required='true' aria-describedby='aiuto-dataNascita' value='[dataNascita]'></input>
-                    <span id='aiuto-dataNascita' class='aiuto'></span>
+                        <label for='dataNascita'>Data di nascita:</label>
+                        <input type='date' name='dataNascita' id='dataNascita' required aria-required='true' autocomplete='bday' aria-describedby='aiuto-dataNascita' max='" . date('Y-m-d', strtotime('-18 years'))."' value='[dataNascita]'>
+                        <span id='aiuto-dataNascita' class='aiuto'>Inserisci la tua data di nascita (devi essere maggiorenne), es: 01/09/2007</span>
 
                     
-                    <label for='nome'>Nome:</label>
-                    <input type='text' name='nome' id='nome' required aria-required='true' aria-describedby='aiuto-nome' value='[nome]'></input>
-                    <span id='aiuto-nome' class='aiuto'>A</span>
+                        <label for='nome'>Nome:</label>
+                        <input type='text' name='nome' id='nome' required aria-required='true' aria-describedby='aiuto-nome' value='[nome]'>
+                        <span id='aiuto-nome' class='aiuto'>Solo lettere, minimo 2 caratteri, es: Mario</span>
 
 
-                    <label for='cognome'>Cognome:</label>
-                    <input type='text' name='cognome' id='cognome' required aria-required='true' aria-describedby='aiuto-cognome' value='[cognome]'></input>
-                    <span id='aiuto-cognome' class='aiuto'></span>
+                        <label for='cognome'>Cognome:</label>
+                        <input type='text' name='cognome' id='cognome' required aria-required='true' aria-describedby='aiuto-cognome' value='[cognome]'>
+                        <span id='aiuto-cognome' class='aiuto'>Solo lettere, minimo 2 caratteri, es: Rossi</span>
 
 
-                    <label for='password'>Password:</label>
-                    <input type='password' name='password' id='password' required aria-required='true' aria-describedby='aiuto-password' value='[password]'></input>
-                    <span id='aiuto-password' class='aiuto'></span>
+                        <label for='password'>Password:</label>
+                        <input type='password' name='password' id='password' required aria-required='true' aria-describedby='aiuto-password' value='[password]'>
+                        <span id='aiuto-password' class='aiuto'>Minimo 8 caratteri con almeno una maiuscola e un numero</span>
 
 
-                    <label for='pass_again'>Ripeti la password:</label>
-                    <input type='password' name='pass_again' id='pass_again' required aria-required='true' aria-describedby='aiuto-pass_again' value='[pass_again]'></input>
-                    <span id='aiuto-pass_again' class=''></span>
-
+                        <label for='pass_again'>Ripeti la password:</label>
+                        <input type='password' name='pass_again' id='pass_again' required aria-required='true' aria-describedby='aiuto-pass_again' value='[pass_again]'>
+                        <span id='aiuto-pass_again' class='aiuto'>Ripeti la password scelta</span>
+                    </fieldset>
 
                     <button type='submit'>Registrati</button>
+                
                 </form>
                 <p>Sei già registrato? Vai direttamente alla <a href='/volontario/login'>pagina di connessione</a></p>";
         $html = str_replace('[form]', $form, $html);

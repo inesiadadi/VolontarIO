@@ -11,7 +11,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <!-- Trucchetto con media="print" per caricare il font senza bloccare il caricamento, con onload per riattivarlo-->
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" media="print" onload="this.meadia='all'">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
         <!-- Se js non è attivo lo carica normalmente-->
         <noscript>
             <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -29,8 +29,8 @@
         <script src="src/js/script.js" defer></script>
 
     </head>
-    <body id="[pageNameId]" onload="[onload]">
-    <a href="#content" class="skip-link">Vai al contenuto principale</a>
+    <body id="[pageNameId]" [onload]>
+    <a id="top" href="#content" class="skip-link">Vai al contenuto principale</a>
     [Header]
 
     [MainContent]

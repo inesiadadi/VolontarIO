@@ -27,7 +27,7 @@ $utente = $dbAccess->getUtentePerId($id_utente_target);
 $dbAccess->closeDBConnection();
 
 if(!$utente) {
-    http_code(404);
+    http_response_code(404);
     include ROOT_PATH . '/php/error_404.php';
     exit;
 }
@@ -82,71 +82,72 @@ $html_content = file_get_contents(ROOT_PATH . '/templates/modificaProfilo.html')
 
 $form = "
 <form class='accessForm' id='modifyForm' action='/volontario/modifica-profilo?id=$id_utente_target' method='post' enctype='multipart/form-data'>
+     <fieldset>
+        <legend>Modifica il tuo profilo</legend>   
+        <label for='nome'>Nome (attuale: {$dati_utente['nome']}):</label>
+        <input type='text' name='nome' id='nome' placeholder='{$dati_utente['nome']}' value='' aria-describedby='aiuto-nome'>
+        <span id='aiuto-nome' class='aiuto'>Inserire il nuovo nome per modificarlo</span>
 
-    <label for='nome'>Nome (attuale: {$dati_utente['nome']}):</label>
-    <input type='text' name='nome' id='nome' placeholder='{$dati_utente['nome']}' value='' aria-describedby='aiuto-nome'>
-    <span id='aiuto-nome' class='aiuto'>Inserire il nuovo nome per modificarlo</span>
+        <label for='cognome'>Cognome (attuale: {$dati_utente['cognome']}):</label>
+        <input type='text' name='cognome' id='cognome' placeholder='{$dati_utente['cognome']}' value='' aria-describedby='aiuto-cognome'>
+        <span id='aiuto-cognome' class='aiuto'>Inserire il nuovo cognome per modificarlo</span>
 
-    <label for='cognome'>Cognome (attuale: {$dati_utente['cognome']}):</label>
-    <input type='text' name='cognome' id='cognome' placeholder='{$dati_utente['cognome']}' value='' aria-describedby='aiuto-cognome'>
-    <span id='aiuto-cognome' class='aiuto'>Inserire il nuovo cognome per modificarlo</span>
+        <label for='dataNascita'>Data di nascita:</label>
+        <input type='date' name='dataNascita' id='dataNascita' value='{$dati_utente['nascita']}' aria-describedby='aiuto-data'>
+        <span id='aiuto-data' class='aiuto'>Modifica la tua data di nascita</span>
 
-    <label for='dataNascita'>Data di nascita:</label>
-    <input type='date' name='dataNascita' id='dataNascita' value='{$dati_utente['nascita']}' aria-describedby='aiuto-data'>
-    <span id='aiuto-data' class='aiuto'>Modifica la tua data di nascita</span>
+        <label for='descrizione'>Breve descrizione:</label>
+        <textarea name='descrizione' id='descrizione' maxlength='255' aria-describedby='aiuto-desc'>{$dati_utente['descrizione']}</textarea>
+        <span id='aiuto-desc' class='aiuto'>Aggiorna la tua presentazione (max 255 caratteri)</span>
 
-    <label for='descrizione'>Breve descrizione:</label>
-    <textarea name='descrizione' id='descrizione' maxlength='255' aria-describedby='aiuto-desc'>{$dati_utente['descrizione']}</textarea>
-    <span id='aiuto-desc' class='aiuto'>Aggiorna la tua presentazione (max 255 caratteri)</span>
+        <div class='autocomplete-container'>
+            <label for='citta-input'>Città di residenza:</label>
 
-    <div class='autocomplete-container'>
-        <label for='citta-input'>Città di residenza:</label>
+            <input
+                type='text'
+                id='citta-input'
+                name='citta_nome'
+                autocomplete='off'
+                role='combobox'
+                aria-autocomplete='list'
+                aria-expanded='false'
+                aria-controls='suggerimenti-citta'
+                aria-describedby='aiuto-citta'
+            >
 
-        <input
-            type='text'
-            id='citta-input'
-            name='citta_nome'
-            autocomplete='off'
-            role='combobox'
-            aria-autocomplete='list'
-            aria-expanded='false'
-            aria-controls='suggerimenti-citta'
-            aria-describedby='aiuto-citta'
-        >
+            <ul
+                id='suggerimenti-citta'
+                role='listbox'
+                tabindex='-1'
+                hidden
+            ></ul>
 
-        <ul
-            id='suggerimenti-citta'
-            role='listbox'
-            tabindex='-1'
-            hidden
-        ></ul>
+            <input type='hidden' name='idCitta' id='idCitta-input'>
 
-        <input type='hidden' name='idCitta' id='idCitta-input'>
+            <div id='status-citta' class='sr-only' aria-live='polite'></div>
+        </div>
 
-        <div id='status-citta' class='sr-only' aria-live='polite'></div>
-    </div>
-
-    <span id='aiuto-citta' class='aiuto'>
-        Digita il comune e usa le frecce su e giù per selezionare.
-    </span>
+        <span id='aiuto-citta' class='aiuto'>
+            Digita il comune e usa le frecce su e giù per selezionare.
+        </span>
 
 
-    <label for='email'>Email:</label>
-    <input type='email' name='email' id='email' placeholder='{$dati_utente['email']}' aria-describedby='aiuto-email'>
-    <span id='aiuto-email' class='aiuto'>Inserisci un nuovo indirizzo email valido</span>
+        <label for='email'>Email:</label>
+        <input type='email' name='email' id='email' placeholder='{$dati_utente['email']}' aria-describedby='aiuto-email'>
+        <span id='aiuto-email' class='aiuto'>Inserisci un nuovo indirizzo email valido</span>
 
-    <label for='password'>Nuova Password:</label>
-    <input type='password' name='password' id='password' aria-describedby='aiuto-password'>
-    <span id='aiuto-password' class='aiuto'>Lascia vuoto se non desideri cambiare la password</span>
+        <label for='password'>Nuova Password:</label>
+        <input type='password' name='password' id='password' aria-describedby='aiuto-password'>
+        <span id='aiuto-password' class='aiuto'>Lascia vuoto se non desideri cambiare la password</span>
 
-    <label for='pass_again'>Ripeti la nuova password:</label>
-    <input type='password' name='pass_again' id='pass_again' aria-describedby='aiuto-pass-again'>
-    <span id='aiuto-pass-again' class='aiuto'>Conferma la nuova password inserita sopra</span>
+        <label for='pass_again'>Ripeti la nuova password:</label>
+        <input type='password' name='pass_again' id='pass_again' aria-describedby='aiuto-pass-again'>
+        <span id='aiuto-pass-again' class='aiuto'>Conferma la nuova password inserita sopra</span>
 
-    <label for='foto-profilo'>Cambia Foto profilo (.png):</label>
-    <input type='file' name='immagine' id='foto-profilo' accept='image/png' aria-describedby='aiuto-foto'>
-    <span id='aiuto-foto' class='aiuto'>Carica un file PNG per aggiornare la tua immagine (max 2MB)</span>
-
+        <label for='foto-profilo'>Cambia Foto profilo (.png):</label>
+        <input type='file' name='immagine' id='foto-profilo' accept='image/png' aria-describedby='aiuto-foto'>
+        <span id='aiuto-foto' class='aiuto'>Carica un file PNG per aggiornare la tua immagine (max 2MB)</span>
+    </fieldset>
     <button type='submit'>Conferma Modifiche</button>
 </form>
 <p>Se non vuoi modificare il profilo, torna all'<a href='/volontario/profilo?id=$id_utente_target'>Area Personale!</a></p>";
@@ -161,7 +162,7 @@ $placeholders_layout = [
     '[Description]'   => 'Pagina di modifica del profilo di VolontarIO',
     '[Keywords]'      => 'volontariato, profilo, modifica',
     '[pageNameId]'    => 'modifyPage',
-    '[onload]'        => 'initCittaAutocomplete()',
+    '[onload]'        => 'onload="initCittaAutocomplete()"',
     '[Header]'        => $header_html,
     '[Footer]'        => $footer_html,
     '[MainContent]'   => $html_content 

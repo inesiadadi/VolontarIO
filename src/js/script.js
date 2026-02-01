@@ -153,7 +153,7 @@ function initValidations() {
             ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
             ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
             ['password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Minimo 8 caratteri con almeno una maiuscola e un numero", "Password debole"],
-            ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita", "Data non valida"]
+            ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita, almeno 18 anni, es: 01/09/2007", "Data non valida"]
         ];
     } else if (form.id == "contattoForm") {
         regole = [
