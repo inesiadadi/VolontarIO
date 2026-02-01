@@ -2447,7 +2447,6 @@ body.dark-mode .filterSubtitle {
     color: var(--deep-green);
 }
 
-body.dark-mode .get-started-btn,
 body.dark-mode .stat-label,
 body.dark-mode .stat-number,
 body.dark-mode .form-input input,
@@ -2484,8 +2483,8 @@ body.dark-mode .form-textarea textarea:focus {
     box-shadow: 0 0 0 3px var(--focus-glow);
 }
 
-body.dark-mode .get-started-btn:hover,
-body.dark-mode .btn-primary:hover {
+body.dark-mode #landing .get-started-btn:hover,
+body.dark-mode #landing .btn-primary:hover {
     background-color: var(--separator);
     color: var(--dark-green);
 }
@@ -2545,7 +2544,8 @@ body.dark-mode .btn.apply-filters {
     color: var(--white);
 }
 
-body.dark-mode .modifyProfile {
+body.dark-mode .modifyProfile,
+body.dark-mode .btn.reset-link {
     color: var(--secondary-bg);
 }
 
@@ -2604,4 +2604,15 @@ body.dark-mode #infoForm {
 body.dark-mode .back-to-top:hover,
 body.dark-mode .back-to-top:focus-visible {
     background-color: var(--deep-green);
+}
+
+
+body.dark-mode #landing .get-started-btn {
+    color: var(--dark-green);
+    border-color: var(--dark-green);
+    background-color: var(--white);
+}
+
+body.dark-mode .team-card {
+   border-color: var(--deep-green);
 }
