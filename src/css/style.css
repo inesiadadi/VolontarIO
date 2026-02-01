@@ -2745,6 +2745,6 @@ body.dark-mode .btn-secondary:hover {
     border: 2px solid var(--outline);
 }
 
-body.dark-mode .success {
-    background-color: #305121;
+body.dark-mode #infoForm {
+    color: var(--main-bg);
 }

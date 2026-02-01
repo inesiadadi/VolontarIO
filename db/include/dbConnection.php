@@ -346,7 +346,7 @@ public function getCandidatureEffettuate($idVolontario) {
     ## FUNZIONI DB ##
 
      public function loginAccount($username) {
-        $check_username = $this->connection->prepare("SELECT username, idPersona, ruolo, password FROM Persona WHERE username =  ?");
+        $check_username = $this->connection->prepare("SELECT username, idPersona, email, ruolo, password FROM Persona WHERE username =  ?");
         $check_username->bind_param("s", $username);
         $check_username->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
         $result = $check_username->get_result();
