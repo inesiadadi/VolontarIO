@@ -20,7 +20,6 @@
 
                     <div class='autocomplete-container'>
                         <label for='citta-input'>Città di residenza:</label>
-
                         <input
                             type='text'
                             id='citta-input'
@@ -33,26 +32,24 @@
                             aria-controls='suggerimenti-citta'
                             aria-describedby='aiuto-citta'
                         >
-
                         <ul
                             id='suggerimenti-citta'
                             role='listbox'
                             tabindex='-1'
                             hidden
                         ></ul>
-
                         <input type='hidden' name='idCitta' id='idCitta-input'>
-
                         <div id='status-citta' class='sr-only' aria-live='polite'></div>
                     </div>
+                    <span id='aiuto-citta' class='sr-only'>Digita il comune e usa le frecce su e giù per selezionare.</span>
                     [CheckboxesCategorie]
 
                     <button type="submit" class="btn apply-filters full-width">Applica Filtri</button>
-                    <a href="/volontario/bacheca-richieste" class="btn reset-link">Cancella Filtri</a>
+                    <a role="button" href="/volontario/bacheca-richieste" class="btn reset-link">Cancella Filtri</a>
                 </form>
             </aside>
 
-            <div class="requests-list" aria-label="Elenco delle richieste disponibili">
+            <div class="requests-list">
                 [ListaRichieste]
 
                 [MessaggioVuoto]

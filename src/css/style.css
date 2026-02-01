@@ -1334,6 +1334,11 @@ SEZIONE FOOTER
     font-weight: 500;
 }
 
+ul.category-list {
+    padding: 0;
+    margin: 0;
+}
+
 .filter-form input[type="date"],
 .filter-form input[type="text"] {
     width: 100%;
