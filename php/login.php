@@ -13,6 +13,7 @@ if(isset($_SESSION['logged'])) {
     $form = "
         [error_message]
         <form id='logForm' class='accessForm form-input' action='/volontario/login' method='post'>
+            <fieldset>
                 <legend id='legendForm'>Accedi al tuo account</legend>
                 <label for='username'><span lang='en'>Username</span>:</label>
                 <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' autocomplete='username'/>
@@ -21,6 +22,7 @@ if(isset($_SESSION['logged'])) {
                 <input type='password' name='password' id='password' required aria-required='true' aria-describedby='aiuto-password' autocomplete='current-password' />
                 <span id='aiuto-password' class='aiuto'>Inserisci la tua <span lang='en'>password</span></span>
                 <button type='submit'>Accedi</button>
+            </fieldset>
         </form>
         <p>Non sei registrato? <a href='/volontario/register'>Registrati!</a></p>";
     

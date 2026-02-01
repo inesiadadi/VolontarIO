@@ -1033,7 +1033,7 @@ SEZIONE FOOTER
     width: 100%;
     min-height: 75vh;
     overflow: hidden;
-    background: linear-gradient(#00000099, #000000dc), url('../images/background.jpg') center/cover no-repeat;
+    background: linear-gradient(#00000099, #000000dc), url('../images/background.webp') center/cover no-repeat;
     background-attachment: fixed;
 }
 
@@ -1509,16 +1509,21 @@ SEZIONE FOOTER
     margin-top: 1em;
 }
 
-.accessForm {
+.accessForm{
+    border: none;
     background: var(--white);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    margin: 1em;
+}
+
+.accessForm fieldset {
+    border: none;
     display: flex;
     flex-direction: column;
-    margin: 1em;
 }
 
 .accessForm label {
@@ -1527,18 +1532,32 @@ SEZIONE FOOTER
     color: var(--dark-green);
 }
 
+.accessForm legend {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: center;
+}
+
 .accessForm input {
-    padding: 12px;
-    margin-bottom: 20px;
+    width: 100%;
+    padding: 0.7em;
+    margin-bottom: 1em;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1em;
 }
 
+.accessForm textarea {
+    resize: vertical;
+    padding: 0.7em;
+    margin-bottom: 1em;
+}
+
 .accessForm button {
     background-color: var(--outline);
     color: var(--white);
-    padding: 12px;
+    padding: 0.7em;
     border: none;
     border-radius: 4px;
     font-weight: bold;
@@ -1585,11 +1604,15 @@ SEZIONE FOOTER
     margin-bottom: 1em;
 }
 
+textarea {
+    resize: vertical;
+}
+
 
 #legendForm, #alreadyLogged {
     text-align: center;
 }
-#alreadyLogged a {
+#alreadyLogged a, #mainForm a {
     text-decoration: underline;
 }
 /* 
