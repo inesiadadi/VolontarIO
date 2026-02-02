@@ -220,20 +220,16 @@ function initValidations() {
     });
 }
 
-/* Helpers per le funzioni relative alle recensioni e alle richieste */
 document.addEventListener('DOMContentLoaded', () => {
   initReviewFiltering();
-  initRequestsFiltering();
+  initRequestsFiltering(); // gestisce sia Richieste che Candidature
 });
 
 function initReviewFiltering() {
-  console.log("initReviewFiltering avviato");
-
   const sidebar = document.querySelector('.filters-sidebar');
   const reviewsGrid = getReviewGrid();
-  const cards = document.querySelectorAll('.reviewCard');
 
-  if (!sidebar || !reviewsGrid || cards.length === 0) return;
+  if (!sidebar || !reviewsGrid) return;
 
   if (sidebar.dataset.reviewFilteringInit === '1') return;
   sidebar.dataset.reviewFilteringInit = '1';
@@ -250,25 +246,6 @@ function initReviewFiltering() {
   applyReviewFiltering();
 }
 
-function initRequestsFiltering() {
-    const sidebar = document.querySelector('.filters-sidebar');
-    const grid = getRequestGrid();
-    if(!sidebar || !grid) return;
-
-    if (sidebar.dataset.reviewFilteringInit === '1') return;
-    sidebar.dataset.reviewFilteringInit = '1';
-    sidebar.addEventListener('change', (e) => {
-        const t = e.target;
-        if (!(t instanceof HTMLInputElement)) return;
-        if (t.type !== 'checkbox') return;
-        if (t.name !== 'state[]' && t.name !== 'category[]') return;
-
-        applyRequestsFiltering();
-      });
-
-    applyRequestsFiltering();
-}
-
 function applyReviewFiltering() {
   const selectedVoteRanges = getCheckedValue('vote[]');
   const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
@@ -278,7 +255,7 @@ function applyReviewFiltering() {
 
   for (const card of cards) {
     const vote = readReviewVote(card);
-    const category = readReviewCategory(card); // token normalizzato
+    const category = readReviewCategory(card);
 
     const passVote =
       (selectedVoteRanges.length === 0) ||
@@ -292,49 +269,10 @@ function applyReviewFiltering() {
     card.style.display = show ? '' : 'none';
     if (show) visible++;
   }
-    const grid = getReviewGrid();
-    const empty = getReviewEmptyState();
-    updateEmptyState(grid, empty, visible);
-}
 
-function applyRequestsFiltering() {
-    const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
-    const selectedStates = getCheckedValue('state[]').map(normalizeToken);
-    const cards = document.querySelectorAll('.request-card');
-
-    let visible = 0;
-
-    for(const card of cards) {
-        const state = readRequestState(card);
-        const category = readRequestCategory(card);
-
-        const passState = 
-            (selectedStates.length === 0) ||
-            selectedStates.includes(state);
-
-        const passCategory =
-            (selectedCategories.length === 0) ||
-            selectedCategories.includes(category);
-
-        const show = passState && passCategory;
-        card.style.display = show ? '' : 'none';
-        if(show) visible++;
-
-        const grid = getRequestGrid();
-        const empty = getRequestsEmptyState();
-        updateEmptyState(grid, empty, visible);
-    }
-}
-
-function readRequestState(card) {
-    const att = card.getAttribute('data-status') || '';
-    return normalizeToken(att);
-}
-
-function readRequestCategory(card) {
-    const el = card.querySelector('.category-tag, [itemprop="category"]');
-    if(!el) return '';
-    return normalizeToken(el.textContent);
+  const grid = getReviewGrid();
+  const empty = getReviewEmptyState(grid);
+  updateEmptyState(grid, empty, visible);
 }
 
 function readReviewVote(card) {
@@ -350,32 +288,106 @@ function readReviewCategory(card) {
   if (!catEl) return '';
 
   const clone = catEl.cloneNode(true);
-
   clone.querySelectorAll('.srOnly, .sr-only').forEach(n => n.remove());
 
   return normalizeToken(clone.textContent);
 }
 
 function getReviewGrid() {
-  return document.getElementById('grigliaRecensioni') || document.querySelector(".reviewsGrid");
+  return document.getElementById('grigliaRecensioni') || document.querySelector('.reviewsGrid');
 }
 
-function getReviewEmptyState() {
-  return document.getElementById('filterEmptyState');
+function initRequestsFiltering() {
+  const sidebar = document.querySelector('.filters-sidebar');
+  const grid = getRequestsGrid();
+
+  if (!sidebar || !grid) return;
+
+  if (sidebar.dataset.requestsFilteringInit === '1') return;
+  sidebar.dataset.requestsFilteringInit = '1';
+
+  sidebar.addEventListener('change', (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement)) return;
+    if (t.type !== 'checkbox') return;
+    if (t.name !== 'state[]' && t.name !== 'category[]') return;
+
+    applyRequestsFiltering();
+  });
+
+  applyRequestsFiltering();
+}
+
+function applyRequestsFiltering() {
+  const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
+  const selectedStates = getCheckedValue('state[]').map(normalizeToken);
+
+  const cards = document.querySelectorAll('.request-card');
+  let visible = 0;
+
+  for (const card of cards) {
+    const state = readRequestState(card);
+    const category = readRequestCategory(card);
+
+    const passState =
+      (selectedStates.length === 0) ||
+      selectedStates.includes(state);
+
+    const passCategory =
+      (selectedCategories.length === 0) ||
+      selectedCategories.includes(category);
+
+    const show = passState && passCategory;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  }
+
+  const grid = getRequestsGrid();
+  const empty = getRequestsEmptyState(grid);
+  updateEmptyState(grid, empty, visible);
+}
+
+function readRequestState(card) {
+  return normalizeToken(card.getAttribute('data-status') || '');
+}
+
+function readRequestCategory(card) {
+  const el = card.querySelector('.category-tag, [itemprop="category"]');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
 }
 
 function getRequestsGrid() {
-  return document.getElementById('grigliaRichieste');
+  return document.getElementById('grigliaRichieste') || document.getElementById('grigliaCandidature');
 }
 
-function getRequestsEmptyState() {
-  return document.getElementById('filterEmptyState');
+function getReviewEmptyState(grid) {
+  const root = grid?.closest('.requests-layout-wrapper') || document;
+  return root.querySelector('#filterEmptyState');
+}
+
+function getRequestsEmptyState(grid) {
+  const root = grid?.closest('.requests-layout-wrapper') || document;
+  return root.querySelector('#filterEmptyState');
+}
+
+function updateEmptyState(grid, empty, visibleCount) {
+  if (!grid || !empty) return;
+
+  const isEmpty = visibleCount === 0;
+
+  grid.hidden = isEmpty;
+
+  empty.hidden = !isEmpty;
+  empty.style.display = isEmpty ? 'flex' : '';
+
+  if (isEmpty) empty.style.flex = '1';
+  else empty.style.flex = '';
 }
 
 function getCheckedValue(name) {
-    console.log("Valore nome individuato:", name);
-    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
-        .map(el => String(el.value).trim());
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+    .map(el => String(el.value).trim());
 }
 
 function voteInRange(vote, rangeStr) {
@@ -386,6 +398,7 @@ function voteInRange(vote, rangeStr) {
     const [min, max] = s.split('-').map(Number);
     return Number.isFinite(min) && Number.isFinite(max) && vote >= min && vote <= max;
   }
+
   const x = Number(s);
   return Number.isFinite(x) && vote === x;
 }
@@ -400,96 +413,6 @@ function normalizeToken(str) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
-}
-
-function updateEmptyState(grid, empty, visibleCount) {
-  if (!grid || !empty) return;
-
-  const isEmpty = visibleCount === 0;
-
-  empty.hidden = !isEmpty;
-
-  empty.style.display = isEmpty ? 'flex' : '';
-
-  grid.hidden = false;
-}
-
-
-document.addEventListener('DOMContentLoaded', initRequestFilters);
-function initRequestFilters() {
-    const statSelect = document.getElementById('stateFilter');
-    const catSelect = document.getElementById('categoryFilter');
-
-    if(statSelect) statSelect.addEventListener('change', applyRequestFilters);
-    if(catSelect) catSelect.addEventListener('change', applyRequestFilters);
-}
-
-function getRequestFilterState() {
-    const status = document.getElementById('stateFilter')?.value?.toLowerCase() ?? 'all';
-    const category = document.getElementById('categoryFilter')?.value?.toLowerCase() ?? 'all';
-
-    return { status, category };
-}
-
-function getRequestCards() {
-    return document.querySelectorAll('.requestCard');
-}
-
-function getRequestGrid() {
-    return (
-        document.getElementById('grigliaRichieste') ?? document.querySelector('.requestGrid')
-    );
-}
-
-function matchesRequestStatus(card, { status }) {
-    if (status === 'all') return true;
-
-    const cardStatus = card.dataset.status;
-    if (!cardStatus) return false;
-
-    return cardStatus.toLowerCase() === status;
-}
-
-function matchesRequestCategory(card, { category }) {
-    if (category === 'all') return true;
-
-    const cat = card.querySelector('.requestCategory');
-    if (!cat) return false;
-
-    return cat.textContent.trim().toLowerCase() === category;
-}
-
-function applyRequestFilters() {
-    const state = getRequestFilterState();
-    const cards = getRequestCards();
-
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-        const isVisible =
-            matchesRequestStatus(card, state) &&
-            matchesRequestCategory(card, state);
-
-        card.style.display = isVisible ? '' : 'none';
-        if (isVisible) visibleCount++;
-    });
-
-    updateRequestEmptyState(visibleCount);
-}
-
-function updateRequestEmptyState(visibleCount) {
-    const grid  = getRequestGrid();
-    const empty = getEmptyState();
-
-    if (!grid || !empty) return;
-
-    if (visibleCount === 0) {
-        grid.style.display  = 'none';
-        empty.style.display = 'flex';
-    } else {
-        grid.style.display  = 'grid';
-        empty.style.display = 'none';
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
