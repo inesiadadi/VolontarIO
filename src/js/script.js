@@ -223,7 +223,6 @@ function initValidations() {
 /* Helpers per le funzioni relative alle recensioni e alle richieste */
 document.addEventListener('DOMContentLoaded', () => {
   initReviewFiltering();
-  initRequestsFiltering();
 });
 
 function initReviewFiltering() {
@@ -238,7 +237,6 @@ function initReviewFiltering() {
   if (sidebar.dataset.reviewFilteringInit === '1') return;
   sidebar.dataset.reviewFilteringInit = '1';
 
-  // Event delegation: UN SOLO listener
   sidebar.addEventListener('change', (e) => {
     const t = e.target;
     if (!(t instanceof HTMLInputElement)) return;
@@ -252,7 +250,7 @@ function initReviewFiltering() {
 }
 
 function applyReviewFiltering() {
-  const selectedVoteRanges = getCheckedValue('vote[]');                // array
+  const selectedVoteRanges = getCheckedValue('vote[]');
   const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
 
   const cards = document.querySelectorAll('.reviewCard');
@@ -274,7 +272,8 @@ function applyReviewFiltering() {
     card.style.display = show ? '' : 'none';
     if (show) visible++;
   }
-
+    const grid = getReviewGrid();
+    const empty = getReviewEmptyState();
     updateEmptyState(grid, empty, visible);
 }
 
@@ -342,10 +341,8 @@ function updateEmptyState(grid, empty, visibleCount) {
 
   empty.hidden = !isEmpty;
 
-  // forza display per vincere eventuali regole CSS che mettono display:none
   empty.style.display = isEmpty ? 'flex' : '';
 
-  // la griglia resta nel flow, tanto le card sono già hidden
   grid.hidden = false;
 }
 
