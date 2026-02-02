@@ -69,7 +69,7 @@ if(!empty($resultRec)) {
                 '[PulsantieraAzioni]',
                 '<form action="/volontario/candidature" method="post">
                     <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
-                    <button type="submit" name="rinuncia" class="profileBtn delete-btn">Rinuncia incarico</button>
+                    <button type="submit" name="rinuncia" class="profileBtn delete-btn" aria-label="Rinuncia alla richiesta (Id: ' . $rec['codiceRichiesta']. ')">Rinuncia incarico</button>
                  </form>',
                 $temp
             );
@@ -77,14 +77,14 @@ if(!empty($resultRec)) {
         else if ($rec['stato'] == "completata") {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>Completata</button>',
+                '<button class="disabledBtn" disabled aria-label="Richiesta (Id: ' . $rec['codiceRichiesta']. ') completata">Completata</button>',
                 $temp
             );
         }
         else {
              $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>'.htmlspecialchars($rec['stato']).'</button>',
+                '<button class="disabledBtn" disabled aria-label="Richiesta (Id: ' .$rec['codiceRichiesta'] .') in stato ' . htmlspecialchars($rec['stato']) .'">'.htmlspecialchars($rec['stato']).'</button>',
                 $temp
             );
         }
