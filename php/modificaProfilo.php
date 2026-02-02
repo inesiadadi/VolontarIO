@@ -98,38 +98,15 @@ $form = "
     <label for='descrizione'>Breve descrizione:</label>
     <textarea name='descrizione' id='descrizione' maxlength='255' aria-describedby='aiuto-desc'>{$dati_utente['descrizione']}</textarea>
     <span id='aiuto-desc' class='aiuto'>Aggiorna la tua presentazione (max 255 caratteri)</span>
-
-    <div class='autocomplete-container'>
-        <label for='citta-input'>Città di residenza:</label>
-
-        <input
-            type='text'
-            id='citta-input'
-            name='citta_nome'
-            autocomplete='off'
-            role='combobox'
-            aria-autocomplete='list'
-            aria-expanded='false'
-            aria-controls='suggerimenti-citta'
-            aria-describedby='aiuto-citta'
-        >
-
-        <ul
-            id='suggerimenti-citta'
-            role='listbox'
-            tabindex='-1'
-            hidden
-        ></ul>
-
-        <input type='hidden' name='idCitta' id='idCitta-input'>
-
-        <div id='status-citta' class='sr-only' aria-live='polite'></div>
-    </div>
-
+    
+    <label for='citta-input'>Città di residenza:</label>
+    <input type='text' id='citta-input' name='citta_nome' autocomplete='off' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-controls='suggerimenti-citta'aria-describedby='aiuto-citta'>
+    <ul id='suggerimenti-citta' role='listbox' tabindex='-1' hidden ></ul>
+    <input type='hidden' name='idCitta' id='idCitta-input'>
+    <div id='status-citta' class='sr-only' aria-live='polite'></div>
     <span id='aiuto-citta' class='aiuto'>
         Digita il comune e usa le frecce su e giù per selezionare.
     </span>
-
 
     <label for='email'>Email:</label>
     <input type='email' name='email' id='email' placeholder='{$dati_utente['email']}' aria-describedby='aiuto-email'>
@@ -148,10 +125,10 @@ $form = "
     <span id='aiuto-foto' class='aiuto'>Carica un file PNG per aggiornare la tua immagine (max 2MB)</span>
 
     <button type='submit'>Conferma Modifiche</button>
-</form>
-<p>Se non vuoi modificare il profilo, torna all'<a href='/volontario/profilo?id=$id_utente_target'>Area Personale!</a></p>";
+</form>";
 
 $html_content = str_replace('[Form]', $form, $html_content);
+$html_content = str_replace('[idUtenteTarget]', $id_utente_target, $html_content);
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';

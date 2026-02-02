@@ -141,7 +141,6 @@ function initCittaAutocomplete() {
     });
 }
 
-
 // VALIDAZIONE DEL FORM DI REGISTER
 function initValidations() {
     const form = document.getElementById('signForm');
@@ -213,18 +212,136 @@ function initValidations() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initReviewFilters);
-document.addEventListener('DOMContentLoaded', initRequestFilters);
+/* Helpers per le funzioni relative alle recensioni e alle richieste */
+document.addEventListener('DOMContentLoaded', () => {
+  initReviewFiltering();
+});
 
-function initReviewFilters() {
-    const voteSelect = document.getElementById('voteFilter');
-    const catSelect  = document.getElementById('categoryFilter');
+function initReviewFiltering() {
+  console.log("initReviewFiltering avviato");
 
-    if (voteSelect) voteSelect.addEventListener('change', applyReviewFilters);
-    if (catSelect)  catSelect.addEventListener('change', applyReviewFilters);
+  const sidebar = document.querySelector('.filters-sidebar');
+  const reviewsGrid = getReviewGrid();
+  const cards = document.querySelectorAll('.reviewCard');
 
-    applyReviewFilters();
+  console.log('🧪 sidebar:', !!sidebar);
+  console.log('🧪 grid:', !!reviewsGrid);
+  console.log('🧪 reviewCard trovate:', cards.length);
+
+  if (!sidebar || !reviewsGrid || cards.length === 0) return;
+
+  if (sidebar.dataset.reviewFilteringInit === '1') return;
+  sidebar.dataset.reviewFilteringInit = '1';
+
+  // Event delegation: UN SOLO listener
+  sidebar.addEventListener('change', (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement)) return;
+    if (t.type !== 'checkbox') return;
+    if (t.name !== 'vote[]' && t.name !== 'category[]') return;
+
+    console.log('🔄 change:', t.name, t.value, t.checked);
+    applyReviewFiltering();
+  });
+
+  applyReviewFiltering();
 }
+
+function applyReviewFiltering() {
+  const selectedVoteRanges = getCheckedValue('vote[]');                // array
+  const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
+
+  console.log('📊 filtri:', { selectedVoteRanges, selectedCategories });
+
+  const cards = document.querySelectorAll('.reviewCard');
+  let visible = 0;
+
+  for (const card of cards) {
+    const vote = readReviewVote(card);
+    const category = readReviewCategory(card); // token normalizzato
+
+    const passVote =
+      (selectedVoteRanges.length === 0) ||
+      selectedVoteRanges.some(r => voteInRange(vote, r));
+
+    const passCategory =
+      (selectedCategories.length === 0) ||
+      selectedCategories.includes(category);
+
+    const show = passVote && passCategory;
+    card.hidden = !show;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  }
+
+  updateEmptyState(getReviewGrid(), getReviewEmptyState(), visible);
+}
+
+function readReviewVote(card) {
+  const el = card.querySelector('[itemprop="ratingValue"]');
+  if (!el) return NaN;
+
+  const n = Number(String(el.textContent).trim());
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function readReviewCategory(card) {
+  const catEl = card.querySelector('.reviewCategory');
+  if (!catEl) return '';
+
+  const clone = catEl.cloneNode(true);
+
+  clone.querySelectorAll('.srOnly, .sr-only').forEach(n => n.remove());
+
+  return normalizeToken(clone.textContent);
+}
+
+function getReviewGrid() {
+  return document.getElementById('grigliaRecensioni') || document.querySelector(".reviewsGrid");
+}
+
+function getReviewEmptyState() {
+  return document.getElementById('filterEmptyStateReviews') || document.getElementById('filterEmptyState');
+}
+
+function getCheckedValue(name) {
+    console.log("Valore nome individuato:", name);
+    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+        .map(el => String(el.value).trim());
+}
+
+function voteInRange(vote, rangeStr) {
+  if (!Number.isFinite(vote)) return false;
+
+  const s = String(rangeStr).trim();
+  if (s.includes('-')) {
+    const [min, max] = s.split('-').map(Number);
+    return Number.isFinite(min) && Number.isFinite(max) && vote >= min && vote <= max;
+  }
+  const x = Number(s);
+  return Number.isFinite(x) && vote === x;
+}
+
+function normalizeToken(str) {
+  return String(str)
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['"]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function updateEmptyState(grid, empty, visibleCount) {
+  if (!grid || !empty) return;
+  grid.hidden = (visibleCount === 0);
+  empty.hidden = (visibleCount !== 0);
+}
+
+
+document.addEventListener('DOMContentLoaded', initRequestFilters);
 
 function initRequestFilters() {
     const statSelect = document.getElementById('stateFilter');
@@ -234,17 +351,6 @@ function initRequestFilters() {
     if(catSelect) catSelect.addEventListener('change', applyRequestFilters);
 }
 
-function getReviewFilterState() {
-    const voteValue =
-        document.getElementById('voteFilter')?.value ?? '0-10';
-
-    const [minVote, maxVote] = voteValue.split('-').map(Number);
-
-    const category = document.getElementById('categoryFilter')?.value?.toLowerCase() ?? 'all';
-
-    return { minVote, maxVote, category };
-}
-
 function getRequestFilterState() {
     const status = document.getElementById('stateFilter')?.value?.toLowerCase() ?? 'all';
     const category = document.getElementById('categoryFilter')?.value?.toLowerCase() ?? 'all';
@@ -252,45 +358,14 @@ function getRequestFilterState() {
     return { status, category };
 }
 
-function getReviewCards() {
-    return document.querySelectorAll('.reviewCard');
-}
-
 function getRequestCards() {
     return document.querySelectorAll('.requestCard');
-}
-
-function getReviewGrid() {
-    return (
-        document.getElementById('grigliaRecensioni') ?? document.querySelector('.reviewsGrid')
-    );
 }
 
 function getRequestGrid() {
     return (
         document.getElementById('grigliaRichieste') ?? document.querySelector('.requestGrid')
     );
-}
-
-function getEmptyState() {
-    return document.getElementById('filterEmptyState');
-}
-
-function matchesReviewVote(card, { minVote, maxVote }) {
-    const rating = card.querySelector('[itemprop="ratingValue"]');
-    if (!rating) return false;
-
-    const vote = Number(rating.textContent.trim());
-    return vote >= minVote && vote <= maxVote;
-}
-
-function matchesReviewCategory(card, { category }) {
-    if (category === 'all') return true;
-
-    const cat = card.querySelector('.reviewCategory');
-    if (!cat) return false;
-
-    return cat.textContent.trim().toLowerCase() === category;
 }
 
 function matchesRequestStatus(card, { status }) {
@@ -311,24 +386,6 @@ function matchesRequestCategory(card, { category }) {
     return cat.textContent.trim().toLowerCase() === category;
 }
 
-function applyReviewFilters() {
-    const state = getReviewFilterState();
-    const cards = getReviewCards();
-
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-        const isVisible =
-            matchesReviewVote(card, state) &&
-            matchesReviewCategory(card, state);
-
-        card.style.display = isVisible ? '' : 'none';
-        if (isVisible) visibleCount++;
-    });
-
-    updateReviewEmptyState(visibleCount);
-}
-
 function applyRequestFilters() {
     const state = getRequestFilterState();
     const cards = getRequestCards();
@@ -345,21 +402,6 @@ function applyRequestFilters() {
     });
 
     updateRequestEmptyState(visibleCount);
-}
-
-function updateReviewEmptyState(visibleCount) {
-    const grid  = getReviewGrid();
-    const empty = getEmptyState();
-
-    if (!grid || !empty) return;
-
-    if (visibleCount === 0) {
-        grid.style.display  = 'none';
-        empty.style.display = 'flex';
-    } else {
-        grid.style.display  = 'grid';
-        empty.style.display = 'none';
-    }
 }
 
 function updateRequestEmptyState(visibleCount) {

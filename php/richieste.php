@@ -79,7 +79,7 @@ if(!empty($resultRec)) {
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
                 <form action="/volontario/richieste?id="' . $id_utente_target . ' method="post" >
                     <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
-                    <button type="submit" name="rimuovi" class="btn-action">Rimuovi richiesta</button>
+                    <button type="submit" name="rimuovi" class="profileBtn">Rimuovi richiesta</button>
                  </form>',
                 $temp
             );
@@ -97,7 +97,7 @@ if(!empty($resultRec)) {
             // Stato aperto: pulsante disabilitato
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>Nessun volontario</button>',
+                '<span class="disabledBtn" disabled>Nessun volontario</span>',
                 $temp
             );
         } 
@@ -109,8 +109,8 @@ if(!empty($resultRec)) {
 }
 
 $html_pagina_richieste = file_get_contents(ROOT_PATH . '/templates/requestsPage.html');
-$categorie = file_exists(ROOT_PATH . '/templates/components/categories.html') ? file_get_contents(ROOT_PATH . '/templates/components/categories.html') : '';
-$html_pagina_richieste = str_replace('[Categorie]', $categorie, $html_pagina_richieste);
+$categorie = file_exists(ROOT_PATH . '/templates/components/checkboxCategories.html') ? file_get_contents(ROOT_PATH . '/templates/components/checkboxCategories.html') : '';
+$html_pagina_richieste = str_replace('[CheckboxesCategorie]', $categorie, $html_pagina_richieste);
 $html_pagina_richieste = str_replace('[Richieste]', $html_richieste_output, $html_pagina_richieste);
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');

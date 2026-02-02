@@ -3,30 +3,43 @@
         <ul>
         <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
         <li><a href="/volontario/profilo">Area Personale</a></li>
-        <li>Richieste</li>
+        <li aria-current="page">Richieste</li>
         </ul>
     </nav>
     <h1 class="profilePageTitle">Le mie richieste</h1>
-    <aside class="filtersSidebar">
-        <a href="/volontario/nuova-richiesta" id="newRequest">Aggiungi richiesta</a>
-        <div class="filterBox">
-            <h2 class="filterTitle">Filtra Richieste</h2>
-            <div class="filterGroup">
-                <label for="stateFilter" class="filterSubtitle">
-                    Stato
-                </label>
-                <select id="stateFilter" class="filterSelect">
-                    <option value="all">Tutti gli stati</option>
-                    <option value="aperta">Aperta</option>
-                    <option value="in_carico">In carico</option>
-                    <option value="completata">Completata</option>
-                    <option value="scaduta">Scaduta</option>
-                </select>
-            </div>
-            [Categorie]
+    <div class="requests-layout-wrapper">
+            <aside class="filters-sidebar" aria-label="Filtri recensioni">
+                    <div class="filter-header">
+                        <h2>Filtra Recensioni</h2>
+                        <a href="/volontario/recensioni?id=" class="btn reset-link">Reimposta Filtri</a>
+                    </div>
+                        <fieldset class="form-group category-group">
+                        <legend class="form-label">Valutazione</legend>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="state[]" value="aperta">
+                            Aperta
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="state[]" value="in_carico">
+                            In Carico
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="state[]" value="completata">
+                            Completata
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="state[]" value="scaduta">
+                            Scaduta
+                        </label>
+                        </fieldset>
+                        [CheckboxesCategorie]
+            </aside>
         </div>
     </aside>
-    <section class="requestContent">
         <div class="requestGrid" id="grigliaRichieste">
             [Richieste]
         </div>
@@ -34,5 +47,4 @@
             <span aria-hidden="true">🌱</span>
             <p>Non ci sono ancora richieste per questo filtro.</p>
         </div>
-    </section>
 </main>

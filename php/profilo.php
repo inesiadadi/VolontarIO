@@ -105,7 +105,10 @@ if ($numRec > 0) {
 $html_recensioni_output = "";
 if (!empty($resultRec)) {
     $template_item = file_get_contents(ROOT_PATH . '/templates/components/review.html');
-    foreach ($resultRec as $rec) {
+    if(count($resultRec) >= 3) $size = 3;
+    else $size = count($resultRec);
+    for($i = 0; $i < $size; $i++) {
+        $rec = $resultRec[$i];
         $foto_file = $rec['foto_autore'] ?? '';
         $foto_fs = ROOT_PATH . '/src/images/' . $foto_file;
         $foto_autore = (!empty($foto_file) && file_exists($foto_fs))

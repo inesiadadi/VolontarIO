@@ -60,8 +60,8 @@ if (!empty($resultRec)) {
 
 $html_pagina_recensioni = file_get_contents('templates/reviewsPage.html');
 $html_pagina_recensioni = str_replace('[Recensioni]', $html_recensioni_output, $html_pagina_recensioni);
-$categorie = file_exists('templates/components/categories.html') ? file_get_contents('templates/components/categories.html') : '';
-$html_pagina_recensioni = str_replace('[Categorie]', $categorie, $html_pagina_recensioni);
+$categorie = file_exists('templates/components/checkboxCategories.html') ? file_get_contents('templates/components/checkboxCategories.html') : '';
+$html_pagina_recensioni = str_replace('[CheckboxesCategorie]', $categorie, $html_pagina_recensioni);
 
 $pagina = file_get_contents('templates/blueprint.html');
 $footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';
