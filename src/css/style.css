@@ -469,7 +469,7 @@ h2, h3 {
 }
 
 .sez2-cf h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     font-size: 2.2rem;
     text-align: center;
     color: var(--deep-green);
@@ -484,11 +484,16 @@ h2, h3 {
     display: flex;
     background-color: var(--white); 
     border-radius: 24px;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     align-items: stretch; 
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(1, 39, 19, 0.08);
 }
+
+.container-cf:last-of-type {
+    margin-bottom: 2rem; 
+}
+
 
 .container-cf.reverse {
     flex-direction: row-reverse;
@@ -1033,7 +1038,7 @@ SEZIONE FOOTER
     width: 100%;
     min-height: 75vh;
     overflow: hidden;
-    background: linear-gradient(#00000099, #000000dc), url('../images/background.jpg') center/cover no-repeat;
+    background: linear-gradient(#00000099, #000000dc), url('../images/background.webp') center/cover no-repeat;
     background-attachment: fixed;
 }
 
@@ -1525,16 +1530,21 @@ ul.category-list {
     margin-top: 1em;
 }
 
-.accessForm {
+.accessForm{
+    border: none;
     background: var(--white);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    margin: 1em;
+}
+
+.accessForm fieldset {
+    border: none;
     display: flex;
     flex-direction: column;
-    margin: 1em;
 }
 
 .accessForm label {
@@ -1543,18 +1553,32 @@ ul.category-list {
     color: var(--dark-green);
 }
 
+.accessForm legend {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: center;
+}
+
 .accessForm input {
-    padding: 12px;
-    margin-bottom: 20px;
+    width: 100%;
+    padding: 0.7em;
+    margin-bottom: 1em;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1em;
 }
 
+.accessForm textarea {
+    resize: vertical;
+    padding: 0.7em;
+    margin-bottom: 1em;
+}
+
 .accessForm button {
     background-color: var(--outline);
     color: var(--white);
-    padding: 12px;
+    padding: 0.7em;
     border: none;
     border-radius: 4px;
     font-weight: bold;
@@ -1583,8 +1607,8 @@ ul.category-list {
 
 .error {
     border-radius: 4px;
-    color: var(--main-bg);
-    background-color:#dd6969;
+    color: black;
+    background-color:#f77373;;
     padding: 0.5em;
     border-radius: 4px;
     border: 1px solid var(--main-bg);
@@ -1601,11 +1625,15 @@ ul.category-list {
     margin-bottom: 1em;
 }
 
+textarea {
+    resize: vertical;
+}
+
 
 #legendForm, #alreadyLogged {
     text-align: center;
 }
-#alreadyLogged a {
+#alreadyLogged a, #mainForm a {
     text-decoration: underline;
 }
 /* 
@@ -2538,7 +2566,6 @@ body.dark-mode .filterSubtitle {
     color: var(--deep-green);
 }
 
-body.dark-mode .get-started-btn,
 body.dark-mode .stat-label,
 body.dark-mode .stat-number,
 body.dark-mode .form-input input,
@@ -2575,8 +2602,8 @@ body.dark-mode .form-textarea textarea:focus {
     box-shadow: 0 0 0 3px var(--focus-glow);
 }
 
-body.dark-mode .get-started-btn:hover,
-body.dark-mode .btn-primary:hover {
+body.dark-mode #landing .get-started-btn:hover,
+body.dark-mode #landing .btn-primary:hover {
     background-color: var(--separator);
     color: var(--dark-green);
 }
@@ -2636,7 +2663,8 @@ body.dark-mode .btn.apply-filters {
     color: var(--white);
 }
 
-body.dark-mode .modifyProfile {
+body.dark-mode .modifyProfile,
+body.dark-mode .btn.reset-link {
     color: var(--secondary-bg);
 }
 
@@ -2695,4 +2723,15 @@ body.dark-mode #infoForm {
 body.dark-mode .back-to-top:hover,
 body.dark-mode .back-to-top:focus-visible {
     background-color: var(--deep-green);
+}
+
+
+body.dark-mode #landing .get-started-btn {
+    color: var(--dark-green);
+    border-color: var(--dark-green);
+    background-color: var(--white);
+}
+
+body.dark-mode .team-card {
+   border-color: var(--deep-green);
 }
