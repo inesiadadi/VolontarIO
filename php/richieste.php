@@ -117,7 +117,7 @@ $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 
 $placeholders_layout = [
-    '[Titolo Pagina]' => 'VolontarIO | Richieste di ' . htmlspecialchars($rowUser['username']),
+    '[Titolo Pagina]' => 'Richieste di ' . htmlspecialchars($rowUser['username']) . ' | VolontarIO',
     '[Description]'   => 'Elenco delle richieste effettuate da ' . htmlspecialchars($rowUser['nome']),
     '[Keywords]'      => 'richieste, aiuti, necessità ' . htmlspecialchars($rowUser['nome']),
     '[pageNameId]'    => 'requestsPage', 
