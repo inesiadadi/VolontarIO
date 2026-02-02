@@ -1473,7 +1473,7 @@ ul.category-list {
     justify-content: center;
     flex-wrap: wrap;
 }
-.requests-list .btn-action{
+.requests-list .btn-action {
     padding: 0.8rem 1.5rem;
     border: none;
     margin: 0.5rem 0.5rem;
@@ -1608,7 +1608,7 @@ ul.category-list {
 .error {
     border-radius: 4px;
     color: black;
-    background-color:#f77373;;
+    background-color:#f77373;
     padding: 0.5em;
     border-radius: 4px;
     border: 1px solid var(--main-bg);
@@ -1704,7 +1704,7 @@ textarea {
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   object-fit: cover;
-  border: 0.6rem solid var(--deep-green);
+  border: 0.3rem solid var(--deep-green);
   margin: 0 auto 1.5rem;
 }
 
@@ -1937,7 +1937,7 @@ textarea {
   border-radius: 1.5rem;
   padding: 1rem;
   box-shadow: var(--shadow);
-  border: var(--card-border);
+  border: 2px solid var(--dark-green);
 
   display: flex;
   flex-direction: column;
@@ -2160,6 +2160,7 @@ textarea#messaggio {
 
 #suggerimenti-citta li {
     padding: 8px 12px;
+    font-size: 0.9rem;
     cursor: pointer;
     border-bottom: 1px solid #eee;
     white-space: nowrap;
@@ -2213,7 +2214,7 @@ textarea#messaggio {
     display: none;
 }
 
-.reviewsPageContainer, .requestPageContainer {
+.reviewsPageContainer {
     display: grid;
     grid-template-columns: 15rem 1fr;
     gap: 3rem;
@@ -2224,7 +2225,6 @@ textarea#messaggio {
     align-items: start;
 }
 
-.reviewsPageContainer  #breadcrumb,
 .requestPageContainer #breadcrumb, 
 .servicePageContainer #breadcrumb {
     display: flex;

@@ -231,5 +231,14 @@ body #mainForm input {
     display: table-cell;
 }
 
+p a {
+    text-decoration: none;
+}
+p a[href]::after {
+    text-decoration: underline;
+    content: " (tecnologieweb.studenti.math.unipd.it/asuar" attr(href) ")";
+    word-wrap: break-word;
+}
+
 
     

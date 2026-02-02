@@ -101,10 +101,11 @@ if(!empty($resultRec)) {
 }
 
 $html_pagina_candidature = file_get_contents(ROOT_PATH . '/templates/candidaturePage.html');
-$categorie = file_exists(ROOT_PATH . '/templates/components/categories.html') ? file_get_contents(ROOT_PATH . '/templates/components/categories.html') : '';
+$categorie = file_exists(ROOT_PATH . '/templates/components/checkboxCategories.html') ? file_get_contents(ROOT_PATH . '/templates/components/checkboxCategories.html') : '';
 
-$html_pagina_candidature = str_replace('[Categorie]', $categorie, $html_pagina_candidature);
+$html_pagina_candidature = str_replace('[CheckboxesCategorie]', $categorie, $html_pagina_candidature);
 $html_pagina_candidature = str_replace('[Candidature]', $html_candidature_output, $html_pagina_candidature);
+$html_pagina_candidature = str_replace('[idUtenteTarget]', $id_utente_target, $html_pagina_candidature);
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';

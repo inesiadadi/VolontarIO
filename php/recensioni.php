@@ -14,7 +14,7 @@ $id_utente_target = $id_visitatore;
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
     http_response_code(500);
-    header('Location: /volontario/php/error_500.php');
+    include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
     exit;
 }
 
@@ -60,7 +60,7 @@ if (!empty($resultRec)) {
 
 $html_pagina_recensioni = file_get_contents('templates/reviewsPage.html');
 $html_pagina_recensioni = str_replace('[Recensioni]', $html_recensioni_output, $html_pagina_recensioni);
-$categorie = file_exists('templates/components/checkboxCategories.html') ? file_get_contents('templates/components/checkboxCategories.html') : '';
+$categorie = file_exists(ROOT_PATH . '/templates/components/checkboxCategories.html') ? file_get_contents(ROOT_PATH . '/templates/components/checkboxCategories.html') : '';
 $html_pagina_recensioni = str_replace('[CheckboxesCategorie]', $categorie, $html_pagina_recensioni);
 
 $pagina = file_get_contents('templates/blueprint.html');

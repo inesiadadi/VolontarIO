@@ -223,6 +223,7 @@ function initValidations() {
 /* Helpers per le funzioni relative alle recensioni e alle richieste */
 document.addEventListener('DOMContentLoaded', () => {
   initReviewFiltering();
+  initRequestsFiltering();
 });
 
 function initReviewFiltering() {
@@ -231,10 +232,6 @@ function initReviewFiltering() {
   const sidebar = document.querySelector('.filters-sidebar');
   const reviewsGrid = getReviewGrid();
   const cards = document.querySelectorAll('.reviewCard');
-
-  console.log('🧪 sidebar:', !!sidebar);
-  console.log('🧪 grid:', !!reviewsGrid);
-  console.log('🧪 reviewCard trovate:', cards.length);
 
   if (!sidebar || !reviewsGrid || cards.length === 0) return;
 
@@ -248,7 +245,6 @@ function initReviewFiltering() {
     if (t.type !== 'checkbox') return;
     if (t.name !== 'vote[]' && t.name !== 'category[]') return;
 
-    console.log('🔄 change:', t.name, t.value, t.checked);
     applyReviewFiltering();
   });
 
@@ -258,8 +254,6 @@ function initReviewFiltering() {
 function applyReviewFiltering() {
   const selectedVoteRanges = getCheckedValue('vote[]');                // array
   const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
-
-  console.log('📊 filtri:', { selectedVoteRanges, selectedCategories });
 
   const cards = document.querySelectorAll('.reviewCard');
   let visible = 0;
@@ -280,17 +274,6 @@ function applyReviewFiltering() {
     card.style.display = show ? '' : 'none';
     if (show) visible++;
   }
-
-    const grid = getReviewGrid();
-    const empty = getReviewEmptyState();
-
-    console.log('DEBUG empty-state:', {
-    visible,
-    totalCards: cards.length,
-    gridFound: !!grid,
-    emptyFound: !!empty,
-    emptyHiddenBefore: empty?.hidden
-    });
 
     updateEmptyState(grid, empty, visible);
 }
@@ -368,7 +351,6 @@ function updateEmptyState(grid, empty, visibleCount) {
 
 
 document.addEventListener('DOMContentLoaded', initRequestFilters);
-
 function initRequestFilters() {
     const statSelect = document.getElementById('stateFilter');
     const catSelect = document.getElementById('categoryFilter');

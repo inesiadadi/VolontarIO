@@ -119,9 +119,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $query = $dbAccess->aggiungiNuovaRichiesta($descrizione, $dataRichiesta, $idRichiedente, $idTipo, $idCitta);
+    $successo = $dbAccess->aggiungiNuovaRichiesta($descrizione, $dataRichiesta, $idRichiedente, $idTipo, $idCitta);
 
     $dbAccess->closeDBConnection();
+    if($successo) {
+        header('Location: /volontario/richieste?id=' . $id_utente_target);
+        exit();
+    }
 }
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_get_contents(ROOT_PATH . '/templates/components/footer.html');
