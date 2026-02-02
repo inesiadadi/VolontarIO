@@ -219,5 +219,17 @@ body #mainForm input {
     display: block;
 }
 
+.contact-table td, .contact-table th{
+    border: 1px solid #000;
+}
+
+.noStampaTabella {
+    display: none;
+}
+
+.soloStampaTabella[hidden] {
+    display: table-cell;
+}
+
 
     

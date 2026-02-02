@@ -2401,13 +2401,13 @@ SEZIONE PANNELLO AMMINISTRATORE
 
 */ 
 
-#pannelPage {
+#pannelMain {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#pannelPage #content {
+#pannelMain #content {
     text-align: center;
 }
 
@@ -2474,6 +2474,9 @@ SEZIONE PANNELLO AMMINISTRATORE
     word-wrap: break-word;
 }
 
+.soloStampaTabella {
+    display: none;
+}
 
 .contact-table th:last-child, 
 .contact-table td:last-child {
