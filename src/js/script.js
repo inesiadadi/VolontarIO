@@ -223,6 +223,7 @@ function initValidations() {
 /* Helpers per le funzioni relative alle recensioni e alle richieste */
 document.addEventListener('DOMContentLoaded', () => {
   initReviewFiltering();
+  initRequestsFiltering();
 });
 
 function initReviewFiltering() {
@@ -247,6 +248,25 @@ function initReviewFiltering() {
   });
 
   applyReviewFiltering();
+}
+
+function initRequestsFiltering() {
+    const sidebar = document.querySelector('.filters-sidebar');
+    const grid = getRequestGrid();
+    if(!sidebar || !grid) return;
+
+    if (sidebar.dataset.reviewFilteringInit === '1') return;
+    sidebar.dataset.reviewFilteringInit = '1';
+    sidebar.addEventListener('change', (e) => {
+        const t = e.target;
+        if (!(t instanceof HTMLInputElement)) return;
+        if (t.type !== 'checkbox') return;
+        if (t.name !== 'state[]' && t.name !== 'category[]') return;
+
+        applyRequestsFiltering();
+      });
+
+    applyRequestsFiltering();
 }
 
 function applyReviewFiltering() {
@@ -277,6 +297,46 @@ function applyReviewFiltering() {
     updateEmptyState(grid, empty, visible);
 }
 
+function applyRequestsFiltering() {
+    const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
+    const selectedStates = getCheckedValue('state[]').map(normalizeToken);
+    const cards = document.querySelectorAll('.request-card');
+
+    let visible = 0;
+
+    for(const card of cards) {
+        const state = readRequestState(card);
+        const category = readRequestCategory(card);
+
+        const passState = 
+            (selectedStates.length === 0) ||
+            selectedStates.includes(state);
+
+        const passCategory =
+            (selectedCategories.length === 0) ||
+            selectedCategories.includes(category);
+
+        const show = passState && passCategory;
+        card.style.display = show ? '' : 'none';
+        if(show) visible++;
+
+        const grid = getRequestGrid();
+        const empty = getRequestsEmptyState();
+        updateEmptyState(grid, empty, visible);
+    }
+}
+
+function readRequestState(card) {
+    const att = card.getAttribute('data-status') || '';
+    return normalizeToken(att);
+}
+
+function readRequestCategory(card) {
+    const el = card.querySelector('.category-tag, [itemprop="category"]');
+    if(!el) return '';
+    return normalizeToken(el.textContent);
+}
+
 function readReviewVote(card) {
   const el = card.querySelector('[itemprop="ratingValue"]');
   if (!el) return NaN;
@@ -301,6 +361,14 @@ function getReviewGrid() {
 }
 
 function getReviewEmptyState() {
+  return document.getElementById('filterEmptyState');
+}
+
+function getRequestsGrid() {
+  return document.getElementById('grigliaRichieste');
+}
+
+function getRequestsEmptyState() {
   return document.getElementById('filterEmptyState');
 }
 
