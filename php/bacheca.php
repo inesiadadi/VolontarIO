@@ -4,6 +4,7 @@ use DB\DBAccess;
 
 
 $id_utente_loggato = $_SESSION['user_id'] ?? 0;
+$user_role = $_SESSION['role'] ?? 'guest';
 $is_logged_in = ($id_utente_loggato > 0);
 
 $dbAccess = new DBAccess();
@@ -17,7 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accetta_id']) && $is_
     $id_to_accept = intval($_POST['accetta_id']);
     $dbAccess->accettaRichiesta($id_to_accept, $id_utente_loggato);
 }
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['elimina_id']) && $is_logged_in && $user_role === 'admin') {
+    $id_to_delete = intval($_POST['elimina_id']);
+    $dbAccess->rimuoviRichiesta($id_to_delete);
+}
 $filtro_data   = isset($_GET['date']) ? $_GET['date'] : '';
 $filtro_orario = isset($_GET['time']) ? $_GET['time'] : '';
 $filtro_citta  = isset($_GET['city']) ? trim($_GET['city']) : '';
@@ -64,11 +68,17 @@ if (!empty($richieste)) {
 
         if (!$is_logged_in) {
             $btn_html = '<a href="/volontario/login" class="btn-action">Accedi per aiutare</a>';
+        } else if($user_role === 'admin') {
             $btn_html = '
-            <form action="/volontario/login" method="post">
-                <button type="submit" class="btn-action btn-guest">Accedi per aiutare</button>
+            <form action="/volontario/bacheca-richieste" method="post">
+                <input type="hidden" name="accetta_id" value="' . $req['id'] . '">
+                <button type="submit" class="btn-action" aria-label="Offri aiuto a ' . $req['nome_utente'] . '">Offri Aiuto</button>
+            </form>
+            <form action="/volontario/bacheca-richieste" method="post">
+                <input type="hidden" name="elimina_id" value="' . $req['id'] . '">
+                <button type="submit" class="btn-action btn-delete">Elimina Richiesta</button>
             </form>';
-        } else {
+        }else{
             $btn_html = '
             <form action="/volontario/bacheca-richieste" method="post">
                 <input type="hidden" name="accetta_id" value="' . $req['id'] . '">
@@ -78,7 +88,8 @@ if (!empty($richieste)) {
         $temp = str_replace('[ActionButton]', $btn_html, $temp);
         $html_richieste_output .= $temp;
     }
-} else {
+} 
+if (empty($html_richieste_output)) {
     $html_richieste_output = file_get_contents('templates/components/no-filtered-requests.html');
 }
 $html_bacheca_page = file_get_contents(ROOT_PATH . '/templates/bachecaPage.html'); 

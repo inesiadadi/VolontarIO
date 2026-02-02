@@ -300,16 +300,16 @@ SEZIONE COME_FUNZIONA
 }
 /*bacheca page*/
 .requests-layout-wrapper {
-        grid-template-columns: 1fr; /* Sidebar sopra, lista sotto */
-    }
+    grid-template-columns: 1fr;
+}
 
 
 .requests-layout.container {
-        grid-template-columns: 1fr; 
-        width: 100%;
-        padding: 0 1rem;
-        max-width: 100%;
-        gap: 2rem;
+    grid-template-columns: 1fr; 
+    width: 100%;
+    padding: 0 1rem;
+    max-width: 100%;
+    gap: 2rem;
 }
 
 .filters-sidebar {
@@ -329,14 +329,17 @@ SEZIONE COME_FUNZIONA
     gap: 0.5rem;
 }
 
-.req-footer .btn {
+.action-button .btn-action {
     width: 100%;
-    text-align: center;
+}
+
+.action-button form {
+    width: 70%;
 }
 
 .no-request-msg {
     margin-top: 0rem;
-    }
+}
 /* 
    ========================
 

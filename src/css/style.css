@@ -1048,17 +1048,17 @@ SEZIONE FOOTER
     max-width: 800px;
 }
 
-#landing h2 {
-    font-size: 3.5rem;
+#landing h1 {
+    font-size: 3rem;
     font-weight: 800;
     margin-bottom: 1rem;
     color: var(--main-bg);
 }
 
-#landing h3 {
+#landing h2 {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--secondary-bg);
 }
 
@@ -1417,8 +1417,9 @@ ul.category-list {
     background-color: var(--main-bg);
     color: var(--outline);
     padding: 0.4rem 0.8rem;
+    margin-top: 0;
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
     border: 1px solid var(--outline);
@@ -1461,19 +1462,27 @@ ul.category-list {
     font-weight: 600;
     white-space: nowrap;
 }
-.req-footer .action-button {
+.req-footer > .action-button {
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .requests-list .btn-action{
     padding: 0.8rem 1.5rem;
     border: none;
+    margin: 0.5rem 0.5rem;
     cursor: pointer;
-    display: inline-flex;
     justify-content: center;
     color: var(--white);
     background-color: var(--dark-green);
+}
+
+.btn-action.btn-delete{
+    background-color:#AA4E4E;
+}
+.btn-action.btn-delete:hover {
+    background-color: #833333;
 }
 
 .no-request-msg {
@@ -1492,7 +1501,9 @@ ul.category-list {
     margin-bottom: 1.5rem;
 }
 
-
+.no-request-msg p {
+    font-size: 1.8rem;
+}
 /* 
    ========================
 
