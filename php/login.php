@@ -54,6 +54,7 @@ if ($connessioneOK && $result === false) {
         $_SESSION['logged'] = true;
         $_SESSION['username'] = $row['username'];
         $_SESSION['user_id'] = $row['idPersona'];
+        $_SESSION['email'] = $row['email'];
         $_SESSION['role'] = $row['ruolo'];
         header('Location: /volontario/');
         exit();

@@ -1,7 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-    if (document.getElementById('signForm')) {
-        initValidations();
-    }  
+document.addEventListener('DOMContentLoaded', function () { 
     if (document.getElementById('citta-input')) {
         initCittaAutocomplete();
     }
@@ -141,19 +138,30 @@ function initCittaAutocomplete() {
     });
 }
 
-// VALIDAZIONE DEL FORM DI REGISTER
+// VALIDAZIONE DEL FORM DI REGISTER O FORM DI CONTATTO O FORM DI LOGIN
+
 function initValidations() {
-    const form = document.getElementById('signForm');
+    
+    const form = document.getElementById('signForm') || document.getElementById('contattoForm');
+    var regole = [];
 
-    const regole = [
-        ['username', /^[a-zA-Z0-9_]{4,20}$/, "4-20 caratteri (lettere, numeri, underscore)", "Username non valido"],
-        ['email', /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
-        ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
-        ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
-        ['password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Minimo 8 caratteri con almeno una maiuscola e un numero", "Password debole"],
-        ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita", "Data non valida"]
-    ];
-
+    if(form.id == "signForm") {
+        regole = [
+            ['username', /^[a-zA-Z0-9_]{4,20}$/, "4-20 caratteri (lettere, numeri, underscore)", "Username non valido"],
+            ['email', /^[a-zA-Z0-9._%+-]+@[a-zAèZ0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
+            ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
+            ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
+            ['password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Minimo 8 caratteri con almeno una maiuscola e un numero", "Password debole"],
+            ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita", "Data non valida"]
+        ];
+    } else if (form.id == "contattoForm") {
+        regole = [
+            ['nome_cognome', /^[a-zA-Zà-ùÀ-Ù\s']{2,}$/, "Solo lettere, minimo 2 caratteri, es: Mario Rossi", "Nome e cognome non validi"],
+            ['email', /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
+            ['tel', /^(\+?[0-9\s\-]{8,20})?$/, "Inserisci un numero di telefono valido, es: +39 333 111 2222", "Formato non valido"],
+            ['messaggio', /\S+\s+\S+/, "Inserisci la tua richiesta, almeno 2 parole, es: \"Come creare un account?\"", "Richiesta non valida"]
+        ];
+    }
 
     function validaCampo(id, regex, testoAiuto, testoErrore) {
         const input = document.getElementById(id);
@@ -161,7 +169,7 @@ function initValidations() {
     
         if (input.value === "") {
             span.textContent = testoAiuto;
-            span.className="aiuto";
+            span.className = "aiuto";
             input.classList.remove("input-error");
         } else if (!regex.test(input.value)) {
             span.textContent = testoErrore;
@@ -205,7 +213,7 @@ function initValidations() {
     }
 
     form.addEventListener('submit', function(e) {
-        regole.forEach(campo => validaCampo(campo[0], campo[1], campo[2], campo[3], campo[4], campo[5]));
+        regole.forEach(campo => validaCampo(campo[0], campo[1], campo[2], campo[3]));
         if (document.querySelectorAll('.aiuto.errore').length > 0) {
             e.preventDefault();
         }
@@ -439,19 +447,65 @@ function updateRequestEmptyState(visibleCount) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    //GESTIONE MENU HAMBURGER
+    // MENU HAMBURGER
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const menuWrapper = document.getElementById('menuWrapper');
 
     if (hamburgerBtn && menuWrapper) {
         hamburgerBtn.addEventListener('click', () => {
-            menuWrapper.classList.toggle('active');
-
+            const isOpen = menuWrapper.classList.toggle('active');
             hamburgerBtn.classList.toggle('open');
+            hamburgerBtn.setAttribute('aria-expanded', isOpen);
+
+            if (isOpen) {
+                const primoLink = menuWrapper.querySelector('a, button');
+                if (primoLink) setTimeout(() => { primoLink.focus(); }, 100);
+            } else {
+                hamburgerBtn.focus();
+            }
+        });
+
+        menuWrapper.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                menuWrapper.classList.remove('active');
+                hamburgerBtn.classList.remove('open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                hamburgerBtn.focus();
+            }
         });
     }
 
-    //GESTIONE DARK MODE
+    //MENU UTENTE
+    const userBtn = document.getElementById('userBtn');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    if (userBtn && dropdownContent) {
+        userBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isAperto = dropdownContent.classList.toggle('show');
+            userBtn.setAttribute('aria-expanded', isAperto);
+
+            if (isAperto) {
+                const primoLinkUser = dropdownContent.querySelector('a');
+                if (primoLinkUser) setTimeout(() => { primoLinkUser.focus(); }, 100);
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (!userBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+                dropdownContent.classList.remove('show');
+                userBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && dropdownContent.classList.contains('show')) {
+                dropdownContent.classList.remove('show');
+                userBtn.setAttribute('aria-expanded', 'false');
+                userBtn.focus();
+            }
+        });
+    }
+
+    //DARK MODE
     const themeBtn = document.getElementById('themeBtn');
     const body = document.body;
     const savedTheme = localStorage.getItem('theme');
@@ -462,12 +516,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
+            const isDark = body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
     }
+
+    // VALIDAZIONE FORM
+    if (document.getElementById('signForm') || document.getElementById('contattoForm')) {
+        if (typeof initValidations === 'function') {
+            initValidations();
+        }
+    } 
 });

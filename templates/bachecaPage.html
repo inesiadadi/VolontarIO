@@ -6,13 +6,12 @@
         </ul>
     </nav>
     <div class="container-requests">
-        <h1 id="accountTitle">La Bacheca</h1>
+        <h1 id="accountTitle">Bacheca</h1>
         <div class="requests-layout-wrapper">
             <aside class="filters-sidebar">
                 <form action="/volontario/bacheca-richieste" method="get" class="filter-form">
                     <div class="filter-header">
                         <h2>Filtra Richieste</h2>
-                        <a href="/volontario/bacheca-richieste" class="btn reset-link">Reimposta Filtri</a>
                     </div>
                     <div class="form-group">
                         <label for="filter-date">Data</label>
@@ -21,33 +20,32 @@
 
                     <div class='autocomplete-container'>
                         <label for='citta-input'>Città di residenza:</label>
-
                         <input
                             type='text'
                             id='citta-input'
                             name='citta_nome'
                             autocomplete='off'
                             role='combobox'
+                            placeholder="Inserisci la città..."
                             aria-autocomplete='list'
                             aria-expanded='false'
                             aria-controls='suggerimenti-citta'
                             aria-describedby='aiuto-citta'
                         >
-
                         <ul
                             id='suggerimenti-citta'
                             role='listbox'
                             tabindex='-1'
                             hidden
                         ></ul>
-
                         <input type='hidden' name='idCitta' id='idCitta-input'>
-
                         <div id='status-citta' class='sr-only' aria-live='polite'></div>
                     </div>
+                    <span id='aiuto-citta' class='sr-only'>Digita il comune e usa le frecce su e giù per selezionare.</span>
                     [CheckboxesCategorie]
 
                     <button type="submit" class="btn apply-filters full-width">Applica Filtri</button>
+                    <a role="button" href="/volontario/bacheca-richieste" class="btn reset-link">Cancella Filtri</a>
                 </form>
             </aside>
 

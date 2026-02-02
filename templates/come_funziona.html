@@ -79,8 +79,8 @@
             
 
     <p>Hai dubbi o domande? Compila il form e mettiti in contatto con noi.</p>
-    
-    <form action="/volontario/come-funziona" method="post" class="contact-form">
+    [formMessage]
+    <form action="/volontario/come-funziona#contatti" id="contattoForm" method="post" class="contact-form">
         <fieldset class="form-cf">
             <legend class="legend-cont">Modulo di contatto</legend>
 
@@ -89,28 +89,31 @@
                 <div class="form-input">
                     <label for="nome_cognome">Inserisci nome e cognome</label> 
                     <input type="text" class="input-cf" id="nome_cognome" name="nome_cognome" autocomplete="name" required aria-required="true" value="[nome_cognome]">
-                    
+                    <span id="aiuto-nome_cognome" class="aiuto"></span>
+
                     <label for="email">Inserisci email</label> 
                     <input type="email" class="input-cf" id="email" name="email" autocomplete="email" required aria-required="true" value="[email]">
-                    
+                    <span id="aiuto-email" class="aiuto"></span>
+
                     <label for="tel">Inserisci numero di telefono</label> 
                     <input type="tel" class="input-cf" id="tel" name="tel" autocomplete="tel" value="[tel]">
+                    <span id="aiuto-tel" class="aiuto"></span>
+
                 </div>
 
                 <div class="form-textarea">
-                    <label for="descrizione">Inserisci il messaggio qui</label>
-                    <textarea id="descrizione" class="textarea-cf" name="descrizione" rows="5" required aria-required="true" value="[messaggio]"></textarea> 
+                    <label for="messaggio">Inserisci il messaggio qui</label>
+                    <textarea id="messaggio" class="textarea-cf" name="messaggio" rows="5" required aria-required="true" value="[messaggio]"></textarea> 
+                    <span id="aiuto-messaggio" class="aiuto"></span>
                 </div>
             </div > 
-
+ 
             <div class="form-buttons">
-                <input type="submit" id="invia" name="invia" value="Invia" aria-label="Invia" class="btn-submit">
-                <input type="reset" id="reset" value="Cancella tutto" class="btn-delete">
+            <button type="submit" class="btn-submit">Invia</button>
+            <button type="reset" class="btn-delete">Cancella tutto</button>
             </div>
 
         </fieldset>
        </form>
       </section>
-    </main>
-</body>
-
+</main>
