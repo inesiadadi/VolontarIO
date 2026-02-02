@@ -67,7 +67,7 @@ if($connessioneOK) {
                     <th data-label="Nome" scope="row">' . $nome_cognome . '</th>
 
                     <td data-label="Numero">' . $numero . '</td>
-                    <td data-label="Messaggio"><div class="message-cell-content">'. $messaggio . '</div></td>
+                    <td data-label="Messaggio"><div class="message-cell-content" tabindex="0">'. $messaggio . '</div></td>
                     <td data-label="Azioni" class="noStampaTabella">
                         <div class="actions">
                             <a href="mailto:' . $email . '?subject=Risposta assistenza VolontarIO" 
