@@ -469,7 +469,7 @@ h2, h3 {
 }
 
 .sez2-cf h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     font-size: 2.2rem;
     text-align: center;
     color: var(--deep-green);
@@ -484,11 +484,16 @@ h2, h3 {
     display: flex;
     background-color: var(--white); 
     border-radius: 24px;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     align-items: stretch; 
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(1, 39, 19, 0.08);
 }
+
+.container-cf:last-of-type {
+    margin-bottom: 2rem; 
+}
+
 
 .container-cf.reverse {
     flex-direction: row-reverse;
@@ -1048,17 +1053,17 @@ SEZIONE FOOTER
     max-width: 800px;
 }
 
-#landing h2 {
-    font-size: 3.5rem;
+#landing h1 {
+    font-size: 3rem;
     font-weight: 800;
     margin-bottom: 1rem;
     color: var(--main-bg);
 }
 
-#landing h3 {
+#landing h2 {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--secondary-bg);
 }
 
@@ -1334,6 +1339,11 @@ SEZIONE FOOTER
     font-weight: 500;
 }
 
+ul.category-list {
+    padding: 0;
+    margin: 0;
+}
+
 .filter-form input[type="date"],
 .filter-form input[type="text"] {
     width: 100%;
@@ -1412,8 +1422,9 @@ SEZIONE FOOTER
     background-color: var(--main-bg);
     color: var(--outline);
     padding: 0.4rem 0.8rem;
+    margin-top: 0;
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
     border: 1px solid var(--outline);
@@ -1456,19 +1467,27 @@ SEZIONE FOOTER
     font-weight: 600;
     white-space: nowrap;
 }
-.req-footer .action-button {
+.req-footer > .action-button {
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .requests-list .btn-action{
     padding: 0.8rem 1.5rem;
     border: none;
+    margin: 0.5rem 0.5rem;
     cursor: pointer;
-    display: inline-flex;
     justify-content: center;
     color: var(--white);
     background-color: var(--dark-green);
+}
+
+.btn-action.btn-delete{
+    background-color:#AA4E4E;
+}
+.btn-action.btn-delete:hover {
+    background-color: #833333;
 }
 
 .no-request-msg {
@@ -1487,7 +1506,9 @@ SEZIONE FOOTER
     margin-bottom: 1.5rem;
 }
 
-
+.no-request-msg p {
+    font-size: 1.8rem;
+}
 /* 
    ========================
 
@@ -1586,8 +1607,8 @@ SEZIONE FOOTER
 
 .error {
     border-radius: 4px;
-    color: var(--main-bg);
-    background-color:#dd6969;
+    color: black;
+    background-color:#f77373;;
     padding: 0.5em;
     border-radius: 4px;
     border: 1px solid var(--main-bg);
@@ -2473,7 +2494,6 @@ body.dark-mode .filterSubtitle {
     color: var(--deep-green);
 }
 
-body.dark-mode .get-started-btn,
 body.dark-mode .stat-label,
 body.dark-mode .stat-number,
 body.dark-mode .form-input input,
@@ -2510,8 +2530,8 @@ body.dark-mode .form-textarea textarea:focus {
     box-shadow: 0 0 0 3px var(--focus-glow);
 }
 
-body.dark-mode .get-started-btn:hover,
-body.dark-mode .btn-primary:hover {
+body.dark-mode #landing .get-started-btn:hover,
+body.dark-mode #landing .btn-primary:hover {
     background-color: var(--separator);
     color: var(--dark-green);
 }
@@ -2571,7 +2591,8 @@ body.dark-mode .btn.apply-filters {
     color: var(--white);
 }
 
-body.dark-mode .modifyProfile {
+body.dark-mode .modifyProfile,
+body.dark-mode .btn.reset-link {
     color: var(--secondary-bg);
 }
 
@@ -2630,4 +2651,15 @@ body.dark-mode #infoForm {
 body.dark-mode .back-to-top:hover,
 body.dark-mode .back-to-top:focus-visible {
     background-color: var(--deep-green);
+}
+
+
+body.dark-mode #landing .get-started-btn {
+    color: var(--dark-green);
+    border-color: var(--dark-green);
+    background-color: var(--white);
+}
+
+body.dark-mode .team-card {
+   border-color: var(--deep-green);
 }
