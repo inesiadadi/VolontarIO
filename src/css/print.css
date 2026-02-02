@@ -29,7 +29,14 @@ body .skip-link,
 body .btn,
 body #menuWrapper, 
 body .header-right, 
-body #hamburgerBtn { 
+body #hamburgerBtn,    
+body .accessForm button,
+body #mainForm button,
+body #alreadyLogged,
+body #legendForm,
+body .aiuto, 
+body .error, 
+body .success { 
     display: none; 
 } 
 
@@ -181,4 +188,36 @@ body .sez1-cf {
     margin-bottom: 1rem; 
     background: none;
 }
+
+/*ACCEDI E REGISTRATI*/
+body #mainForm {
+    min-height: auto; 
+    display: block;  
+
+}
+
+body #mainForm h1 {
+    text-align: center;
+}
+
+body .accessForm, 
+body #mainForm form {
+    border: 1px solid #000;
+    border-radius: 15px;
+    max-width: 400px;       
+    margin: 0 auto;        
+    padding: 30px;
+    page-break-inside: avoid; 
+}
+
+body .accessForm input,
+body #mainForm input {
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    display: block;
+}
+
+
     
