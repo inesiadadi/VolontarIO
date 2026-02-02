@@ -23,7 +23,7 @@ if(isset($_SESSION['logged'])) {
             <a href="/volontario/candidature?id=' . $_SESSION['user_id'] . '">Candidature</a>
         ';
 if($_SESSION['role'] == "admin") {
-    $menu_utente .= '<a href="/volontario/pannello">Pannello amministratore</a>';
+    $menu_utente .= '<a href="/volontario/pannello">Pannello d\'assistenza</a>';
 }
     $menu_utente .=    '
             <a href="/volontario/logout?id=' . $_SESSION['user_id'] . '">Log out</a>

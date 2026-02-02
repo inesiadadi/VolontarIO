@@ -86,7 +86,7 @@ if($connessioneOK) {
                         </div>
                     </td>
                     <td class="soloStampaTabella" hidden>'. $email .'</td>
-                  </tr>';
+                </tr>';
         }
         $table .= '</tbody></table>';
     }
@@ -101,7 +101,7 @@ $pagina = file_get_contents(realpath(__DIR__ . '/' . '../templates/blueprint.htm
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 
 $placeholders_layout = [
-    '[Titolo Pagina]' => 'Pannello amministratore',
+    '[Titolo Pagina]' => 'Pannello d\'assistenza',
     '[Description]'   => "Visualizza i messaggi d'assistenza degli utenti di VolontarIO",
     '[Keywords]'      => 'volontariato, profilo, assistenza, pannello',
     '[pageNameId]'    => 'pannelPage',
