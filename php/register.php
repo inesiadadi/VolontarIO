@@ -68,20 +68,57 @@ if(isset($_SESSION['logged'])) {
     $pass_again = "";
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
-    $username = $_POST["username"];
-    $email = $_POST["email"];
+    $username = trim($_POST["username"] ?? "");
+    $email = trim($_POST["email"] ?? "");
     
-    $nome = $_POST["nome"];
-    $cognome = $_POST["cognome"];
-    $dataNascita = $_POST["dataNascita"];
+    $nome = trim($_POST["nome"] ?? "");
+    $cognome = trim($_POST["cognome"] ?? "");
+    $dataNascita = $_POST["dataNascita"] ?? "";
+
+    $password = $_POST["password"] ?? "";
+    $pass_again = $_POST["pass_again"] ?? "";
     
-    $password = $_POST["password"];
-    $pass_again = $_POST["pass_again"];
-    
+    $errori = [];
+
+    if(!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $username)) {
+            $errori[] = "L'username deve essere di 4-20 caratteri (lettere, numeri, underscore).";
+    }
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errori[] = "Formato email non valido.";
+    }
+    if(!preg_match("/^[a-zA-Z\sàèìòù']+$/", $nome)) {
+            $errori[] = "Il nome non è valido.";
+    }
+    if(!preg_match("/^[a-zA-Z\sàèìòù']+$/", $cognome)) {
+            $errori[] = "Il cognome non è valido.";
+    }
+    if(empty($dataNascita)) {
+            $errori[] = "Inserire la data di nascita.";
+        } else {
+            $data_di_nascita = new DateTime($dataNascita);
+            $now = new DateTime();
+            $eta = $now->diff($data_di_nascita)->y;
+            if($eta < 18) {
+                $errori[] = "Devi essere maggiorenne per registrarti.";
+            }
+        }
+    if(!preg_match("/^(?=.*[A-Z])(?=.*\d).{8,}$/", $password)) {
+        $errori[] = "La password deve essere lunga almeno 8 caratteri e deve contenere almeno una maiuscola e un numero.";
+    }
     if($password != $pass_again) {
         $password = "";
         $pass_again = "";
-        $messaggio = "<p class='error'>Le password sono diverse</span>";
+        $errori[] = "Le password sono diverse";
+    }
+    if(!empty($errori)) {
+        $password = "";
+        $pass_again = "";
+        $messaggio = "<div class='error' role='alert'><ul>";
+        
+        foreach ($errori as $errore) {
+            $messaggio .= "<li>" . $errore . "</li>";
+        }
+        $messaggio .= "</ul></div>";
         $html = str_replace('[error_message]', $messaggio, $html);
 
     } else {
