@@ -48,7 +48,8 @@ if($connessioneOK) {
                         <th scope="col">Nome</th>
                         <th data-label="Telefono" scope="col">Telefono</th>
                         <th data-label="Messaggio" scope="col">Messaggio</th>
-                        <th data-label="Azioni" scope="col">Azioni</th>
+                        <th data-label="Azioni" scope="col" class="noStampaTabella">Azioni</th>
+                        <th data-label="Email" scope="col" class="soloStampaTabella" hidden>Email</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -67,21 +68,24 @@ if($connessioneOK) {
 
                     <td data-label="Numero">' . $numero . '</td>
                     <td data-label="Messaggio"><div class="message-cell-content">'. $messaggio . '</div></td>
-                    <td data-label="Azioni">
+                    <td data-label="Azioni" class="noStampaTabella">
                         <div class="actions">
                             <a href="mailto:' . $email . '?subject=Risposta assistenza VolontarIO" 
-                               class="btnh btn-login-header" title="Rispondi via email">
+                               class="btnh btn-login-header" title="Rispondi via email"
+                               aria-label="Rispondi a ' . $nome_cognome . ' via mail">
                                <span aria-hidden="true">✉️</span> Rispondi
                             </a>
 
                             <form action="/volontario/pannello" method="POST">
                                 <input type="hidden" name="id" value="' . $id . '">
-                                <button type="submit" name="delete_btn" class="btnh btn-register-header">
+                                <button type="submit" name="delete_btn" class="btnh btn-register-header"
+                                aria-label="Elimina messaggio di ' . $nome_cognome .'">
                                     <span aria-hidden="true">🗑️</span> Elimina
                                 </button>
                             </form>
                         </div>
-                    </td>   
+                    </td>
+                    <td class="soloStampaTabella" hidden>'. $email .'</td>
                   </tr>';
         }
         $table .= '</tbody></table>';
