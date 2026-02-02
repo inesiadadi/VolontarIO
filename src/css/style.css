@@ -1127,16 +1127,18 @@ SEZIONE FOOTER
     padding: 0 1rem;
 }
 
-.info-step h3 {
+.info-step .step-text > h3 {
     font-size: 1.3rem;
     margin: 1rem 0 0.5rem;
     color: var(--dark-green);
+    text-align: center;
 }
 
-.info-step p {
+.info-step .step-text > p {
     font-size: 1rem;
     color: var(--separator);
     max-width: 250px;
+    text-align: center;
 }
 
 .step-icon {
@@ -1176,7 +1178,6 @@ SEZIONE FOOTER
 }
 
 .team-section > .container > p {
-    max-width: 700px;
     margin: 0 auto 3rem;
     font-size: 1.2rem;
     color: var(--dark-green);
@@ -1198,7 +1199,7 @@ SEZIONE FOOTER
 .team-card {
     align-items: center;
     background-color: var(--white);
-    border-radius: 12px;
+    border-radius: 1rem;
     padding: 2rem;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
