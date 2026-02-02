@@ -469,7 +469,7 @@ h2, h3 {
 }
 
 .sez2-cf h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     font-size: 2.2rem;
     text-align: center;
     color: var(--deep-green);
@@ -484,11 +484,16 @@ h2, h3 {
     display: flex;
     background-color: var(--white); 
     border-radius: 24px;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     align-items: stretch; 
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(1, 39, 19, 0.08);
 }
+
+.container-cf:last-of-type {
+    margin-bottom: 2rem; 
+}
+
 
 .container-cf.reverse {
     flex-direction: row-reverse;
@@ -1602,8 +1607,8 @@ ul.category-list {
 
 .error {
     border-radius: 4px;
-    color: var(--main-bg);
-    background-color:#dd6969;
+    color: black;
+    background-color:#f77373;;
     padding: 0.5em;
     border-radius: 4px;
     border: 1px solid var(--main-bg);
