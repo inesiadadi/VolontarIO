@@ -40,22 +40,54 @@ $dati_utente = [
     'nascita'     => $utente['dataNascita'],
     'idCitta'     => $utente['idCitta'],
     'descrizione' => $utente['descrizione'] ?? '',
-    'password'    => $utente['password']
+    'password'    => $utente['password'],
 ];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    $nome        = !empty($_POST['nome'])        ? $_POST['nome']        : $dati_utente['nome'];
-    $cognome     = !empty($_POST['cognome'])     ? $_POST['cognome']     : $dati_utente['cognome'];
+    $nome        = !empty($_POST['nome'])        ? trim($_POST['nome'])        : $dati_utente['nome'];
+    $cognome     = !empty($_POST['cognome'])     ? trim($_POST['cognome'])     : $dati_utente['cognome'];
     $dataNascita = !empty($_POST['dataNascita']) ? $_POST['dataNascita'] : $dati_utente['nascita'];
-    $descrizione = !empty($_POST['descrizione']) ? $_POST['descrizione'] : $dati_utente['descrizione'];
+    $descrizione = !empty($_POST['descrizione']) ? trim($_POST['descrizione']) : $dati_utente['descrizione'];
     $idCitta     = !empty($_POST['idCitta'])     ? $_POST['idCitta']     : $dati_utente['idCitta'];
     $email       = !empty($_POST['email'])       ? $_POST['email']       : $dati_utente['email'];
 
     $password = (!empty($_POST['password'])) 
-                ? password_hash($_POST['password'], PASSWORD_DEFAULT) 
+                ? password_hash(trim($_POST['password']), PASSWORD_DEFAULT) 
+                : $dati_utente['password'];
+    $pass_again = (!empty($_POST['pass_again'])) 
+                ? password_hash(trim($_POST['pass_again']), PASSWORD_DEFAULT) 
                 : $dati_utente['password'];
 
+    $errori = [];
+
+    if(!empty($_POST['nome']) && !preg_match("/^[a-zA-Z\sàèìòù']+$/", $nome)) {
+        $errori[] = "Il nome non è valido.";
+    }
+    if(!empty($_POST['cognome']) && !preg_match("/^[a-zA-Z\sàèìòù']+$/", $cognome)) {
+        $errori[] = "Il cognome non è valido.";
+    }
+    if(!empty($_POST['username']) && !preg_match('/^[a-zA-Z0-9_]{4,20}$/', $username)) {
+        $errori[] = "L'username deve essere di 4-20 caratteri (lettere, numeri, underscore).";
+    }
+    if(!empty($_POST['email']) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errori[] = "Formato email non valido.";
+    }
+    if(!empty($_POST['dataNascita'])) {
+            $data_di_nascita = new DateTime($dataNascita);
+            $now = new DateTime();
+            $eta = $now->diff($data_di_nascita)->y;
+            if($eta < 18) {
+                $errori[] = "Devi essere maggiorenne per registrarti."; 
+            }
+    }
+    if(!empty($_POST['password']) && !preg_match("/^(?=.*[A-Z])(?=.*\\d).{8,}$/", $password)) {
+        $errori[] = "La password deve essere lunga almeno 8 caratteri e deve contenere almeno una maiuscola e un numero.";
+    }
+    if(!empty($_POST['password']) && ($password != $pass_again)) {
+        $errori[] = "Le password sono diverse";
+    }
+    
     $immagine_finale = $dati_utente['immagine']; 
     if (isset($_FILES['immagine']) && $_FILES['immagine']['error'] === UPLOAD_ERR_OK) {
         $nuovo_nome = aggiungiNuovaImmagineProfilo($_FILES['immagine'], $id_utente_target);
@@ -63,9 +95,19 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $immagine_finale = $nuovo_nome;
         }
     }
+    if(!empty($errori)) {
+        $password = "";
+        $pass_again = "";
+        $messaggio = "<div class='error' role='alert'><ul>";
+        
+        foreach ($errori as $errore) {
+            $messaggio .= "<li>" . $errore . "</li>";
+        }
+        $messaggio .= "</ul></div>";
+        $html = str_replace('[error_message]', $messaggio, $html);
 
-    if($dbAccess->openDBConnection()) {
-        $successo = $dbAccess->modificaProfiloUtente(
+    } else if ($dbAccess->openDBConnection()) {
+         $successo = $dbAccess->modificaProfiloUtente(
             $id_utente_target, $nome, $cognome, $dataNascita, 
             $descrizione, $immagine_finale, $idCitta, $email, $password
         );
@@ -93,7 +135,7 @@ $form = "
         <span id='aiuto-cognome' class='aiuto'>Inserire il nuovo cognome per modificarlo</span>
 
         <label for='dataNascita'>Data di nascita:</label>
-        <input type='date' name='dataNascita' id='dataNascita' value='{$dati_utente['nascita']}' aria-describedby='aiuto-data'>
+        <input type='date' name='dataNascita' id='dataNascita' max='". date('Y-m-d', strtotime('-18 years')) ."' value='{$dati_utente['nascita']}' aria-describedby='aiuto-data'>
         <span id='aiuto-data' class='aiuto'>Modifica la tua data di nascita</span>
 
         <label for='descrizione'>Breve descrizione:</label>
