@@ -6,9 +6,7 @@ class DBAccess {
     private const HOST_DB = "127.0.0.1";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
-    //private const PASSWORD = "";
-    private const PORT = 8889;
-    private const PASSWORD = "root";
+    private const PASSWORD = "";
     private $connection;
 
     public function openDBConnection() {
@@ -19,7 +17,6 @@ class DBAccess {
                 DBAccess::USERNAME, 
                 DBAccess::PASSWORD, 
                 DBAccess::DATABASE_NAME,
-                DBAccess::PORT
             );
 
             mysqli_set_charset($this->connection, "utf8mb4");
@@ -447,7 +444,7 @@ public function getCandidatureEffettuate($idVolontario) {
         }
     public function saveMessaggio($nome_cognome, $email, $numero, $messaggio) {
         $query = $this->connection->prepare("INSERT INTO Assistenza (nome_cognome, email, numero, messaggio) VALUES (?, ?, ?, ?)");
-        $query->bind_param("ssis", $nome_cognome, $email, $numero, $messaggio);
+        $query->bind_param("ssss", $nome_cognome, $email, $numero, $messaggio);
         $query->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
     }
 
