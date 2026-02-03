@@ -48,12 +48,12 @@ if(!isset($_SESSION['logged'])) {
             <fieldset>
                 <legend>Crea una nuova richiesta</legend>
                 <label for='categoria'>Categoria di aiuto:</label>
-                <select name='idTipo' id='categoria' required aria-required='true'>
+                <select name='idTipo' id='categoria' required>
                     <option value='' disabled selected>Scegli una categoria...</option>
                     $tipologie
                 </select>
                 <label for='descrizione'>Breve descrizione:</label>
-                <textarea name='descrizione' id='descrizione' maxlength='255' required aria-required='true' aria-describedby='aiuto-desc'></textarea>
+                <textarea name='descrizione' id='descrizione' maxlength='255' required aria-describedby='aiuto-desc'></textarea>
                 <span id='aiuto-desc' class='aiuto'>Spiegare brevemente di cosa si ha bisogno (massimo 255 caratteri)</span>
                 <div class='autocomplete-container'>
                         <label for='citta-input'>Città di residenza:</label>
@@ -86,14 +86,14 @@ if(!isset($_SESSION['logged'])) {
                         Digita il comune e usa le frecce su e giù per selezionare.
                     </span>
                 <label for='data'>Data dell'intervento:</label>
-                <input type='date' name='dataRichiesta' id='data' min='$data_minima' required aria-required='true' />
+                <input type='date' name='dataRichiesta' id='data' min='$data_minima' required>
                 <span class='aiuto'>Specificare la data in cui si richiede il servizio</span>
 
                 <label for='ora'>Orario richiesto:</label>
-                <input type='time' name='ora' id='ora' required aria-required='true' />
+                <input type='time' name='ora' id='ora' required>
                 <span class='aiuto'>Specificare l'orario in cui si richiede il servizio</span>
+                <button type='submit' id='createRequest'>Invia Richiesta</button>
             </fieldset>
-            <button type='submit' id='createRequest'>Invia Richiesta</button>
         </form>
         <p>Non hai più bisogno di aiuto? <a href='/volontario/bacheca-richieste'>Torna alla Bacheca</a></p>";
 
