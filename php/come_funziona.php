@@ -42,11 +42,12 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             $html = str_replace('[formMessage]', "",$html);
             if(isset($_SESSION['logged'])) {
                 $html = str_replace('[email]', $_SESSION['email'], $html);
+                $html = str_replace('[nome_cognome]', $_SESSION['nome'] . ' ' . $_SESSION['cognome'], $html);
             } else {
                 $html = str_replace('[email]', "", $html);
+                $html = str_replace('[nome_cognome]', "", $html);
             }
             $html = str_replace('[tel]', "", $html);
-            $html = str_replace('[nome_cognome]', "", $html);
             $html = str_replace('[messaggio]', "", $html);
 
             
@@ -64,11 +65,13 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
         $html = str_replace('[formMessage]', "",$html);
         if(isset($_SESSION['logged'])) {
             $html = str_replace('[email]', $_SESSION['email'], $html);
+            $html = str_replace('[nome_cognome]', $_SESSION['nome'] . ' ' . $_SESSION['cognome'], $html);  
         } else {
             $html = str_replace('[email]', "", $html);
+            $html = str_replace('[nome_cognome]', "", $html);
         }
         $html = str_replace('[tel]', "", $html);
-        $html = str_replace('[nome_cognome]', "", $html);
+
         $html = str_replace('[messaggio]', "", $html);
 
 }

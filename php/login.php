@@ -58,7 +58,10 @@ if ($connessioneOK && $result === false) {
         $_SESSION['user_id'] = $row['idPersona'];
         $_SESSION['email'] = $row['email'];
         $_SESSION['role'] = $row['ruolo'];
+        $_SESSION['nome'] = $row['nome'];
+        $_SESSION['cognome'] = $row['cognome'];
         header('Location: /volontario/');
+        
         exit();
     } else {
         $messaggio = "<div role='alert'><p class='error'>La password o l'username non sono corretti</p></div>";

@@ -79,15 +79,22 @@ switch ($path) {
         include ROOT_PATH . '/php/pannello.php';
         break;
     case '/error-500':
+
         http_response_code(500);
         include ROOT_PATH . '/php/error_500.php';
         break;
+    
+    case '/nuova-recensione':
+        include ROOT_PATH . '/php/nuovaRecensione.php';
+        break;
+
+    case '/modifica-richiesta':
+    include ROOT_PATH . '/php/modifica-richiesta.php';
+    break;
+    
     default:
         http_response_code(404);
         include ROOT_PATH . '/php/error_404.php';
         break;
-    case '/modifica-richiesta':
-    include ROOT_PATH . '/php/modifica-richiesta.php';
-    break;
 }
 ?>
