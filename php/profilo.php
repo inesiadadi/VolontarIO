@@ -66,7 +66,7 @@ $azioni_html = "";
 if ($id_visitatore === $dati_utente['id']) {
     $azioni_html = '<a href="/volontario/modifica-profilo?id='. $dati_utente['id'] . '" class="btn modifyProfile">Modifica Profilo</a>';
 } else {
-    $azioni_html = '<a href="mailto:"' . $dati_utente['email'] . ' class="btn contactUser">Contatta Utente</a>';
+    $azioni_html = '<a href="mailto:' . $dati_utente['email'] . '" class="btn contactUser">Contatta Utente</a>';
 }
 
 // Sezione reputazione
