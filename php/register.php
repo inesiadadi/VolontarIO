@@ -141,6 +141,8 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
             $_SESSION['role'] = "user";
+            $_SESSION['nome'] = $nome;
+            $_SESSION['cognome'] = $cognome;
             
             header('Location: /volontario/');
             exit();
