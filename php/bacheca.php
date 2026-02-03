@@ -71,7 +71,7 @@ if (!empty($richieste)) {
             $btn_html = '
             <form action="/volontario/bacheca-richieste" method="post">
                 <input type="hidden" name="accetta_id" value="' . $req['id'] . '">
-                <button type="submit" class="btn-action" aria-label="Offri aiuto a ' . $req['nome_utente'] . ' (Id richiesta:' .$req['id'] . ')'.'">Offri Aiuto</button>
+                <button type="submit" class="btn-action" aria-label="Offri aiuto a ' . $req['nome_utente'] . ' (Id richiesta:' .$req['id'] .')">Offri Aiuto</button>
             </form>
             <form action="/volontario/bacheca-richieste" method="post">
                 <input type="hidden" name="elimina_id" value="' . $req['id'] . '">
@@ -81,7 +81,7 @@ if (!empty($richieste)) {
             $btn_html = '
             <form action="/volontario/bacheca-richieste" method="post">
                 <input type="hidden" name="accetta_id" value="' . $req['id'] . '">
-                <button type="submit" class="btn-action" aria-label="Offri aiuto a ' . $req['nome_utente'] . ' (Id richiesta: ' .$req['id'] . ')'. '">Offri Aiuto <span class="">(Id richiesta: ' . $req['id'] . '</span></button>
+                <button type="submit" class="btn-action" aria-label="Offri aiuto a ' . $req['nome_utente'] . ' (Id richiesta: ' .$req['id'] . ')'. '">Offri Aiuto <span class="sr-only">(Id richiesta: ' . $req['id'] . ')</span></button>
             </form>';
         }
         $temp = str_replace('[ActionButton]', $btn_html, $temp);
