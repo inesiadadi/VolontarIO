@@ -221,18 +221,22 @@ function initValidations() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initReviewFiltering();
-  initRequestsFiltering(); // gestisce sia Richieste che Candidature
+  initReviewsFiltering();
+  initRequestsFiltering();
+  initCandidaturesFiltering();
 });
 
-function initReviewFiltering() {
+/* =========================
+   REVIEWS (RECENSIONI)
+   ========================= */
+
+function initReviewsFiltering() {
   const sidebar = document.querySelector('.filters-sidebar');
-  const reviewsGrid = getReviewGrid();
+  const grid = getReviewsGrid();
+  if (!sidebar || !grid) return;
 
-  if (!sidebar || !reviewsGrid) return;
-
-  if (sidebar.dataset.reviewFilteringInit === '1') return;
-  sidebar.dataset.reviewFilteringInit = '1';
+  if (sidebar.dataset.reviewsFilteringInit === '1') return;
+  sidebar.dataset.reviewsFilteringInit = '1';
 
   sidebar.addEventListener('change', (e) => {
     const t = e.target;
@@ -240,17 +244,20 @@ function initReviewFiltering() {
     if (t.type !== 'checkbox') return;
     if (t.name !== 'vote[]' && t.name !== 'category[]') return;
 
-    applyReviewFiltering();
+    applyReviewsFiltering();
   });
 
-  applyReviewFiltering();
+  applyReviewsFiltering();
 }
 
-function applyReviewFiltering() {
-  const selectedVoteRanges = getCheckedValue('vote[]');
-  const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
+function applyReviewsFiltering() {
+  const grid = getReviewsGrid();
+  if (!grid) return;
 
-  const cards = document.querySelectorAll('.reviewCard');
+  const selectedVoteRanges = getCheckedValues('vote[]');
+  const selectedCategories = getCheckedValues('category[]').map(normalizeToken);
+
+  const cards = grid.querySelectorAll('.reviewCard');
   let visible = 0;
 
   for (const card of cards) {
@@ -258,11 +265,11 @@ function applyReviewFiltering() {
     const category = readReviewCategory(card);
 
     const passVote =
-      (selectedVoteRanges.length === 0) ||
+      selectedVoteRanges.length === 0 ||
       selectedVoteRanges.some(r => voteInRange(vote, r));
 
     const passCategory =
-      (selectedCategories.length === 0) ||
+      selectedCategories.length === 0 ||
       selectedCategories.includes(category);
 
     const show = passVote && passCategory;
@@ -270,37 +277,35 @@ function applyReviewFiltering() {
     if (show) visible++;
   }
 
-  const grid = getReviewGrid();
-  const empty = getReviewEmptyState(grid);
-  updateEmptyState(grid, empty, visible);
+  updateEmptyState(grid, getEmptyState(grid), visible);
+}
+
+function getReviewsGrid() {
+  return document.getElementById('grigliaRecensioni') || document.querySelector('.reviewsGrid');
 }
 
 function readReviewVote(card) {
   const el = card.querySelector('[data-value="ratingValue"]');
   if (!el) return NaN;
-
   const n = Number(String(el.textContent).trim());
   return Number.isFinite(n) ? n : NaN;
 }
 
 function readReviewCategory(card) {
-  const catEl = card.querySelector('.reviewCategory');
-  if (!catEl) return '';
-
-  const clone = catEl.cloneNode(true);
+  const el = card.querySelector('.reviewCategory');
+  if (!el) return '';
+  const clone = el.cloneNode(true);
   clone.querySelectorAll('.srOnly, .sr-only').forEach(n => n.remove());
-
   return normalizeToken(clone.textContent);
 }
 
-function getReviewGrid() {
-  return document.getElementById('grigliaRecensioni') || document.querySelector('.reviewsGrid');
-}
+/* =========================
+   REQUESTS (RICHIESTE)
+   ========================= */
 
 function initRequestsFiltering() {
   const sidebar = document.querySelector('.filters-sidebar');
   const grid = getRequestsGrid();
-
   if (!sidebar || !grid) return;
 
   if (sidebar.dataset.requestsFilteringInit === '1') return;
@@ -312,17 +317,21 @@ function initRequestsFiltering() {
     if (t.type !== 'checkbox') return;
     if (t.name !== 'state[]' && t.name !== 'category[]') return;
 
-    applyRequestsFiltering();
+    // Applico SOLO se la griglia richieste esiste in pagina
+    if (getRequestsGrid()) applyRequestsFiltering();
   });
 
   applyRequestsFiltering();
 }
 
 function applyRequestsFiltering() {
-  const selectedCategories = getCheckedValue('category[]').map(normalizeToken);
-  const selectedStates = getCheckedValue('state[]').map(normalizeToken);
+  const grid = getRequestsGrid();
+  if (!grid) return;
 
-  const cards = document.querySelectorAll('.request-card');
+  const selectedStates = getCheckedValues('state[]').map(normalizeToken);
+  const selectedCategories = getCheckedValues('category[]').map(normalizeToken);
+
+  const cards = grid.querySelectorAll('.request-card');
   let visible = 0;
 
   for (const card of cards) {
@@ -330,11 +339,11 @@ function applyRequestsFiltering() {
     const category = readRequestCategory(card);
 
     const passState =
-      (selectedStates.length === 0) ||
+      selectedStates.length === 0 ||
       selectedStates.includes(state);
 
     const passCategory =
-      (selectedCategories.length === 0) ||
+      selectedCategories.length === 0 ||
       selectedCategories.includes(category);
 
     const show = passState && passCategory;
@@ -342,31 +351,107 @@ function applyRequestsFiltering() {
     if (show) visible++;
   }
 
-  const grid = getRequestsGrid();
-  const empty = getRequestsEmptyState(grid);
-  updateEmptyState(grid, empty, visible);
+  updateEmptyState(grid, getEmptyState(grid), visible);
+}
+
+function getRequestsGrid() {
+  return document.getElementById('grigliaRichieste');
 }
 
 function readRequestState(card) {
-  return normalizeToken(card.getAttribute('data-status') || '');
-}
+  const fromAttr = card.getAttribute('data-status') || card.dataset?.status;
+  if (fromAttr) return normalizeToken(fromAttr);
 
-function readRequestCategory(card) {
-  const el = card.querySelector('.category-tag, [itemprop="category"]');
+  const el = card.querySelector('.requestStatus, .status-tag, [data-status="status"]');
   if (!el) return '';
   return normalizeToken(el.textContent);
 }
 
-function getRequestsGrid() {
-  return document.getElementById('grigliaRichieste') || document.getElementById('grigliaCandidature');
+function readRequestCategory(card) {
+  const el = card.querySelector('.category-tag, [data-category="category"], .requestCategory');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
 }
 
-function getReviewEmptyState(grid) {
-  const root = grid?.closest('.requests-layout-wrapper') || document;
-  return root.querySelector('#filterEmptyState');
+/* =========================
+   CANDIDATURE
+   ========================= */
+
+function initCandidaturesFiltering() {
+  const sidebar = document.querySelector('.filters-sidebar');
+  const grid = getCandidaturesGrid();
+  if (!sidebar || !grid) return;
+
+  if (sidebar.dataset.candidaturesFilteringInit === '1') return;
+  sidebar.dataset.candidaturesFilteringInit = '1';
+
+  sidebar.addEventListener('change', (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement)) return;
+    if (t.type !== 'checkbox') return;
+    if (t.name !== 'state[]' && t.name !== 'category[]') return;
+
+    // Applico SOLO se la griglia candidature esiste in pagina
+    if (getCandidaturesGrid()) applyCandidaturesFiltering();
+  });
+
+  applyCandidaturesFiltering();
 }
 
-function getRequestsEmptyState(grid) {
+function applyCandidaturesFiltering() {
+  const grid = getCandidaturesGrid();
+  if (!grid) return;
+
+  const selectedStates = getCheckedValues('state[]').map(normalizeToken);
+  const selectedCategories = getCheckedValues('category[]').map(normalizeToken);
+
+  const cards = grid.querySelectorAll('.request-card');
+  let visible = 0;
+
+  for (const card of cards) {
+    const state = readCandidatureState(card);
+    const category = readCandidatureCategory(card);
+
+    const passState =
+      selectedStates.length === 0 ||
+      selectedStates.includes(state);
+
+    const passCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(category);
+
+    const show = passState && passCategory;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  }
+
+  updateEmptyState(grid, getEmptyState(grid), visible);
+}
+
+function getCandidaturesGrid() {
+  return document.getElementById('grigliaCandidature');
+}
+
+function readCandidatureState(card) {
+  const fromAttr = card.getAttribute('data-status') || card.dataset?.status;
+  if (fromAttr) return normalizeToken(fromAttr);
+
+  const el = card.querySelector('.candidatureStatus, .requestStatus, .status-tag, [data-status="status"]');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
+}
+
+function readCandidatureCategory(card) {
+  const el = card.querySelector('.category-tag, [data-category="category"], .candidatureCategory, .requestCategory');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
+}
+
+/* =========================
+   SHARED HELPERS
+   ========================= */
+
+function getEmptyState(grid) {
   const root = grid?.closest('.requests-layout-wrapper') || document;
   return root.querySelector('#filterEmptyState');
 }
@@ -377,7 +462,6 @@ function updateEmptyState(grid, empty, visibleCount) {
   const isEmpty = visibleCount === 0;
 
   grid.hidden = isEmpty;
-
   empty.hidden = !isEmpty;
   empty.style.display = isEmpty ? 'flex' : '';
 
@@ -385,7 +469,7 @@ function updateEmptyState(grid, empty, visibleCount) {
   else empty.style.flex = '';
 }
 
-function getCheckedValue(name) {
+function getCheckedValues(name) {
   return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
     .map(el => String(el.value).trim());
 }

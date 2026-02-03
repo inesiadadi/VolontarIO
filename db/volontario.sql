@@ -8007,7 +8007,7 @@ INSERT INTO Citta (provincia, nome) VALUES
     ('SU', 'Villaspeciosa');
 
 INSERT INTO Tipologia (nome) VALUES 
-('Ripetizioni scolastiche'), ('Spesa'), ('Compagnia'), ('Accompagnamento');
+('Ripetizioni scolastiche'), ('Spesa'), ('Compagnia'), ('Accompagnamento'), ('Pulizie'), ('Animali'), ('Giardinaggio');
 
 INSERT INTO Persona (username, email, password, ruolo, nome, cognome, dataNascita, idCitta) VALUES
 ('aala', 'aala@volontario.it', '$2a$12$7jvRwNIFNbDnDueuuRlxGOVdLq59t71JOm4HpWLLqH4WIz2qdbZum', 'admin', 'Aala', 'Ajmaime', '1995-05-10', 14),
