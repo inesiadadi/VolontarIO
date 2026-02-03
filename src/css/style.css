@@ -1596,8 +1596,7 @@ ul.category-list {
     background-color:#c0def5;
     font-size: 0.85em;
     padding: 0.5em;
-    border-radius: 4px #507089;
-    border: 1px solid ;
+    border: 1px solid #507089;
     margin-bottom: 1em;
     border-radius: 4px;
 }
@@ -2348,7 +2347,6 @@ SEZIONE PANNELLO AMMINISTRATORE
     border-collapse: collapse;
     background-color: var(--white);
     font-family: sans-serif;
-    color: var();
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden; 
