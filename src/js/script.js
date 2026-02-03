@@ -1,17 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () { 
-    if (document.getElementById('citta-input')) {
-        initCittaAutocomplete();
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const stars = document.querySelectorAll('.starsColor[data-percentuale]');
-    stars.forEach(star => {
-        // Legge il dato dall'HTML e lo applica come variabile CSS
-        star.style.setProperty('--percentuale', star.dataset.percentuale);
-    });
-});
-
 function initCittaAutocomplete() {
     const input = document.getElementById('citta-input');
     const lista = document.getElementById('suggerimenti-citta');
@@ -157,10 +143,9 @@ function initValidations() {
         ];
     } else if (form.id == "contattoForm") {
         regole = [
-            ['nome_cognome', /^[a-zA-Zà-ùÀ-Ù\s']{2,}$/, "Solo lettere, minimo 2 caratteri, es: Mario Rossi", "Nome e cognome non validi"],
-            ['email', /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
-            ['tel', /^(\+?[0-9\s\-]{8,20})?$/, "Inserisci un numero di telefono valido, es: +39 333 111 2222", "Formato non valido"],
-            ['messaggio', /\S+\s+\S+/, "Inserisci la tua richiesta, almeno 2 parole, es: \"Come creare un account?\"", "Richiesta non valida"]
+            ['nome_cognome', /^[a-zA-Zà-ùÀ-Ù']{2,}\s+[a-zA-Zà-ùÀ-Ù\s']{2,}$/, "Inserisci nome e cognome separati da spazio, es: Mario Rossi", "Nome completo non valido"],            ['email', /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
+            ['tel', /^(\+?[0-9\s\-]{10,14})?$/, "Inserisci un numero di telefono valido, senza spazi, es: +393331112222", "Formato non valido"],
+            ['messaggio', /^[\s\S]{50,999}$/, "Inserisci la tua richiesta, almeno 50 caratteri, sotto i 1000 caratteri, es: \"Come creare un account?\"", "Richiesta non valida"]
         ];
     }
 
@@ -444,6 +429,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    // COSE
+    if (document.getElementById('citta-input')) {
+        initCittaAutocomplete();
+    }
+    initReviewFilters();
+    initRequestFilters();
+    const stars = document.querySelectorAll('.starsColor[data-percentuale]');
+    stars.forEach(star => {
+        // Legge il dato dall'HTML e lo applica come variabile CSS
+        star.style.setProperty('--percentuale', star.dataset.percentuale);
+    });
 
     //DARK MODE
     const themeBtn = document.getElementById('themeBtn');
@@ -463,8 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // VALIDAZIONE FORM
     if (document.getElementById('signForm') || document.getElementById('contattoForm')) {
-        if (typeof initValidations === 'function') {
             initValidations();
-        }
     } 
+
 });

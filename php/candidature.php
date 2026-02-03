@@ -21,7 +21,7 @@ if($id_utente_target === 0 || $id_utente_target != $id_visitatore) {
 
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-    http_response_code(500);
+    
     include ROOT_PATH . '/php/error_500.php';
     exit;
 }
@@ -69,7 +69,7 @@ if(!empty($resultRec)) {
                 '[PulsantieraAzioni]',
                 '<form action="/volontario/candidature" method="post">
                     <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
-                    <button type="submit" name="rinuncia" class="profileBtn delete-btn">Rinuncia incarico</button>
+                    <button type="submit" name="rinuncia" class="profileBtn delete-btn" aria-label="Rinuncia incarico (Id: ' . $rec['codiceRichiesta']. ')">Rinuncia incarico<span class="sr-only">(Id: '. $rec['codiceRichiesta'].')</span></button>
                  </form>',
                 $temp
             );
@@ -77,14 +77,14 @@ if(!empty($resultRec)) {
         else if ($rec['stato'] == "completata") {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>Completata</button>',
+                '<button class="disabledBtn" disabled aria-label="Richiesta (Id: ' . $rec['codiceRichiesta']. ') completata">Completata <span class="sr-only">'. $rec['codiceRichiesta'].'</span></button>',
                 $temp
             );
         }
         else {
              $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>'.htmlspecialchars($rec['stato']).'</button>',
+                '<button class="disabledBtn" disabled aria-label="Richiesta (Id: ' .$rec['codiceRichiesta'] .') in stato ' . htmlspecialchars($rec['stato']) .'">'.htmlspecialchars($rec['stato']).'<span class="sr-only">'. $rec['codiceRichiesta'].'</span> </button>',
                 $temp
             );
         }

@@ -78,6 +78,10 @@ switch ($path) {
     case '/pannello':
         include ROOT_PATH . '/php/pannello.php';
         break;
+    case '/error-500':
+        http_response_code(500);
+        include ROOT_PATH . '/php/error_500.php';
+        break;
     default:
         http_response_code(404);
         include ROOT_PATH . '/php/error_404.php';

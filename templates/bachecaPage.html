@@ -19,7 +19,7 @@
                     </div>
 
                     <div class='autocomplete-container'>
-                        <label for='citta-input'>Città di residenza:</label>
+                        <label for='citta-input' id='label-citta'>Città di residenza:</label>
                         <input
                             type='text'
                             id='citta-input'
@@ -27,6 +27,7 @@
                             autocomplete='off'
                             role='combobox'
                             placeholder="Inserisci la città..."
+                            aria-labelledby='label-citta'
                             aria-autocomplete='list'
                             aria-expanded='false'
                             aria-controls='suggerimenti-citta'

@@ -9,34 +9,35 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $numero = trim(filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_SPECIAL_CHARS));
     $messaggio = trim(filter_input(INPUT_POST, 'messaggio', FILTER_SANITIZE_SPECIAL_CHARS));
-
+    $errori = [];
+    
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errore = "<div role='alert'><p id='infoForm' class='error'>La email inserita nel form d'assistenza non è valida, riprovare</p></div>";
-        $html = str_replace('[formMessage]', $errore,$html);
-        $html = str_replace('[tel]', $numero, $html);
-        $html = str_replace('[nome_cognome]', $nome, $html);
-        $html = str_replace('[messaggio]', $messaggio, $html);
-    } else if (strlen($nome) > 32) {
-        $errore = "<div role='alert'><p id='infoForm' class='error'>Il nome inserito è troppo lungo, riprovare</p></div>";
-        $html = str_replace('[formMessage]', $errore, $html);
-        $html = str_replace('[email]', $email, $html);
-        $html = str_replace('[tel]', $numero, $html);
-        $html = str_replace('[messaggio]', $messaggio, $html);
-    } else if(strlen($numero) > 13) {
-        $errore = "<div role='alert'><p id='infoForm' class='error'>Errore nel numero di telefono, riprovare</p></div>";
-        $html = str_replace('[formMessage]', $errore,$html);
-        $html = str_replace('[tel]', $numero, $html);
-        $html = str_replace('[nome_cognome]', $nome, $html);
-        $html = str_replace('[messaggio]', $messaggio, $html);
-    } else {
+        $errori[] = "L'email inserita non è valida.";
+    }
+    
+    if (!preg_match("/^[a-zA-Zà-ùÀ-Ù']{2,}\s+[a-zA-Zà-ùÀ-Ù\s']{2,}$/", $nome)) {
+        $errori[] = "Inserisci sia il nome che il cognome (solo lettere).";
+    } elseif (strlen($nome) > 50) {
+        $errori[] = "Il nome completo è troppo lungo (max 50 caratteri).";
+    }
+
+    if (!empty($numero) && !preg_match("/^(\+?[0-9\s\-]{10,14})$/", $numero)) {
+        $errori[] = "Il numero di telefono non è valido.";
+    }
+    
+    if(!preg_match("/^[\s\S]{50,999}$/s", $messaggio)) {
+        $errori[] = "Il messaggio non rispetta il minimo o il massimo dei caratteri richiesti.";
+    }
+    
+    
+    if(empty($errori)) {
         $dbAccess = new DBAccess();
         if (!$dbAccess->openDBConnection()) {
-            http_response_code(500);
-            include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
+            header('Location: /volontario/error-500');
             exit;
             } else {
             $dbAccess->saveMessaggio($nome, $email, $numero, $messaggio);
-            $errore = "<div role='alert'><p id='infoForm' class='success'>Richiesta d'assistenza inviata con successo</p></div>";
+            $errore = "<div role='status'><p id='infoForm' class='success'>Richiesta d'assistenza inviata con successo</p></div>";
             $html = str_replace('[formMessage]', $errore,$html);
             $html = str_replace('[formMessage]', "",$html);
             if(isset($_SESSION['logged'])) {
@@ -50,8 +51,16 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
 
             
         }
-    }
     } else {
+        $messaggio = "<div role='alert'><ul>";
+        foreach($errori as $errore) {
+            $messaggio .= "<li>" . $errore . "</li>";
+        }
+        $messaggio .= "</ul></div>";
+        
+        $html = str_replace('[formMessage]', $messaggio, $html);
+    }
+} else {
         $html = str_replace('[formMessage]', "",$html);
         if(isset($_SESSION['logged'])) {
             $html = str_replace('[email]', $_SESSION['email'], $html);
@@ -62,7 +71,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
         $html = str_replace('[nome_cognome]', "", $html);
         $html = str_replace('[messaggio]', "", $html);
 
-    }
+}
     
 
 $pagina = file_get_contents(ROOT_PATH .'/templates/blueprint.html');

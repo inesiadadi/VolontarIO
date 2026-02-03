@@ -16,10 +16,10 @@ if(isset($_SESSION['logged'])) {
             <fieldset>
                 <legend id='legendForm'>Accedi al tuo account</legend>
                 <label for='username'><span lang='en'>Username</span>:</label>
-                <input type='text' name='username' id='username' required aria-required='true' aria-describedby='aiuto-username' autocomplete='username'/>
+                <input type='text' name='username' id='username' required aria-describedby='aiuto-username' autocomplete='username'/>
                 <span id='aiuto-username' class='aiuto'>Inserisci il tuo <span lang='en'>username</span></span>
                 <label for='password'><span lang='en'>Password</span>:</label>
-                <input type='password' name='password' id='password' required aria-required='true' aria-describedby='aiuto-password' autocomplete='current-password' />
+                <input type='password' name='password' id='password' required aria-describedby='aiuto-password' autocomplete='current-password' />
                 <span id='aiuto-password' class='aiuto'>Inserisci la tua <span lang='en'>password</span></span>
                 <button type='submit'>Accedi</button>
             </fieldset>
@@ -68,8 +68,7 @@ if ($connessioneOK && $result === false) {
 }
 } else {
     if (!$connection->openDBConnection()) {
-        http_response_code(500);
-        header('Location: error_500.php');
+        header('Location: /volontario/error-500');
         exit;
     }
 

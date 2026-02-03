@@ -16,8 +16,7 @@ if ($id_visitatore === 0) {
 // Connessione DB
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-    http_response_code(500);
-    include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
+    header('Location: /volontario/error-500');
     exit;
 }
 
@@ -41,7 +40,9 @@ if($connessioneOK) {
         </div>
         ";
     } else {
-        $table = '<table class="contact-table">
+
+        $table = '<p class="sr-only" id="aiuto-tabella">Nella tabella sono presenti le richieste d\'assistenza, per ogni riga c\'é una richiesta d\'assistenza con il corrispondente nome e cognome dell\'utente, il numero d\'assistenza se inserito dall\'utente, il messaggio di richiesta e i bottoni per rispondere o eliminare il messaggio.</p>
+                <table class="contact-table" aria-describedby="aiuto-tabella">
                 <caption>Lista richieste di assistenza</caption>
                 <thead>
                     <tr>
@@ -58,6 +59,8 @@ if($connessioneOK) {
             $email = htmlspecialchars($row['email']);
             $numero = htmlspecialchars($row['numero']);
             $messaggio = nl2br(htmlspecialchars($row['messaggio']));
+            $ora = date('H:i', strtotime($row['data_invio']));
+            $data = date('d/m/Y', strtotime($row['data_invio']));
             if($numero == 0) {
                 $numero = "Nessun numero";
             }
@@ -70,7 +73,7 @@ if($connessioneOK) {
                     <td data-label="Messaggio"><div class="message-cell-content" tabindex="0">'. $messaggio . '</div></td>
                     <td data-label="Azioni" class="noStampaTabella">
                         <div class="actions">
-                            <a href="mailto:' . $email . '?subject=Risposta assistenza VolontarIO" 
+                            <a href="mailto:' . $email . '?subject=Risposta%20assistenza%20VolontarIO" 
                                class="btnh btn-login-header" title="Rispondi via email"
                                aria-label="Rispondi a ' . $nome_cognome . ' via mail">
                                <span aria-hidden="true">✉️</span> Rispondi
@@ -79,7 +82,7 @@ if($connessioneOK) {
                             <form action="/volontario/pannello" method="POST">
                                 <input type="hidden" name="id" value="' . $id . '">
                                 <button type="submit" name="delete_btn" class="btnh btn-register-header"
-                                aria-label="Elimina messaggio di ' . $nome_cognome .'">
+                                aria-label="Elimina messaggio di ' . $nome_cognome .'mandato il '. $data .' alle '. $ora .'">
                                     <span aria-hidden="true">🗑️</span> Elimina
                                 </button>
                             </form>

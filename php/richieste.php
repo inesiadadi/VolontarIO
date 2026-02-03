@@ -15,8 +15,7 @@ $id_utente_target = $id_visitatore;
 
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-    http_response_code(500);
-    include ROOT_PATH . '/php/error_500.php';
+    header('Location: /volontario/error-500');
     exit;
 }
 
@@ -64,7 +63,7 @@ if(!empty($resultRec)) {
             // Stato aperto: pulsante disabilitato
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<form action="/volontario/richieste?id="' . $id_utente_target . ' method="post" >
+                '<form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
                     <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
                     <button type="submit" name="rimuovi" class="btn-action">Rimuovi richiesta</button>
                  </form>',
