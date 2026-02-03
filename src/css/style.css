@@ -2208,6 +2208,13 @@ textarea#messaggio {
     font-size: 3rem;
 }
 
+.modify {
+    padding: 0.5rem;
+    background-color: #AA4E4E;
+    font-weight: 600;
+    border: 1px solid #AA4E4E;
+}
+
 #filterEmptyState {
     margin: auto;            /* Magia: centra sia verticalmente che orizzontalmente in un flex */
     width: 100%;             /* O una larghezza fissa se preferisci, es. 80% */

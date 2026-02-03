@@ -61,13 +61,9 @@ if(!empty($resultRec)) {
         $temp = str_replace('[StatoRichiesta]', htmlspecialchars($rec['stato']), $temp);
 
         if ($rec['stato'] == "aperta") {
-            // Stato aperto: pulsante disabilitato
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<form action="/volontario/richieste?id="' . $id_utente_target . ' method="post" >
-                    <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
-                    <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
-                 </form>',
+                '<a href="/volontario/modificaRichiesta?id=' . $rec['codiceRichiesta'] . '"class="modify">Modifica Richiesta</a>',
                 $temp
             );
         } 
