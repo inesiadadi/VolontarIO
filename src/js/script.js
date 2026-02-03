@@ -276,7 +276,7 @@ function applyReviewFiltering() {
 }
 
 function readReviewVote(card) {
-  const el = card.querySelector('[itemprop="ratingValue"]');
+  const el = card.querySelector('[data-value="ratingValue"]');
   if (!el) return NaN;
 
   const n = Number(String(el.textContent).trim());

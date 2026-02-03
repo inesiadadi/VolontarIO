@@ -79,7 +79,8 @@ class DBAccess {
     }
 
     public function getRecensioniRicevute($idVolontario) {
-        $sql = "SELECT 
+        $sql = "SELECT
+                    V.idValutazione, 
                     V.voto, 
                     V.descrizione AS testo_recensione, 
                     R.dataRichiesta, 

@@ -63,7 +63,7 @@ if(!empty($resultRec)) {
         if ($rec['stato'] == "aperta") {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<a href="/volontario/modificaRichiesta?id=' . $rec['codiceRichiesta'] . '"class="modify">Modifica Richiesta</a>',
+                '<a href="/volontario/modificaRichiesta?id=' . $rec['codiceRichiesta'] . '" class="modify">Modifica Richiesta</a>',
                 $temp
             );
         } 
@@ -73,7 +73,7 @@ if(!empty($resultRec)) {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="btn-action btn-accept">Visualizza volontario</a>
-                <form action="/volontario/richieste?id="' . $id_utente_target . ' method="post" >
+                <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
                     <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
                     <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
                  </form>',
