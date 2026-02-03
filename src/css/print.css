@@ -1,115 +1,128 @@
 #content {
-width: 100%; 
-margin: 0; 
-float: none;
+    width: 100%;
+    margin: 0;
+    float: none;
 }
 
-@page { margin: 2cm }
+@page {
+    margin: 1cm;
+}
 
-*{
-box-shadow: none;
-text-shadow: none;
-text-align: justify;
+* {
+    box-shadow: none;
+    text-shadow: none;
+    text-align: justify;
 }
 
 body {
-font-family: Georgia, "Times New Roman", serif;
-font-size: 12pt;
-color: #000;
-line-height: 1.3;
-margin: 0;
-padding: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 12pt;
+    color: #000;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
     font-size: 24pt;
 }
+
 h2, h3, h4 {
     font-size: 14pt;
     margin-top: 25px;
 }
 
 a {
-page-break-inside:avoid
+    page-break-inside: avoid;
 }
-h1, h2, h3, h4, h5, h6 { 
-    page-break-after:avoid; 
-    page-break-inside:avoid 
+
+h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    text-align: center;
+    width: 100%;
 }
-img { 
-    page-break-inside:avoid; 
-    page-break-after:avoid; 
+img {
+    page-break-inside: avoid;
+    page-break-after: avoid;
 }
-table { 
-    page-break-inside:avoid 
+
+table {
+    page-break-inside: avoid;
 }
-ul, ol, dl  { 
-    page-break-before:avoid 
+
+ul, ol, dl {
+    page-break-before: avoid;
 }
+
 a:link, a:visited, a {
     font-weight: bold;
     text-decoration: underline;
 }
-a {
-    page-break-inside:avoid
-}
 
 body .site-header {
-    position: static; 
-    height: auto; 
-    padding: 10px 0; 
+    position: static;
+    height: auto;
+    padding: 10px 0;
     border: none;
-    display: block; 
+    display: block;
     text-align: center;
     background-color: transparent;
 }
 
-body .site-footer, 
-body .back-to-top, 
-body .skip-link, 
+body .site-footer,
+body .back-to-top,
+body .skip-link,
 body .btn,
-body #menuWrapper, 
-body .header-right, 
-body #hamburgerBtn,    
+body #menuWrapper,
+body .header-right,
+body #hamburgerBtn,
 body .accessForm button,
 body #mainForm button,
 body #alreadyLogged,
 body #legendForm,
-body .aiuto, 
-body .error, 
-body .success { 
-    display: none; 
-} 
+body .aiuto,
+body .error,
+body .success,
+body .modifyProfile,
+body .contactUser,
+body .request-card .action-button,
+body .request-card .btn-actio,
+body .filtersSidebar,
+body .filterBox,
+body #newRequest,
+.filters-sidebar,
+.btn,
+.reset-link,
+.action-button,
+.btn-action,
+span.sr-only,
+#breadcrumb,
+.landing-buttons-wrapper,
+nav {
+    display: none;
+}
 
-body .site-header .logo-image { 
-    height: 50px; 
-    width: auto; 
-    margin-right: 5px; 
+body .site-header .logo-image {
+    height: 50px;
+    width: auto;
+    margin-right: 5px;
 }
 
 body #site-name {
-    font-size: 2.5rem; 
-    color: #000000; 
-    display: inline-block; 
+    font-size: 2.5rem;
+    color: #000000;
+    display: inline-block;
     vertical-align: middle;
 }
 
 body .brand-wrapper {
-    text-decoration: none; 
+    text-decoration: none;
     display: inline-flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
 
-
-#breadcrumb,
-.landing-buttons-wrapper, nav{
-    display: none;
-}
-
-
-/*INES*/
-/*home*/
 .infographic-wrapper {
     position: relative;
     display: flex;
@@ -169,19 +182,21 @@ body .brand-wrapper {
     text-align: center;
 }
 
-.team-card > h3, .team-card > .role, .team-card > .bio {
+.team-card > h3,
+.team-card > .role,
+.team-card > .bio {
     text-align: center;
-
 }
+
 .team-card h3 {
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
 .team-card .role {
     font-style: italic;
     text-transform: uppercase;
     margin-bottom: 10px;
-
 }
 
 .profile-pic {
@@ -192,16 +207,11 @@ body .brand-wrapper {
     border: 1px solid black;
 }
 
-/*bacheca*/
-.filters-sidebar,.btn,.reset-link{
-    display: none;
-}
-
-.container-requests, .requests-list{
-    width: 100% ;
-    max-width: none;
-    padding: 0;
+.container-requests {
+    width: 100%;
     margin: 0;
+    padding: 0;
+    display: block;
 }
 
 .requests-layout-wrapper {
@@ -211,93 +221,104 @@ body .brand-wrapper {
 #accountTitle {
     text-align: center;
     font-size: 24pt;
+    margin-top: 0;
     margin-bottom: 1cm;
+    padding-top: 20pt;
+    page-break-before: avoid;
 }
 
-.requests-list {
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        gap: 15pt;
-        margin-top: 20pt;
-    }
+body .requests-list {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+}
 
-.request-card {
-    border: 1pt solid #000;
-    border-radius: 12pt;
-    padding: 15pt;
-    box-shadow: none;
+body .request-card {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: top;
+    position: relative;
+    box-sizing: border-box;
+    width: 46%;
+    margin-bottom: 20pt;
+    margin-right: 4%;
+    font-size: 12pt;
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 35pt 10pt 10pt 10pt;
     page-break-inside: avoid;
     break-inside: avoid;
-    display: flex;
-    flex-direction: column;
-    height: auto;
 }
 
-.req-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10pt;
+body .request-card:nth-child(even) {
+    margin-right: 0;
 }
 
-.user-info {
+body .req-header {
     display: flex;
-    gap: 8pt;
     align-items: center;
+    margin-top: -25pt;
+    margin-bottom: 10pt;
+    padding-right: 80pt;
 }
 
-.user-avatar {
-    width: 50pt;
-    height: 50pt;
+body .user-avatar {
+    width: 40pt;
+    height: 40pt;
     border-radius: 50%;
+    border: 1px solid #000;
+    flex-shrink: 0;
 }
 
-.user-name {
-    font-size: 14pt;
+body .user-name {
+    font-size: 13pt;
     font-weight: bold;
-    padding: 0;
+    margin: 0;
+    padding-left: 10pt;
 }
 
-.category-tag {
-    border-radius: 12pt;
-    padding: 4pt 8pt;
+body .request-card .category-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    margin: 0;
+    padding: 3pt 10pt;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-radius: 0 15px 0 15px;
     font-size: 9pt;
     font-weight: bold;
     text-transform: uppercase;
-    white-space: nowrap;
+    z-index: 5;
 }
 
-.req-body h3 {
-    margin: 10pt 0 5pt;
+body .req-body h3 {
+    margin: 5pt 0;
+    font-size: 12pt;
 }
 
-.req-body p {
+body .req-body p {
     margin: 0 0 10pt 0;
-    max-height: none; 
+    max-height: none;
     overflow: visible;
 }
 
-.req-footer {
+body .req-footer {
     margin-top: auto;
     padding-top: 10pt;
     display: flex;
     flex-wrap: wrap;
-    gap: 10pt;
+    gap: 8pt;
 }
 
-.meta-item {
+body .meta-item {
     display: flex;
     align-items: center;
     gap: 4pt;
-}
-
-.meta-item img, .meta-item svg {
-    width: 16px;
-    height: 16px;
-}
-
-.action-button, .btn-action, span.sr-only{
-    display: none;
+    font-size: 10pt;
 }
 
 .no-request-msg {
@@ -307,11 +328,11 @@ body .brand-wrapper {
     width: 100%;
     grid-column: 1 / -1;
 }
-/*ANGELA*/
+
 body .container-cf {
-    display: block;        
-    border: 1px solid #000000; 
-    border-radius: 15px; 
+    display: block;
+    border: 1px solid #000000;
+    border-radius: 15px;
     margin-bottom: 20px;
     padding: 0;
     page-break-inside: avoid;
@@ -321,52 +342,39 @@ body .container-cf img {
     display: none;
 }
 
-body .container-text { 
-    padding: 20px; 
+body .container-text {
+    padding: 20px;
     width: auto;
     display: block;
 }
 
-body .container-text ol, 
-body .container-text ul { 
-    margin-left: 20px; 
-    padding-left: 0; 
-
+body .container-text ol,
+body .container-text ul {
+    margin-left: 20px;
+    padding-left: 0;
 }
 
-body .sez3-cf {
+body .sez3-cf .btn-registrati {
+    display: none;
+}
+
+body .contact-section {
     display: block;
-    border: 1px solid #000000; 
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: none;
     page-break-inside: avoid;
+    margin-top: 30px;
 }
 
-
-body .sez3-cf .btn-registrati { 
-    display: none; 
-}
-
-body .contact-section { 
-    display: block; 
-    page-break-inside: avoid; 
-    margin-top: 30px; 
-}
-
-body .contact-section h2 { 
-    border-bottom: 2px solid #000000; 
-    display: inline-block; 
+body .contact-section h2 {
+    border-bottom: 2px solid #000000;
+    display: inline-block;
 }
 
 body .form-buttons,
-body .legend-cont { 
-    display: none; 
+body .legend-cont {
+    display: none;
 }
 
-
-body .form-input input, 
+body .form-input input,
 body .form-textarea textarea {
     border: 1px solid #000000;
     border-radius: 8px;
@@ -377,51 +385,48 @@ body .form-textarea textarea {
     box-shadow: none;
 }
 
-body .form-input label, 
+body .form-input label,
 body .form-textarea label {
-    font-weight: bold; 
-    margin-bottom: 5px; 
+    font-weight: bold;
+    margin-bottom: 5px;
     display: block;
 }
- 
-body .sez1-cf { 
-    padding: 0; 
-    border: none; 
-    margin-bottom: 1rem; 
+
+body .sez1-cf {
+    padding: 0;
+    border: none;
+    margin-bottom: 1rem;
     background: none;
 }
 
-/*ACCEDI E REGISTRATI*/
 body #mainForm {
-    min-height: auto; 
-    display: block;  
-
+    min-height: auto;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 body #mainForm h1 {
     text-align: center;
-}
-
-body .accessForm, 
-body #mainForm form {
-    border: 1px solid #000;
-    border-radius: 15px;
-    max-width: 400px;       
-    margin: 0 auto;        
-    padding: 30px;
-    page-break-inside: avoid; 
+    margin-bottom: 20px;
+    color: #000;
 }
 
 body .accessForm input,
 body #mainForm input {
+    border: 1px solid black;
     border-radius: 8px;
     margin-bottom: 10px;
     padding: 10px;
     width: 100%;
+    max-width: 300px;
     display: block;
 }
 
-.contact-table td, .contact-table th{
+.contact-table td,
+.contact-table th {
     border: 1px solid #000;
 }
 
@@ -436,10 +441,140 @@ body #mainForm input {
 p a {
     text-decoration: none;
 }
+
 p a[href]::after {
     text-decoration: underline;
     content: " (tecnologieweb.studenti.math.unipd.it/asuar" attr(href) ")";
     word-wrap: break-word;
+}
+
+body .profileGrid {
+    display: block;
+    width: 100%;
+    margin: 20px auto;
+    padding: 0;
+    text-align: center; 
+}
+
+body .profileInfoColumn {
+    display: block;
+    width: 100%;       
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    page-break-inside: avoid;
+    box-sizing: border-box;
+}
+
+body .userPfP {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    margin: 0 auto 15px auto; 
+    display: block;
+}
+
+
+body .volunteerBiography,
+body .valuationSection {
+    display: block;
+    width: 100%;
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-right: 0;
+    text-align: left; 
+    page-break-inside: avoid;
+    box-sizing: border-box;
+}
+
+body .cardTitle,
+body .sectionTitle,
+body .sectionHeader {
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14pt;
+}
+
+body .requestGrid,
+body .reviewsGrid {
+    display: block;
+    width: 100%;
+    margin: 10pt auto 0 auto;
+}
+
+body .reviewCard {
+    display: block;
+    width: 100%;
+    border: 1px solid #000;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    text-align: left;
+    page-break-inside: avoid;
+    box-sizing: border-box;
+}
+
+body .reviewText {
+    overflow: visible;
+    max-height: none;
+    margin-top: 5px;
+}
+
+body .reviewVote {
+    border: 1px solid #000;
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+body .requestCard {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: top;
+    position: relative;
+    box-sizing: border-box;
+    width: 48%; 
+    margin-bottom: 15pt;
+    border: 1px solid #000;
+    border-radius: 10px;
+    font-size: 10pt;
+    padding: 35pt 10pt 10pt 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+body .requestCard .category-tag,
+body .requestCard .requestCategory,
+body .reviewCard .reviewCategory {
+    position: absolute;
+    display: block;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-radius: 0 10px 0 10px;
+    font-size: 8pt;
+    font-weight: bold;
+    text-transform: uppercase;
+
+}
+
+body .requestCard strong,
+body .requestCard b {
+    font-size: 8pt;
+    font-weight: normal;
+}
+
+body .requestCard .req-header,
+body .reviewCard .reviewHeader {
+    display: flex;
+    align-items: center;
 }
 
 
