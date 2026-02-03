@@ -2496,8 +2496,8 @@ body.dark-mode {
     --font-main: "Quicksand", sans-serif;
 }
 
+body.dark-mode #landing h1,
 body.dark-mode #landing h2,
-body.dark-mode #landing h3,
 body.dark-mode #landing p,
 body.dark-mode .team-card .bio,
 body.dark-mode #breadcrumb li,
@@ -2523,7 +2523,6 @@ body.dark-mode #landing h3 span,
 body.dark-mode .site-footer a:visited,
 body.dark-mode .container-text h3,
 body.dark-mode .sez3-cf .btn-registrati,
-body.dark-mode .btn.reset-link,
 body.dark-mode .userUsername,
 body.dark-mode .userInformation dt,
 body.dark-mode .noReviewsMsg,
@@ -2627,7 +2626,8 @@ body.dark-mode .btn.apply-filters {
 }
 
 body.dark-mode .modifyProfile,
-body.dark-mode .btn.reset-link{
+body.dark-mode .btn.reset-link,
+body.dark-mode .btn-action.btn-delete{
     color: var(--secondary-bg);
 } 
 
@@ -2698,3 +2698,9 @@ body.dark-mode #landing .get-started-btn {
 body.dark-mode .team-card {
    border-color: var(--deep-green);
 }
+
+body.dark-mode .btn-modify:hover, body.dark-mode .profileBtn:hover {
+    background-color: var(--dark-green);
+    color: var(--main-bg);
+}
+
