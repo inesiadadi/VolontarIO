@@ -9,9 +9,8 @@ $is_logged_in = ($id_utente_loggato > 0);
 
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-    http_response_code(500);
-    include ROOT_PATH . '/php/error_500.php';
-    exit;
+    header('Location: /volontario/error-500');
+        exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accetta_id']) && $is_logged_in) {

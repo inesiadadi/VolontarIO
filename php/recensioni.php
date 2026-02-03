@@ -13,7 +13,6 @@ if ($id_visitatore === 0) {
 $id_utente_target = $id_visitatore;
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-    http_response_code(500);
     header('Location: /volontario/php/error_500.php');
     exit;
 }

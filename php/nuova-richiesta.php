@@ -14,8 +14,8 @@ $id_utente_target = $id_visitatore;
 
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-    http_response_code(500);
-    header('Location: error_500.php');
+    
+    header('Location: /volontario/error-500');
     exit;
 }
 
@@ -114,7 +114,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idRichiedente = $_SESSION['user_id'];
 
     if(!$dbAccess->openDBConnection()) {
-        http_response_code(500);
+        
         include ROOT_PATH . '/php/error500.php';
         exit;
     }
