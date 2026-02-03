@@ -1,23 +1,41 @@
 <?php 
-include('connessione.php'); // La connessione con il database è fatto in un file a parte, aggiunto nell'header (quindi aggiunto in ogni pagina).
-?>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$title?></title> <!--$title corrisponde al valore che mettiamo a $title prima dell'include dell'header dentro ogni file php-->
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/" lang="en">Home</a></li>
-                <li><a href="/register">Registrazione</a></li>
-                <li><a href="/login" lang="en">Login</a></li>
-                <li><a href="/come-funziona">Come funziona</a></li> <!-- Da aggiungere -->
-            </ul>
-        </nav>
-    </header>
-    <!-- Ancora da lavorarci -->
+require_once ROOT_PATH . '/db/include/functions.php';
+require_once ROOT_PATH . '/db/include/dbConnection.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$header_html = file_get_contents(ROOT_PATH . '/templates/components/header.html');
+
+
+if(isset($_SESSION['logged'])) {
+    $menu_utente = '
+    <div class="dropdown">
+       <button id="userBtn" class="dropbtn" aria-label="Menu Utente" aria-expanded="false">
+            <svg class="user-icon" width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM7.07 18.28C7.5 17.38 10.12 16.5 12 16.5C13.88 16.5 16.51 17.38 16.93 18.28C15.57 19.36 13.86 20 12 20C10.14 20 8.43 19.36 7.07 18.28ZM12 14.5C13.46 14.5 16.93 15.09 18.36 16.83C19.38 15.49 20 13.82 20 12C20 7.59 16.41 4 12 4C7.59 4 4 7.59 4 12C4 13.82 4.62 15.49 5.64 16.83C7.07 15.09 10.54 14.5 12 14.5ZM12 6C10.06 6 8.5 7.56 8.5 9.5C8.5 11.44 10.06 13 12 13C13.94 13 15.5 11.44 15.5 9.5C15.5 7.56 13.94 6 12 6ZM10.5 9.5C10.5 10.33 11.17 11 12 11C12.83 11 13.5 10.33 13.5 9.5C13.5 8.67 12.83 8 12 8C11.17 8 10.5 8.67 10.5 9.5Z" fill="currentColor"/>
+            </svg>
+        </button>
+        <div class="dropdown-content">
+            <a href="/volontario/profilo?id=' . $_SESSION['user_id'] . '">Area personale</a>
+            <a href="/volontario/recensioni?id=' . $_SESSION['user_id'] . '">Recensioni</a>
+            <a href="/volontario/richieste?id=' . $_SESSION['user_id'] . '">Richieste effettuate</a>
+            <a href="/volontario/candidature?id=' . $_SESSION['user_id'] . '">Candidature</a>
+        ';
+if($_SESSION['role'] == "admin") {
+    $menu_utente .= '<a href="/volontario/pannello">Pannello d\'assistenza</a>';
+}
+    $menu_utente .=    '
+            <a href="/volontario/logout?id=' . $_SESSION['user_id'] . '">Log out</a>
+        </div>
+    </div>';
+    $header_html = str_replace("[accountAccess]", $menu_utente, $header_html);
+} else {
+    $bottoni_ospite = "
+        <div class='auth-buttons'>
+            <a href='/volontario/login' class='btnh btn-login-header'>Accedi</a>
+            <a href='/volontario/register' class='btnh btn-register-header'>Registrati</a>
+        </div>";
+    $header_html = str_replace("[accountAccess]", $bottoni_ospite, $header_html);
+}
+?>

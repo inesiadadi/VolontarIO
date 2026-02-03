@@ -1,0 +1,43 @@
+<main id='content'>
+    <nav id='breadcrumb' aria-label="Percorso attuale del sito">
+        <ul>
+            <li lang='en-GB'><a href='/volontario/'>Home</a></li>
+            <li><a href='/volontario/profilo?id=[idUtenteTarget]'>Area Personale</a></li>
+            <li aria-current="page">Candidature</li>
+        </ul>
+    </nav>
+    <div class="container-requests">
+        <h1 id='accountTitle'>Le mie candidature</h1>
+        <div class="requests-layout-wrapper">
+            <aside class="filters-sidebar" aria-label="Filtri candidature">
+                <form class='filter-form'>
+                    <div class='filter-header'>
+                        <h2>Filtra Candidature</h2>
+                        <a href='/volontario/candidature?id=[idUtenteTarget]' class='btn reset-link'>Reimposta Filtri</a>
+                    </div>
+                    <fieldset class="form-group category-group">
+                        <legend class='form-label'>Stato</legend>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="state[]" value="in_carico">
+                            In Carico
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="state[]" value="completata">
+                            Completata
+                        </label>
+                    </fieldset>
+                    [CheckboxesCategorie]
+                </form>
+            </aside>
+            <section>
+            <div class='requests-list' id='grigliaCandidature'>
+                [Candidature]
+            </div>
+            <div class='noReviewsMsg' id='filterEmptyState'>
+                <span aria-hidden='true'></span>
+                <p>Non ci sono candidature per questi filtri.</p>
+            </div>
+            </section>
+        </div>
+    </div>
+</main>
