@@ -239,6 +239,9 @@ p a[href]::after {
     content: " (tecnologieweb.studenti.math.unipd.it/asuar" attr(href) ")";
     word-wrap: break-word;
 }
+.sr-only {
+    display: none;
+}
 
 
     
