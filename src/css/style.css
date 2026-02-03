@@ -1661,6 +1661,12 @@ display: inline-flex;
     margin-bottom: 1em;
 }
 
+.error ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
 .success {
     color: var(--dark-green);
     background-color: #d3ffbe;
