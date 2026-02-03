@@ -34,15 +34,15 @@ function redirectBacheca(DBAccess $dbAccess): void
 
 $idRichiesta = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $idRichiesta = (int)($_GET['idRichiesta'] ?? 0);
+    $idRichiesta = (int)($_GET['codiceRichiesta'] ?? 0);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $idRichiesta = (int)($_POST['idRichiesta'] ?? 0);
+    $idRichiesta = (int)($_POST['codiceRichiesta'] ?? 0);
 }
 
 if ($idRichiesta <= 0) {
     $dbAccess->closeDBConnection();
-    http_response_code(400);
-    include ROOT_PATH . '/php/error_400.php';
+    http_response_code(404);
+    include ROOT_PATH . '/php/error_404.php';
     exit;
 }
 
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $voto = (int)($_POST['voto'] ?? 0);
     $descrizione = trim($_POST['descrizione'] ?? '');
 
-    if ($voto < 1 || $voto > 5 || mb_strlen($descrizione) > 255) {
+    if ($voto < 1 || $voto > 10 || mb_strlen($descrizione) > 255) {
         $dbAccess->closeDBConnection();
         http_response_code(400);
         include ROOT_PATH . '/php/error_400.php';
@@ -85,8 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $ok = $dbAccess->inserisciRecensione(
         $idRichiesta,
-        (int)$id_visitatore,
-        (int)$idOfferente,
         (int)$voto,
         $descrizione
     );
@@ -111,12 +109,12 @@ if(!isset($_SESSION['logged'])) {
     header('Location: /volontario/login');
 } else {
     $form = "
-        <form id='recensioneForm' class='accessForm' action='/volontario/invia-recensione' method='post'>
+        <form id='recensioneForm' class='accessForm' method='post'>
             <fieldset>
                 <legend>Lascia una recensione</legend>
 
                 <p class='aiuto' id='aiuto-voto'>
-                    Seleziona un voto da 1 a 5. Il voto è obbligatorio.
+                    Seleziona un voto da 1 a 10. Il voto è obbligatorio.
                 </p>
 
             <div class='ratingGroup' role='radiogroup' aria-labelledby='label-voto' aria-describedby='aiuto-voto'>
@@ -185,7 +183,7 @@ if(!isset($_SESSION['logged'])) {
                     Racconta com'è andata (massimo 255 caratteri).
                 </span>
 
-                <input type='hidden' name='request_id' value='" . (int)($request_id ?? 0) . "'>
+                <input type='hidden' name='codiceRichiesta' value='" . $idRichiesta . "'>
                 <button type='submit'>Invia Recensione</button>
             </fieldset>
 

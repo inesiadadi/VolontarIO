@@ -225,7 +225,73 @@ public function getCandidatureEffettuate($idVolontario) {
         return true;
     }
     
-    public function addReview() {}
+    
+    public function getRichiestaPerId(int $codiceRichiesta)
+    {
+        $sql = "SELECT codiceRichiesta, idRichiedente, idOfferente, stato
+                FROM Richiesta
+                WHERE codiceRichiesta = ?";
+
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $codiceRichiesta);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
+
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+
+        $stmt->close();
+        return $row ?: null;
+    }
+
+    public function esisteRecensionePerRichiesta(int $codiceRichiesta): bool
+    {
+        $sql = "SELECT 1
+                FROM Valutazione
+                WHERE idRichiesta = ?
+                LIMIT 1";
+
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("i", $codiceRichiesta);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return false;
+        }
+
+        $res = $stmt->get_result();
+        $exists = ($res && $res->num_rows > 0);
+
+        $stmt->close();
+        return $exists;
+    }
+
+    public function inserisciRecensione(int $codiceRichiesta, int $voto, string $descrizione): bool
+    {
+        $sql = "INSERT INTO Valutazione (descrizione, voto, idRichiesta)
+                VALUES (?, ?, ?)";
+
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("sii", $descrizione, $voto, $codiceRichiesta);
+
+        $ok = $stmt->execute();
+        $stmt->close();
+
+        return $ok;
+    }
 
     public function modificaProfiloUtente($idPersona, $nome, $cognome, $dataNascita, $descrizione, $immagine, $idCitta, $email, $password) {
         $sql = "UPDATE Persona 

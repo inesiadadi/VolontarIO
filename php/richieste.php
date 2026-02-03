@@ -80,14 +80,28 @@ if(!empty($resultRec)) {
                 $temp
             );
         } 
-        else if ($rec['stato'] == "completata") {
-            // Stato completata: pulsante cliccabile verso profilo dell'offerente per recensione
-            $profiloUrl = "/volontario/nuova-recensione?id=" . $rec['codiceRichiesta'];
-            $temp = str_replace(
-                '[PulsantieraAzioni]',
-                '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',
-                $temp
-            );
+        else if ($rec['stato'] === "completata") {
+
+            $codiceRichiesta = (int)$rec['codiceRichiesta'];
+            $dbAccess->openDBConnection();
+            if ($dbAccess->esisteRecensionePerRichiesta($codiceRichiesta)) {
+
+                $temp = str_replace(
+                    '[PulsantieraAzioni]',
+                    "<span class='profileBtn disabled'>Valutazione effettuata</span>",
+                    $temp
+                );
+
+            } else {
+
+                $reviewUrl = "/volontario/nuova-recensione?codiceRichiesta=" . $codiceRichiesta;
+
+                $temp = str_replace(
+                    '[PulsantieraAzioni]',
+                    "<a href='{$reviewUrl}' class='profileBtn'>Recensisci volontario</a>",
+                    $temp
+                );
+            }
         }
         else if ($rec['stato'] == "scaduta") {
             // Stato aperto: pulsante disabilitato
