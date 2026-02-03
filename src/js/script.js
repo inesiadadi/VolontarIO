@@ -142,7 +142,7 @@ function initCittaAutocomplete() {
 
 function initValidations() {
     
-    const form = document.getElementById('signForm') || document.getElementById('contattoForm');
+    const form = document.getElementById('signForm') || document.getElementById('contattoForm') || document.getElementById('modifyForm');
     var regole = [];
 
     if(form.id == "signForm") {
@@ -160,6 +160,13 @@ function initValidations() {
             ['email', /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
             ['tel', /^(\+?[0-9\s\-]{8,20})?$/, "Inserisci un numero di telefono valido, es: +39 333 111 2222", "Formato non valido"],
             ['messaggio', /\S+\s+\S+/, "Inserisci la tua richiesta, almeno 2 parole, es: \"Come creare un account?\"", "Richiesta non valida"]
+        ];
+    } else if (form.id == "modifyForm") {
+        regole = [
+            ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
+            ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
+            ['password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Minimo 8 caratteri con almeno una maiuscola e un numero", "Password debole"],
+            ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita, almeno 18 anni, es: 01/09/2007", "Data non valida"]
         ];
     }
 
@@ -576,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // VALIDAZIONE FORM
-    if (document.getElementById('signForm') || document.getElementById('contattoForm')) {
+    if (document.getElementById('signForm') || document.getElementById('contattoForm') || document.getElementById('modifyForm')) {
         if (typeof initValidations === 'function') {
             initValidations();
         }

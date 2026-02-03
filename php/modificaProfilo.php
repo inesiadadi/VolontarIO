@@ -99,13 +99,9 @@ $form = "
         <label for='descrizione'>Breve descrizione:</label>
         <textarea name='descrizione' id='descrizione' maxlength='255' aria-describedby='aiuto-desc'>{$dati_utente['descrizione']}</textarea>
         <span id='aiuto-desc' class='aiuto'>Aggiorna la tua presentazione (max 255 caratteri)</span>
-
-    <label for='descrizione'>Breve descrizione:</label>
-    <textarea name='descrizione' id='descrizione' maxlength='255' aria-describedby='aiuto-desc'>{$dati_utente['descrizione']}</textarea>
-    <span id='aiuto-desc' class='aiuto'>Aggiorna la tua presentazione (max 255 caratteri)</span>
     
     <label for='citta-input'>Città di residenza:</label>
-    <input type='text' id='citta-input' name='citta_nome' autocomplete='off' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-controls='suggerimenti-citta'aria-describedby='aiuto-citta'>
+    <input type='text' id='citta-input' name='citta_nome' autocomplete='off' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-controls='suggerimenti-citta' aria-describedby='aiuto-citta'>
     <ul id='suggerimenti-citta' role='listbox' tabindex='-1' hidden ></ul>
     <input type='hidden' name='idCitta' id='idCitta-input'>
     <div id='status-citta' class='sr-only' aria-live='polite'></div>
@@ -128,8 +124,9 @@ $form = "
         <label for='foto-profilo'>Cambia Foto profilo (.png):</label>
         <input type='file' name='immagine' id='foto-profilo' accept='image/png' aria-describedby='aiuto-foto'>
         <span id='aiuto-foto' class='aiuto'>Carica un file PNG per aggiornare la tua immagine (max 2MB)</span>
-    </fieldset>
-    <button type='submit'>Conferma Modifiche</button>
+        <button type='submit'>Conferma Modifiche</button>
+        </fieldset>
+    
 </form>";
 
 $html_content = str_replace('[Form]', $form, $html_content);
@@ -143,7 +140,7 @@ $placeholders_layout = [
     '[Description]'   => 'Pagina di modifica del profilo di VolontarIO',
     '[Keywords]'      => 'volontariato, profilo, modifica',
     '[pageNameId]'    => 'modifyPage',
-    '[onload]'        => 'onload="initCittaAutocomplete()"',
+    '[onload]'        => 'initCittaAutocomplete()',
     '[Header]'        => $header_html,
     '[Footer]'        => $footer_html,
     '[MainContent]'   => $html_content 
