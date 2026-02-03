@@ -42,6 +42,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     width: 100%;
 }
+
 img {
     page-break-inside: avoid;
     page-break-after: avoid;
@@ -80,7 +81,6 @@ body #hamburgerBtn,
 body .accessForm button,
 body #mainForm button,
 body #alreadyLogged,
-body #legendForm,
 body .aiuto,
 body .error,
 body .success,
@@ -99,7 +99,12 @@ body #newRequest,
 span.sr-only,
 #breadcrumb,
 .landing-buttons-wrapper,
-nav {
+nav,
+body .form-buttons,
+body .legend-cont,
+body .accessForm p,
+body .autocomplete-container ul,
+body .contact-section {
     display: none;
 }
 
@@ -235,15 +240,16 @@ body .requests-list {
     font-size: 0;
 }
 
-body .request-card {
+body .request-card,
+body .requestCard {
     display: inline-flex;
     flex-direction: column;
     vertical-align: top;
     position: relative;
     box-sizing: border-box;
-    width: 46%;
+    width: 45%;
     margin-bottom: 20pt;
-    margin-right: 4%;
+    margin-right: 2%;
     font-size: 12pt;
     border: 1px solid #000;
     border-radius: 15px;
@@ -252,7 +258,8 @@ body .request-card {
     break-inside: avoid;
 }
 
-body .request-card:nth-child(even) {
+body .request-card:nth-child(even),
+body .requestCard:nth-child(even) {
     margin-right: 0;
 }
 
@@ -279,7 +286,10 @@ body .user-name {
     padding-left: 10pt;
 }
 
-body .request-card .category-tag {
+body .request-card .category-tag,
+body .requestCard .category-tag,
+body .requestCard .requestCategory,
+body .reviewCard .reviewCategory {
     position: absolute;
     top: 0;
     right: 0;
@@ -358,40 +368,6 @@ body .sez3-cf .btn-registrati {
     display: none;
 }
 
-body .contact-section {
-    display: block;
-    page-break-inside: avoid;
-    margin-top: 30px;
-}
-
-body .contact-section h2 {
-    border-bottom: 2px solid #000000;
-    display: inline-block;
-}
-
-body .form-buttons,
-body .legend-cont {
-    display: none;
-}
-
-body .form-input input,
-body .form-textarea textarea {
-    border: 1px solid #000000;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    width: 500px;
-    display: block;
-    box-shadow: none;
-}
-
-body .form-input label,
-body .form-textarea label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-}
-
 body .sez1-cf {
     padding: 0;
     border: none;
@@ -412,17 +388,6 @@ body #mainForm h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #000;
-}
-
-body .accessForm input,
-body #mainForm input {
-    border: 1px solid black;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
-    max-width: 300px;
-    display: block;
 }
 
 .contact-table td,
@@ -446,9 +411,6 @@ p a[href]::after {
     text-decoration: underline;
     content: " (tecnologieweb.studenti.math.unipd.it/asuar" attr(href) ")";
     word-wrap: break-word;
-}
-.sr-only {
-    display: none;
 }
 
 body .profileGrid {
@@ -479,7 +441,6 @@ body .userPfP {
     margin: 0 auto 15px auto; 
     display: block;
 }
-
 
 body .volunteerBiography,
 body .valuationSection {
@@ -538,36 +499,6 @@ body .reviewVote {
     border-radius: 5px;
 }
 
-body .requestCard {
-    display: inline-flex;
-    flex-direction: column;
-    vertical-align: top;
-    position: relative;
-    box-sizing: border-box;
-    width: 48%; 
-    margin-bottom: 15pt;
-    border: 1px solid #000;
-    border-radius: 10px;
-    font-size: 10pt;
-    padding: 35pt 10pt 10pt 10pt;
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-body .requestCard .category-tag,
-body .requestCard .requestCategory,
-body .reviewCard .reviewCategory {
-    position: absolute;
-    display: block;
-    border-bottom: 1px solid #000;
-    border-left: 1px solid #000;
-    border-radius: 0 10px 0 10px;
-    font-size: 8pt;
-    font-weight: bold;
-    text-transform: uppercase;
-
-}
-
 body .requestCard strong,
 body .requestCard b {
     font-size: 8pt;
@@ -580,5 +511,65 @@ body .reviewCard .reviewHeader {
     align-items: center;
 }
 
+body .accessForm {
+    display: block;
+    width: 100%;
+    margin: 1cm auto;
+    text-align: center;
+    page-break-inside: avoid;
+}
 
-    
+body .accessForm fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 500px;
+}
+
+body #legendForm,
+body .accessForm legend {
+    display: block;
+    text-align: center;
+    font-size: 16pt;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 15px;
+    width: auto;
+    padding: 0 10px;
+}
+
+body .accessForm label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 11pt;
+}
+
+body .accessForm input,
+body .accessForm textarea,
+body .accessForm select {
+    display: block;
+    width: 90%;
+    max-width: 100%;
+    margin: 0 auto 10px auto;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    background: #fff;
+    box-shadow: none;
+}
+
+body .accessForm textarea {
+    min-height: 80px;
+    resize: none;
+}

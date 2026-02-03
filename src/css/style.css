@@ -2647,6 +2647,7 @@ body.dark-mode {
     --font-main: "Quicksand", sans-serif;
 }
 
+body.dark-mode #landing h1,
 body.dark-mode #landing h2,
 body.dark-mode #landing h3,
 body.dark-mode #landing p,

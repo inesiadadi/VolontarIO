@@ -77,7 +77,7 @@ if(!empty($resultRec)) {
         else if ($rec['stato'] == "completata") {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled aria-label="Richiesta (Id: ' . $rec['codiceRichiesta']. ') completata">Completata <span class="sr-only">'. $rec['codiceRichiesta'].'</span></button>',
+                '<button class="disabledBtn" disabled aria-label="Richiesta Completata (Id: ' . $rec['codiceRichiesta']. ') Completata">Completata <span class="sr-only">(Id: ' . $rec['codiceRichiesta'].')</span></button>',
                 $temp
             );
         }

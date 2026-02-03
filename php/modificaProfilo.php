@@ -65,7 +65,7 @@ $form = "
         <span id='aiuto-desc' class='aiuto'>Aggiorna la tua presentazione (max 255 caratteri)</span>
     
     <label for='citta-input'>Città di residenza:</label>
-    <input type='text' id='citta-input' name='citta_nome' autocomplete='off' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-controls='suggerimenti-citta' aria-describedby='aiuto-citta'>
+    <input type='text' id='citta-input' name='citta_nome' autocomplete='off' role='combobox' aria-label='citta-residenza' aria-autocomplete='list' aria-expanded='false' aria-controls='suggerimenti-citta' aria-describedby='aiuto-citta'>
     <ul id='suggerimenti-citta' role='listbox' tabindex='-1' hidden ></ul>
     <input type='hidden' name='idCitta' id='idCitta-input'>
     <div id='status-citta' class='sr-only' aria-live='polite'></div>
@@ -181,8 +181,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     $html = str_replace('[error_message]', "", $html);
 }
-$html_content = str_replace('[Form]', $form, $html_content);
-$html_content = str_replace('[idUtenteTarget]', $id_utente_target, $html_content);
+$html = str_replace('[Form]', $form, $html);
+$html = str_replace('[idUtenteTarget]', $id_utente_target, $html);
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
 

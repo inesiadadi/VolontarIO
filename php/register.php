@@ -19,7 +19,7 @@ if(isset($_SESSION['logged'])) {
                         <legend id='legendForm'>Registra un account</legend>
                         <label for='username'>Username:</label>
                         <input type='text' name='username' id='username' required aria-describedby='aiuto-username' value='[username]'>
-                        <span id='aiuto-username' class='aiuto'>4-20 caratteri (lettere, numeri, underscore)</span>
+                        <span id='aiuto-username' class='aiuto'>4-20 caratteri (lettere, numeri, <span lang='en'>underscore</span>)</span>
 
 
                         <label for='email'>Email:</label>
@@ -81,7 +81,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
     $errori = [];
 
     if(!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $username)) {
-            $errori[] = "L'username deve essere di 4-20 caratteri (lettere, numeri, underscore).";
+            $errori[] = "L'username deve essere di 4-20 caratteri (lettere, numeri, <span lang='en'>underscore</span>).";
     }
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errori[] = "Formato email non valido.";

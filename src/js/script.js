@@ -133,7 +133,7 @@ function initValidations() {
 
     if(form.id == "signForm") {
         regole = [
-            ['username', /^[a-zA-Z0-9_]{4,20}$/, "4-20 caratteri (lettere, numeri, underscore)", "Username non valido"],
+            ['username', /^[a-zA-Z0-9_]{4,20}$/, "4-20 caratteri (lettere, numeri, <span lang='en'>underscore</span>)", "Username non valido"],
             ['email', /^[a-zA-Z0-9._%+-]+@[a-zAèZ0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
             ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
             ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
