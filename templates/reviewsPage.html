@@ -1,37 +1,55 @@
-<main class="reviewsPageContainer" id="content">
+<main id="content">
     <nav id="breadcrumb" aria-label="Percorso attuale del sito">
         <ul>
-        <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
-        <li><a href="/volontario/profilo">Area Personale</a></li>
-        <li>Recensioni</li>
+            <li><a href="/volontario/">Home</a></li>
+            <li><a href="/volontario/profilo?id=[idUtenteTarget]">Area Personale</a></li>
+            <li aria-current="page">Recensioni</li>
         </ul>
     </nav>
-    <h1 class="profilePageTitle">Le mie recensioni</h1>
-    <aside class="filterSidebar">
-        <div class="filterBox">
-            <h2 class="filterTitle">Filtra Recensioni</h2>
-            <div class="filterGroup">
-                <label for="voteFilter" class="filterSubtitle">
-                    Valutazione
-                </label>
-                <select id="voteFilter" class="filterSelect">
-                    <option value="0-10">Tutte le recensioni</option>
-                    <option value="1-3">Molto negative (1-3)</option>
-                    <option value="4-5">Negative (4-5)</option>
-                    <option value="6-7">Positive (6-7)</option>
-                    <option value="8-9">Molto positive (8-9)</option>
-                    <option value="10-10">Eccellenti (10)</option>
-                </select>
-            </div>
-            [Categorie]
+    <div class='container-requests'>
+        <h1 id="accountTitle">Le mie recensioni</h1>
+        <div class="requests-layout-wrapper">
+            <aside class="filters-sidebar" aria-label="Filtri recensioni">
+                <form class="filter-form">
+                    <div class="filter-header">
+                        <h2>Filtra Recensioni</h2>
+                        <a href="/volontario/recensioni?id=[idUtenteTarget]" class="btn reset-link">Reimposta Filtri</a>
+                    </div>
+                    <fieldset class="form-group category-group">
+                    <legend class="form-label">Valutazione</legend>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="vote[]" value="1-3">
+                        Molto negative (1–3)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="vote[]" value="4-5">
+                        Negative (4–5)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="vote[]" value="6-7">
+                        Positive (6–7)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="vote[]" value="8-9">
+                        Molto positive (8–9)
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="vote[]" value="10">
+                        Eccellenti (10)
+                    </label>
+                    </fieldset>
+                    [CheckboxesCategorie]
+                </form>
+            </aside>
+            <section>
+                <div class="requests-list" id="grigliaRecensioni">
+                    [Recensioni]
+                </div>
+                <div class="noReviewsMsg" id="filterEmptyState" role="status" aria-live="polite" hidden>
+                    <p>Non ci sono ancora recensioni per questo filtro.</p>
+                </div>
+            </section>
         </div>
-    </aside>
-    <section class="reviewContent">
-        <div class="reviewsGrid" id="grigliaRecensioni">
-            [Recensioni]
-        </div>
-        <div class="noReviewsMsg" id="filterEmptyState">
-            <p>Non ci sono ancora recensioni per questo filtro.</p>
-        </div>
-    </section>
+    </div>
 </main>

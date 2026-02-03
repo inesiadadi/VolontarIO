@@ -13,7 +13,12 @@ if ($id_visitatore === 0) {
 $id_utente_target = $id_visitatore;
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
+<<<<<<< HEAD
     header('Location: /volontario/php/error_500.php');
+=======
+    http_response_code(500);
+    include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
+>>>>>>> dev-suar
     exit;
 }
 
@@ -50,17 +55,17 @@ if (!empty($resultRec)) {
         $temp = str_replace('[DataISO]',          $date_rec_obj->format('Y-m-d'), $temp);
         $temp = str_replace('[DataVisual]',       $data_visual, $temp);
         $temp = str_replace('[CategoriaServizio]', htmlspecialchars($rec['nome_categoria']), $temp);
+        $temp = str_replace('[ReviewKey]', $rec['idValutazione'], $temp);
 
         $html_recensioni_output .= $temp;
     }
-} else {
-    $html_recensioni_output = file_get_contents('templates/components/no_review.html');
-}
+} 
 
 $html_pagina_recensioni = file_get_contents('templates/reviewsPage.html');
 $html_pagina_recensioni = str_replace('[Recensioni]', $html_recensioni_output, $html_pagina_recensioni);
-$categorie = file_exists('templates/components/categories.html') ? file_get_contents('templates/components/categories.html') : '';
-$html_pagina_recensioni = str_replace('[Categorie]', $categorie, $html_pagina_recensioni);
+$categorie = file_exists('templates/components/checkBoxCategories.html') ? file_get_contents('templates/components/checkboxCategories.html') : '';
+$html_pagina_recensioni = str_replace('[CheckboxesCategorie]', $categorie, $html_pagina_recensioni);
+$html_pagina_recensioni = str_replace('[idUtenteTarget]', $id_utente_target, $html_pagina_recensioni);
 
 $pagina = file_get_contents('templates/blueprint.html');
 $footer_html = file_exists('templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';

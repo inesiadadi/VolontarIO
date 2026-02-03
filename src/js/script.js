@@ -124,12 +124,11 @@ function initCittaAutocomplete() {
     });
 }
 
-
 // VALIDAZIONE DEL FORM DI REGISTER O FORM DI CONTATTO O FORM DI LOGIN
 
 function initValidations() {
     
-    const form = document.getElementById('signForm') || document.getElementById('contattoForm');
+    const form = document.getElementById('signForm') || document.getElementById('contattoForm') || document.getElementById('modifyForm');
     var regole = [];
 
     if(form.id == "signForm") {
@@ -146,6 +145,13 @@ function initValidations() {
             ['nome_cognome', /^[a-zA-Zà-ùÀ-Ù']{2,}\s+[a-zA-Zà-ùÀ-Ù\s']{2,}$/, "Inserisci nome e cognome separati da spazio, es: Mario Rossi", "Nome completo non valido"],            ['email', /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
             ['tel', /^(\+?[0-9\s\-]{10,14})?$/, "Inserisci un numero di telefono valido, senza spazi, es: +393331112222", "Formato non valido"],
             ['messaggio', /^[\s\S]{50,999}$/, "Inserisci la tua richiesta, almeno 50 caratteri, sotto i 1000 caratteri, es: \"Come creare un account?\"", "Richiesta non valida"]
+        ];
+    } else if (form.id == "modifyForm") {
+        regole = [
+            ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
+            ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
+            ['password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Minimo 8 caratteri con almeno una maiuscola e un numero", "Password debole"],
+            ['dataNascita', /^\d{4}-\d{2}-\d{2}$/, "Inserisci la tua data di nascita, almeno 18 anni, es: 01/09/2007", "Data non valida"]
         ];
     }
 
@@ -206,168 +212,283 @@ function initValidations() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initReviewFilters);
-document.addEventListener('DOMContentLoaded', initRequestFilters);
+document.addEventListener('DOMContentLoaded', () => {
+  initReviewsFiltering();
+  initRequestsFiltering();
+  initCandidaturesFiltering();
+});
 
-function initReviewFilters() {
-    const voteSelect = document.getElementById('voteFilter');
-    const catSelect  = document.getElementById('categoryFilter');
+/* =========================
+   REVIEWS (RECENSIONI)
+   ========================= */
 
-    if (voteSelect) voteSelect.addEventListener('change', applyReviewFilters);
-    if (catSelect)  catSelect.addEventListener('change', applyReviewFilters);
+function initReviewsFiltering() {
+  const sidebar = document.querySelector('.filters-sidebar');
+  const grid = getReviewsGrid();
+  if (!sidebar || !grid) return;
 
-    applyReviewFilters();
+  if (sidebar.dataset.reviewsFilteringInit === '1') return;
+  sidebar.dataset.reviewsFilteringInit = '1';
+
+  sidebar.addEventListener('change', (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement)) return;
+    if (t.type !== 'checkbox') return;
+    if (t.name !== 'vote[]' && t.name !== 'category[]') return;
+
+    applyReviewsFiltering();
+  });
+
+  applyReviewsFiltering();
 }
 
-function initRequestFilters() {
-    const statSelect = document.getElementById('stateFilter');
-    const catSelect = document.getElementById('categoryFilter');
+function applyReviewsFiltering() {
+  const grid = getReviewsGrid();
+  if (!grid) return;
 
-    if(statSelect) statSelect.addEventListener('change', applyRequestFilters);
-    if(catSelect) catSelect.addEventListener('change', applyRequestFilters);
+  const selectedVoteRanges = getCheckedValues('vote[]');
+  const selectedCategories = getCheckedValues('category[]').map(normalizeToken);
+
+  const cards = grid.querySelectorAll('.reviewCard');
+  let visible = 0;
+
+  for (const card of cards) {
+    const vote = readReviewVote(card);
+    const category = readReviewCategory(card);
+
+    const passVote =
+      selectedVoteRanges.length === 0 ||
+      selectedVoteRanges.some(r => voteInRange(vote, r));
+
+    const passCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(category);
+
+    const show = passVote && passCategory;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  }
+
+  updateEmptyState(grid, getEmptyState(grid), visible);
 }
 
-function getReviewFilterState() {
-    const voteValue =
-        document.getElementById('voteFilter')?.value ?? '0-10';
-
-    const [minVote, maxVote] = voteValue.split('-').map(Number);
-
-    const category = document.getElementById('categoryFilter')?.value?.toLowerCase() ?? 'all';
-
-    return { minVote, maxVote, category };
+function getReviewsGrid() {
+  return document.getElementById('grigliaRecensioni') || document.querySelector('.reviewsGrid');
 }
 
-function getRequestFilterState() {
-    const status = document.getElementById('stateFilter')?.value?.toLowerCase() ?? 'all';
-    const category = document.getElementById('categoryFilter')?.value?.toLowerCase() ?? 'all';
-
-    return { status, category };
+function readReviewVote(card) {
+  const el = card.querySelector('[data-value="ratingValue"]');
+  if (!el) return NaN;
+  const n = Number(String(el.textContent).trim());
+  return Number.isFinite(n) ? n : NaN;
 }
 
-function getReviewCards() {
-    return document.querySelectorAll('.reviewCard');
+function readReviewCategory(card) {
+  const el = card.querySelector('.reviewCategory');
+  if (!el) return '';
+  const clone = el.cloneNode(true);
+  clone.querySelectorAll('.srOnly, .sr-only').forEach(n => n.remove());
+  return normalizeToken(clone.textContent);
 }
 
-function getRequestCards() {
-    return document.querySelectorAll('.requestCard');
+/* =========================
+   REQUESTS (RICHIESTE)
+   ========================= */
+
+function initRequestsFiltering() {
+  const sidebar = document.querySelector('.filters-sidebar');
+  const grid = getRequestsGrid();
+  if (!sidebar || !grid) return;
+
+  if (sidebar.dataset.requestsFilteringInit === '1') return;
+  sidebar.dataset.requestsFilteringInit = '1';
+
+  sidebar.addEventListener('change', (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement)) return;
+    if (t.type !== 'checkbox') return;
+    if (t.name !== 'state[]' && t.name !== 'category[]') return;
+
+    // Applico SOLO se la griglia richieste esiste in pagina
+    if (getRequestsGrid()) applyRequestsFiltering();
+  });
+
+  applyRequestsFiltering();
 }
 
-function getReviewGrid() {
-    return (
-        document.getElementById('grigliaRecensioni') ?? document.querySelector('.reviewsGrid')
-    );
+function applyRequestsFiltering() {
+  const grid = getRequestsGrid();
+  if (!grid) return;
+
+  const selectedStates = getCheckedValues('state[]').map(normalizeToken);
+  const selectedCategories = getCheckedValues('category[]').map(normalizeToken);
+
+  const cards = grid.querySelectorAll('.request-card');
+  let visible = 0;
+
+  for (const card of cards) {
+    const state = readRequestState(card);
+    const category = readRequestCategory(card);
+
+    const passState =
+      selectedStates.length === 0 ||
+      selectedStates.includes(state);
+
+    const passCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(category);
+
+    const show = passState && passCategory;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  }
+
+  updateEmptyState(grid, getEmptyState(grid), visible);
 }
 
-function getRequestGrid() {
-    return (
-        document.getElementById('grigliaRichieste') ?? document.querySelector('.requestGrid')
-    );
+function getRequestsGrid() {
+  return document.getElementById('grigliaRichieste');
 }
 
-function getEmptyState() {
-    return document.getElementById('filterEmptyState');
+function readRequestState(card) {
+  const fromAttr = card.getAttribute('data-status') || card.dataset?.status;
+  if (fromAttr) return normalizeToken(fromAttr);
+
+  const el = card.querySelector('.requestStatus, .status-tag, [data-status="status"]');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
 }
 
-function matchesReviewVote(card, { minVote, maxVote }) {
-    const rating = card.querySelector('[itemprop="ratingValue"]');
-    if (!rating) return false;
-
-    const vote = Number(rating.textContent.trim());
-    return vote >= minVote && vote <= maxVote;
+function readRequestCategory(card) {
+  const el = card.querySelector('.category-tag, [data-category="category"], .requestCategory');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
 }
 
-function matchesReviewCategory(card, { category }) {
-    if (category === 'all') return true;
+/* =========================
+   CANDIDATURE
+   ========================= */
 
-    const cat = card.querySelector('.reviewCategory');
-    if (!cat) return false;
+function initCandidaturesFiltering() {
+  const sidebar = document.querySelector('.filters-sidebar');
+  const grid = getCandidaturesGrid();
+  if (!sidebar || !grid) return;
 
-    return cat.textContent.trim().toLowerCase() === category;
+  if (sidebar.dataset.candidaturesFilteringInit === '1') return;
+  sidebar.dataset.candidaturesFilteringInit = '1';
+
+  sidebar.addEventListener('change', (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement)) return;
+    if (t.type !== 'checkbox') return;
+    if (t.name !== 'state[]' && t.name !== 'category[]') return;
+
+    // Applico SOLO se la griglia candidature esiste in pagina
+    if (getCandidaturesGrid()) applyCandidaturesFiltering();
+  });
+
+  applyCandidaturesFiltering();
 }
 
-function matchesRequestStatus(card, { status }) {
-    if (status === 'all') return true;
+function applyCandidaturesFiltering() {
+  const grid = getCandidaturesGrid();
+  if (!grid) return;
 
-    const cardStatus = card.dataset.status;
-    if (!cardStatus) return false;
+  const selectedStates = getCheckedValues('state[]').map(normalizeToken);
+  const selectedCategories = getCheckedValues('category[]').map(normalizeToken);
 
-    return cardStatus.toLowerCase() === status;
+  const cards = grid.querySelectorAll('.request-card');
+  let visible = 0;
+
+  for (const card of cards) {
+    const state = readCandidatureState(card);
+    const category = readCandidatureCategory(card);
+
+    const passState =
+      selectedStates.length === 0 ||
+      selectedStates.includes(state);
+
+    const passCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(category);
+
+    const show = passState && passCategory;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  }
+
+  updateEmptyState(grid, getEmptyState(grid), visible);
 }
 
-function matchesRequestCategory(card, { category }) {
-    if (category === 'all') return true;
-
-    const cat = card.querySelector('.requestCategory');
-    if (!cat) return false;
-
-    return cat.textContent.trim().toLowerCase() === category;
+function getCandidaturesGrid() {
+  return document.getElementById('grigliaCandidature');
 }
 
-function applyReviewFilters() {
-    const state = getReviewFilterState();
-    const cards = getReviewCards();
+function readCandidatureState(card) {
+  const fromAttr = card.getAttribute('data-status') || card.dataset?.status;
+  if (fromAttr) return normalizeToken(fromAttr);
 
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-        const isVisible =
-            matchesReviewVote(card, state) &&
-            matchesReviewCategory(card, state);
-
-        card.style.display = isVisible ? '' : 'none';
-        if (isVisible) visibleCount++;
-    });
-
-    updateReviewEmptyState(visibleCount);
+  const el = card.querySelector('.candidatureStatus, .requestStatus, .status-tag, [data-status="status"]');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
 }
 
-function applyRequestFilters() {
-    const state = getRequestFilterState();
-    const cards = getRequestCards();
-
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-        const isVisible =
-            matchesRequestStatus(card, state) &&
-            matchesRequestCategory(card, state);
-
-        card.style.display = isVisible ? '' : 'none';
-        if (isVisible) visibleCount++;
-    });
-
-    updateRequestEmptyState(visibleCount);
+function readCandidatureCategory(card) {
+  const el = card.querySelector('.category-tag, [data-category="category"], .candidatureCategory, .requestCategory');
+  if (!el) return '';
+  return normalizeToken(el.textContent);
 }
 
-function updateReviewEmptyState(visibleCount) {
-    const grid  = getReviewGrid();
-    const empty = getEmptyState();
+/* =========================
+   SHARED HELPERS
+   ========================= */
 
-    if (!grid || !empty) return;
-
-    if (visibleCount === 0) {
-        grid.style.display  = 'none';
-        empty.style.display = 'flex';
-    } else {
-        grid.style.display  = 'grid';
-        empty.style.display = 'none';
-    }
+function getEmptyState(grid) {
+  const root = grid?.closest('.requests-layout-wrapper') || document;
+  return root.querySelector('#filterEmptyState');
 }
 
-function updateRequestEmptyState(visibleCount) {
-    const grid  = getRequestGrid();
-    const empty = getEmptyState();
+function updateEmptyState(grid, empty, visibleCount) {
+  if (!grid || !empty) return;
 
-    if (!grid || !empty) return;
+  const isEmpty = visibleCount === 0;
 
-    if (visibleCount === 0) {
-        grid.style.display  = 'none';
-        empty.style.display = 'flex';
-    } else {
-        grid.style.display  = 'grid';
-        empty.style.display = 'none';
-    }
+  grid.hidden = isEmpty;
+  empty.hidden = !isEmpty;
+  empty.style.display = isEmpty ? 'flex' : '';
+
+  if (isEmpty) empty.style.flex = '1';
+  else empty.style.flex = '';
+}
+
+function getCheckedValues(name) {
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+    .map(el => String(el.value).trim());
+}
+
+function voteInRange(vote, rangeStr) {
+  if (!Number.isFinite(vote)) return false;
+
+  const s = String(rangeStr).trim();
+  if (s.includes('-')) {
+    const [min, max] = s.split('-').map(Number);
+    return Number.isFinite(min) && Number.isFinite(max) && vote >= min && vote <= max;
+  }
+
+  const x = Number(s);
+  return Number.isFinite(x) && vote === x;
+}
+
+function normalizeToken(str) {
+  return String(str)
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['"]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -458,7 +579,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // VALIDAZIONE FORM
+<<<<<<< HEAD
     if (document.getElementById('signForm') || document.getElementById('contattoForm')) {
+=======
+    if (document.getElementById('signForm') || document.getElementById('contattoForm') || document.getElementById('modifyForm')) {
+        if (typeof initValidations === 'function') {
+>>>>>>> dev-suar
             initValidations();
     } 
 

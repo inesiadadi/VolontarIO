@@ -1,38 +1,52 @@
-<main class="requestPageContainer" id='content'>
+<main id='content'>
     <nav id="breadcrumb" aria-label="Percorso attuale del sito">
         <ul>
         <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
-        <li><a href="/volontario/profilo">Area Personale</a></li>
-        <li>Richieste</li>
+        <li><a href="/volontario/profilo?id=[idUtenteTarget]">Area Personale</a></li>
+        <li aria-current="page">Richieste</li>
         </ul>
     </nav>
-    <h1 class="profilePageTitle">Le mie richieste</h1>
-    <aside class="filtersSidebar">
-        <a href="/volontario/nuova-richiesta" id="newRequest">Aggiungi richiesta</a>
-        <div class="filterBox">
-            <h2 class="filterTitle">Filtra Richieste</h2>
-            <div class="filterGroup">
-                <label for="stateFilter" class="filterSubtitle">
-                    Stato
-                </label>
-                <select id="stateFilter" class="filterSelect">
-                    <option value="all">Tutti gli stati</option>
-                    <option value="aperta">Aperta</option>
-                    <option value="in_carico">In carico</option>
-                    <option value="completata">Completata</option>
-                    <option value="scaduta">Scaduta</option>
-                </select>
-            </div>
-            [Categorie]
+    <div class="container-requests">
+        <h1 id="accountTitle">Le mie richieste</h1>
+        <div class="requests-layout-wrapper">
+            <aside class="filters-sidebar" aria-label="Filtri richieste">
+                <form class="filter-form">
+                    <div class="filter-header">
+                        <h2>Filtra Richieste</h2>
+                        <a id="newRequest" href="/volontario/nuova-richiesta">Aggiungi Richiesta</a>
+                        <a href="/volontario/richieste?id=[idUtenteTarget]" class="btn reset-link">Reimposta Filtri</a>
+                    </div>
+                    <fieldset class="form-group category-group">
+                    <legend class="form-label">Stato</legend>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="state[]" value="aperta">
+                        Aperta
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="state[]" value="in_carico">
+                        In Carico
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="state[]" value="completata">
+                        Completata
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="state[]" value="scaduta">
+                        Scaduta
+                    </label>
+                    </fieldset>
+                    [CheckboxesCategorie]
+                </form>
+            </aside>
+            <section>
+                <div class="requests-list" id="grigliaRichieste">
+                    [Richieste]
+                </div>
+                <div class="noRequestMsg" id="filterEmptyState">
+                    <span aria-hidden="true">🌱</span>
+                    <p>Non ci sono ancora richieste per questo filtro.</p>
+                </div>
+            </section>
         </div>
-    </aside>
-    <section class="requestContent">
-        <div class="requestGrid" id="grigliaRichieste">
-            [Richieste]
-        </div>
-        <div class="noRequestMsg" id="filterEmptyState">
-            <span aria-hidden="true">🌱</span>
-            <p>Non ci sono ancora richieste per questo filtro.</p>
-        </div>
-    </section>
+    </div>
 </main>
