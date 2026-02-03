@@ -13,12 +13,7 @@ if ($id_visitatore === 0) {
 $id_utente_target = $id_visitatore;
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-<<<<<<< HEAD
-    header('Location: /volontario/php/error_500.php');
-=======
-    http_response_code(500);
-    include ROOT_PATH . '/php/error_500.php'; // oppure /templates/error500.html se preferisci
->>>>>>> dev-suar
+    header('Location: /volontario/error-500');
     exit;
 }
 

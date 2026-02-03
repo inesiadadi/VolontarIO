@@ -1,104 +1,119 @@
-<main id="content">  
+<main id="content" tabindex="-1">
+    
     <section class="sez1-cf" aria-labelledby="intestazione-come-funziona">
-        <nav id="breadcrumb" aria-label="Percorso attuale del sito">
+        <nav id="breadcrumb" aria-label="Percorso di navigazione">
             <ul>
-                <li><a href="/volontario/"><span lang="en-GB">Home</span></a></li>
-                <li>Come funziona</li>
+                <li><a href="/volontario/"><span lang="en">Home</span></a></li>
+                <li><span aria-current="page">Come funziona</span></li>
             </ul>
         </nav>
         <h1 class="accountTitle" id="intestazione-come-funziona">Come funziona</h1>
         <p>In questa pagina troverai tutte le informazioni su come utilizzare volontarIO: come registrarti, come inviare una richiesta di aiuto e come offrire il tuo supporto ad altri utenti. Ti guideremo passo dopo passo per permetterti di usare la piattaforma in modo semplice e immediato.</p>   
     </section>
+
     <section class="sez2-cf" aria-labelledby="intestazione-guida">
-        <h2 id="intestazione-guida">Guida <span lang="en">step-by-step</span></h2>
+        <h2 id="intestazione-guida">Guida <span lang="en">step-by-step</span></h2> 
+        
         <div class="container-cf">
             <div class="container-text">
-                <h3>1. Esegui la registrazione o accedi</h3>
-                <p>Per iniziare a usare volontarIO bastano pochi passaggi.</p>
-                <p>Clicca sul pulsante Accedi o Registrati e segui la procedura:</p>
-                <p>Registrazione</p>
-                <ol>
-                    <li>Compila il modulo con nome, email e password</li>
-                    <li>Compila i campi inserendo i tuoi dati personali</li>
-                    <li>Il tuo profilo è pronto per essere utilizzato!</li>
+                <h3><span lang="en">Step</span> 1: Esegui la registrazione o accedi</h3>
+                <p>Per iniziare a usare volontarIO, individua i pulsanti in alto e scegli l'opzione che fa per te:</p>
+                <p><strong>Sei un nuovo utente?</strong></p>
+                <ol role="list" aria-label="Istruzioni per la registrazione">
+                    <li>Clicca su <strong>"Registrati"</strong>.</li>
+                    <li>Compila i campi inserendo: <span lang="en">username</span>, <span lang="en">email</span>, <span lang="en">password</span> e i dati personali richiesti.</li>
+                    <li>Il tuo profilo sarà subito pronto!</li>
                 </ol>
-                <p>Accesso</p>
-                <ol>
-                    <li>Inserisci email e password</li>
-                    <li>Accedi alla tua area personale, dove puoi creare nuove richieste di aiuto o rispondere a quelle pubblicare dagli altri utenti.</li>
+                <p><strong>Hai già un account?</strong></p>
+                <ol role="list" aria-label="Istruzioni per l'accesso">
+                    <li>Clicca su <strong>"Accedi"</strong>.</li>
+                    <li>Inserisci il tuo <span lang="en">username</span> e la <span lang="en">password</span>.</li>
+                    <li>Entrerai nella tua area personale per gestire le richieste.</li>
                 </ol>
             </div>
-                <picture>
-                    <source media="(min-width: 600px)" srcset="src/images/step1_desktop.webp">
-                    <img src="src/images/step1_mobile.webp" alt="">
-                </picture>
+            <img src="src/images/step1_mobile.webp" alt="">
         </div>
+
         <div class="container-cf reverse">
             <div class="container-text">
-                <h3>2. Hai bisogno di una mano? Ecco come pubblicare una richiesta:</h3>
-                <ol>
-                    <li>Nella tua area personale vai nella sezione "crea una richiesta"</li>
-                    <li>Compila i campi:
-                        <ul class="sotto_sez">
-                            <li>Titolo della richiesta</li>
-                            <li>Descrizione della richiesta d'aiuto</li>
-                            <li>Luogo e orario </li>
+                <h3><span lang="en">Step</span> 2: Hai bisogno di una mano? Ecco come pubblicare una richiesta:</h3>
+                <p>Per creare una nuova richiesta:</p>
+                <ol role="list" aria-label="Istruzioni per creare una richiesta">
+                    <li>Dal tuo menu personale a tendina, seleziona la voce <strong>"Richieste effettuate"</strong>.</li>
+                    <li>Clicca sul pulsante <strong>"Aggiungi richiesta"</strong>.</li>
+                    
+                    <li>Compila il modulo con i dettagli necessari:
+                        <ul class="sotto_sez" role="list" aria-label="Elenco dei campi da compilare">
+                            <li>Categoria e breve descrizione</li>
+                            <li>Città di residenza</li>
+                            <li>Data e orario dell'intervento richiesto</li>
                         </ul>
-                    </li>
-                    <li>Pubblica la richiesta</li>
+                    </li> 
+                    
+                    <li>Conferma per pubblicare l'annuncio in bacheca.</li>
                 </ol>
-                <p>La tua richiesta apparirà nella bacheca pubblica e sarà visibile ai volontari.</p>
+                
+                <p><strong>Gestione delle candidature:</strong></p>
+                <p>Sempre nella sezione <strong>"Richieste effettuate"</strong> potrai vedere chi si è offerto di aiutarti. Da qui potrai:</p>
+                <ul class="sotto_sez" role="list" aria-label="Azioni disponibili per gestire i candidati">
+                    <li><strong>Visualizzare il profilo</strong> del candidato per conoscerlo meglio.</li>
+                    <li><strong>Contattarlo via email</strong> direttamente dalla sua pagina personale per accordarvi.</li>
+                    <li><strong>Rimuovere la richiesta</strong> una volta risolta o se non più necessaria.</li>
+                </ul>
             </div>
-                <picture>
-                    <source media="(min-width: 600px)" srcset="src/images/step2_desktop.webp">
-                    <img src="src/images/step2_mobile.webp" alt="">
-                </picture>
+            <img src="src/images/step2_mobile.webp" alt="">
         </div>
+
         <div class="container-cf">
             <div class="container-text">
-                <h3>3. Offrire un Aiuto</h3>
-                <p>Se vuoi dare una mano:</p>
-                <ol>
-                    <li>Clicca su "Bacheca"</li>
-                    <li>Sfoglia le richieste disponibili filtrandole per:
-                        <ul class="sotto_sez">
-                            <li>categoria</li>
-                            <li>posizione</li>
-                            <li>data</li>
+                <h3><span lang="en">Step</span> 3. Offrire un Aiuto</h3>
+                
+                <p>Se vuoi dare una mano, ecco come fare:</p>
+                <ol role="list" aria-label="Istruzioni per offrire aiuto">
+                    <li>Visita la pagina <strong>"Bacheca"</strong>: qui troverai l'elenco completo di tutte le richieste attive.</li>
+                    
+                    <li>Trova l'opportunità più adatta a te filtrando i risultati per:
+                        <ul class="sotto_sez" role="list" aria-label="Filtri di ricerca disponibili">
+                            <li>Categoria</li>
+                            <li>Città di residenza</li>
+                            <li>Data</li>
                         </ul>
                     </li>
-                    <li>Clicca su una richiesta e premi "offriti come volontario"</li>
-                    <li>L'utente che ha creato la richiesta riceverà una notifica e potrà accettare il tuo aiuto</li>
+                    
+                    <li>Una volta scelta la richiesta, clicca sul pulsante <strong>"Offri aiuto"</strong>.</li>
+                    <li>Il proprietario della richiesta riceverà la tua disponibilità e ti contatterà direttamente sulla tua <strong>email personale</strong> per concordare i dettagli.</li>
                 </ol>
-                <p>Quando la collaborazione è confermata, l’aiuto richiesto potrà essere effettuato secondo le modalità e gli orari concordati tra te e l’utente che ha pubblicato la richiesta.</p>  
+                
+                <p>Quando la collaborazione è confermata, l’aiuto potrà essere svolto secondo le modalità concordate.</p>  
             </div>
-                <picture>
-                    <source media="(min-width: 600px)" srcset="src/images/step3_desktop.webp">
-                    <img src="src/images/step3_mobile.webp" alt="">
-                </picture>
+            <img src="src/images/step3_mobile.webp" alt="">
         </div>
     </section>
+
     <div class="sez3-cf">
         <p>Seguendo questa guida potrai muovere i primi passi all’interno di volontarIO e scoprire quanto può essere semplice fare la differenza. Diventare volontario significa mettere a disposizione un po’ del tuo tempo per migliorare concretamente la vita di qualcun altro: un gesto semplice, capace di creare connessioni reali e trasformare piccoli aiuti in grandi cambiamenti.</p>
+        
         <p>Fai il tuo primo passo: registrati ora.</p>
-        <a href="/volontario/register" class="btn-registrati">Registrati ora!</a>
-    </div>
-    <section class="contact-section" id="contatti" aria-labelledby="intestazione-contatti" role="region">
-        <h2 id="intestazione-contatti">Contattaci</h2>             
+        <a href="/volontario/register" class="btn-registrati" role="button">Registrati ora!</a>
+    </div> 
+
+    <section class="contact-section" id="contatti" aria-labelledby="intestazione-contatti">
+        <h2 id="intestazione-contatti">Contattaci</h2>            
         <p>Hai dubbi o domande? Compila il form e mettiti in contatto con noi.</p>
+        <p class="note-form">I campi contrassegnati con <span aria-hidden="true">*</span> sono obbligatori.</p>
         
         [formMessage]
         
         <form action="/volontario/come-funziona#contatti" id="contattoForm" method="post" class="contact-form">
-            <fieldset class="form-cf">
+             <fieldset class="form-cf">
                 <legend class="legend-cont">Modulo di contatto</legend>
                 <div class="contenitore-form">
                     <div class="form-input">
-                        <label for="nome_cognome">Inserisci nome e cognome</label> 
+                        <label for="nome_cognome">Inserisci nome e cognome*</label> 
                         <input type="text" class="input-cf" id="nome_cognome" name="nome_cognome" autocomplete="name" required value="[nome_cognome]">
                         <span id="aiuto-nome_cognome" class="aiuto"></span>
 
-                        <label for="email">Inserisci email</label> 
+                        <label for="email">Inserisci email*</label> 
                         <input type="email" class="input-cf" id="email" name="email" autocomplete="email" required value="[email]">
                         <span id="aiuto-email" class="aiuto"></span>
 
@@ -108,7 +123,7 @@
                     </div>
 
                     <div class="form-textarea">
-                        <label for="messaggio">Inserisci il messaggio qui</label>
+                        <label for="messaggio">Inserisci il messaggio qui*</label>
                         <textarea id="messaggio" class="textarea-cf" name="messaggio" rows="5" required>[messaggio]</textarea> 
                         <span id="aiuto-messaggio" class="aiuto"></span>
                     </div>

@@ -126,7 +126,53 @@ class DBAccess {
         }
         return $richieste;
     }
+     public function getRichiestaPerId(int $codiceRichiesta)
+    {
+        $sql = "SELECT codiceRichiesta, idRichiedente, idOfferente, stato
+                FROM Richiesta
+                WHERE codiceRichiesta = ?";
 
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $codiceRichiesta);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
+
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+
+        $stmt->close();
+        return $row ?: null;
+    }
+        public function esisteRecensionePerRichiesta(int $codiceRichiesta): bool
+    {
+        $sql = "SELECT 1
+                FROM Valutazione
+                WHERE idRichiesta = ?
+                LIMIT 1";
+
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("i", $codiceRichiesta);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return false;
+        }
+
+        $res = $stmt->get_result();
+        $exists = ($res && $res->num_rows > 0);
+
+        $stmt->close();
+        return $exists;
+    }
     public function checkUpdateRequests() {
         $this->connection->query("
             UPDATE Richiesta
@@ -451,34 +497,6 @@ public function getCandidatureEffettuate($idVolontario) {
         $query->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
     }
 
-    public function getRichiestaPerId($id_richiesta) {
-    if (!isset($this->connection)) {
-        return null;
-    }
-
-    $query = "SELECT r.codiceRichiesta, r.descrizione, r.dataRichiesta, r.idRichiedente, 
-                     r.idTipo AS idTipologia, r.idCitta, c.nome AS citta, t.nome AS nomeTipologia, r.stato
-              FROM Richiesta r
-              JOIN Citta c ON r.idCitta = c.idCitta
-              JOIN Tipologia t ON r.idTipo = t.idTipo
-              WHERE r.codiceRichiesta = ?";
-
-    $stmt = $this->connection->prepare($query);
-    if (!$stmt) {
-
-        return null;
-    }
-
-    $stmt->bind_param('i', $id_richiesta);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    } else {
-        return null;
-    }
-}
 
 public function modificaRichiesta($id_richiesta, $descrizione, $dataIntervento, $idTipo, $idCitta) {
     if (!isset($this->connection)) {

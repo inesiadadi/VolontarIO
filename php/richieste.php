@@ -61,7 +61,6 @@ if(!empty($resultRec)) {
         $temp = str_replace('[LuogoRichiesta]', htmlspecialchars($rec['citta']), $temp);
         $temp = str_replace('[StatoRichiesta]', htmlspecialchars($rec['stato']), $temp);
 
-<<<<<<< HEAD
 if ($rec['stato'] == "aperta") {
     $linkModifica = "/volontario/modifica-richiesta?id=" . $rec['codiceRichiesta'];
     
@@ -75,34 +74,18 @@ if ($rec['stato'] == "aperta") {
         $temp
     );
 } 
-=======
-        if ($rec['stato'] == "aperta") {
-            $temp = str_replace(
-                '[PulsantieraAzioni]',
-                '<a href="/volontario/modificaRichiesta?id=' . $rec['codiceRichiesta'] . '" class="modify">Modifica Richiesta</a>',
-                $temp
-            );
-        } 
->>>>>>> dev-suar
         else if ($rec['stato'] == "in_carico") {
             $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-<<<<<<< HEAD
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
                 <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
-                    <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
-=======
-                '<a href="' . $profiloUrl . '" class="btn-action btn-accept">Visualizza volontario</a>
-                <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
                     <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
->>>>>>> dev-suar
                     <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
                  </form>',
                 $temp
             );
         } 
-<<<<<<< HEAD
         else if ($rec['stato'] == "completata") {
             $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
@@ -110,9 +93,6 @@ if ($rec['stato'] == "aperta") {
                 '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',
                 $temp
             );
-=======
-        else if ($rec['stato'] === "completata") {
-
             $codiceRichiesta = (int)$rec['codiceRichiesta'];
             $dbAccess->openDBConnection();
             if ($dbAccess->esisteRecensionePerRichiesta($codiceRichiesta)) {
@@ -133,7 +113,6 @@ if ($rec['stato'] == "aperta") {
                     $temp
                 );
             }
->>>>>>> dev-suar
         }
         else if ($rec['stato'] == "scaduta") {
             $temp = str_replace(
