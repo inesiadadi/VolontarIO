@@ -336,7 +336,9 @@ SEZIONE COME_FUNZIONA
 .action-button form {
     width: 70%;
 }
-
+.requestGrid .action-button form {
+    width: 100%;
+}
 .no-request-msg {
     margin-top: 0rem;
 }
