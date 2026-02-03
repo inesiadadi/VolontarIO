@@ -2593,9 +2593,10 @@ body.dark-mode .btn.apply-filters {
 }
 
 body.dark-mode .modifyProfile,
-body.dark-mode .btn.reset-link {
+body.dark-mode .btn.reset-link,
+body.dark-mode .btn-action.btn-delete {
     color: var(--secondary-bg);
-}
+} 
 
 body.dark-mode .filterSubtitle {
     display: block;
