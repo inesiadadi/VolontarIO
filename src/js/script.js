@@ -554,8 +554,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('citta-input')) {
         initCittaAutocomplete();
     }
-    initReviewFilters();
-    initRequestFilters();
     const stars = document.querySelectorAll('.starsColor[data-percentuale]');
     stars.forEach(star => {
         // Legge il dato dall'HTML e lo applica come variabile CSS
@@ -579,13 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // VALIDAZIONE FORM
-<<<<<<< HEAD
-    if (document.getElementById('signForm') || document.getElementById('contattoForm')) {
-=======
     if (document.getElementById('signForm') || document.getElementById('contattoForm') || document.getElementById('modifyForm')) {
-        if (typeof initValidations === 'function') {
->>>>>>> dev-suar
-            initValidations();
-    } 
-
+        initValidations();
+    }
 });

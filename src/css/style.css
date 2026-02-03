@@ -2448,7 +2448,6 @@ form#recensioneForm label.ratingRow {
   padding: 0;
 
   cursor: pointer;
-  user-select: none;
 }
 
 /* Numero (colonnina fissa) */
