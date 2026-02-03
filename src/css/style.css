@@ -2374,6 +2374,77 @@ textarea#messaggio {
   border: 0;
 }
 
+/* ==========================
+   RECENSIONE — BLOCCO VOTO
+   Scoped al form: #recensioneForm
+   ========================== */
+
+/* Wrapper generale del blocco voto */
+form#recensioneForm .ratingGroup {
+  margin: 1rem 0;
+}
+
+/* Titolo "Voto:" */
+form#recensioneForm .ratingLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* Lista verticale delle righe 1..5 */
+form#recensioneForm .ratingList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 240px; /* opzionale: limita l'ampiezza */
+}
+
+/* Ogni riga: numero + radio in linea */
+form#recensioneForm label.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  /* evita effetti collaterali se label globali hanno margini/padding */
+  margin: 0;
+  padding: 0;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Numero (colonnina fissa) */
+form#recensioneForm label.ratingRow .ratingNumber {
+  width: 1.75rem;     /* allinea i numeri */
+  text-align: right;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Radio: override pulito contro .accessForm input{display:block;width:100%} */
+form#recensioneForm label.ratingRow > input[type="radio"] {
+  /* fondamentale: impedisce che vada a capo o prenda 100% */
+  display: inline-block;
+  width: auto;
+  max-width: none;
+
+  /* impedisce che flex lo “stiri” */
+  flex: 0 0 auto;
+
+  /* reset margini tipici */
+  margin: 0;
+  padding: 0;
+
+  /* evita che qualche reset lo trasformi in elemento gigante */
+  box-sizing: content-box;
+}
+
+
+/* (Opzionale) evidenzia la riga selezionata — moderno, ma molto comodo
+   Nota: :has è supportato nei browser moderni (Chrome/Edge/Safari, Firefox recente) */
+form#recensioneForm label.ratingRow:has(input[type="radio"]:checked) {
+  font-weight: 600;
+}
 @media (max-width: 1025px) {
     #site-name { 
     display: none; 

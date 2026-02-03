@@ -78,6 +78,11 @@ switch ($path) {
     case '/pannello':
         include ROOT_PATH . '/php/pannello.php';
         break;
+    
+    case '/nuova-recensione':
+        include ROOT_PATH . '/php/nuovaRecensione.php';
+        break;
+
     default:
         http_response_code(404);
         include ROOT_PATH . '/php/error_404.php';

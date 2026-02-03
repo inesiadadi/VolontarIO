@@ -82,7 +82,7 @@ if(!empty($resultRec)) {
         } 
         else if ($rec['stato'] == "completata") {
             // Stato completata: pulsante cliccabile verso profilo dell'offerente per recensione
-            $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
+            $profiloUrl = "/volontario/nuova-recensione?id=" . $rec['codiceRichiesta'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',
@@ -100,10 +100,7 @@ if(!empty($resultRec)) {
 
         $html_richieste_output .= $temp;
     }
-} else {
-    $html_richieste_output = file_get_contents(ROOT_PATH . '/templates/components/no_request.html');
 }
-
 $html_pagina_richieste = file_get_contents(ROOT_PATH . '/templates/requestsPage.html');
 $categorie = file_exists(ROOT_PATH . '/templates/components/checkboxCategories.html') ? file_get_contents(ROOT_PATH . '/templates/components/checkboxCategories.html') : '';
 $html_pagina_richieste = str_replace('[CheckboxesCategorie]', $categorie, $html_pagina_richieste);
