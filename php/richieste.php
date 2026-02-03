@@ -78,21 +78,36 @@ if ($rec['stato'] == "aperta") {
             $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
+                '<a href="' . $profiloUrl . '" class="btn-action btn-accept">Visualizza volontario</a>
                 <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
-                    <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
+                    <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
                     <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
                  </form>',
                 $temp
             );
         } 
-        else if ($rec['stato'] == "completata") {
-            $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
-            $temp = str_replace(
-                '[PulsantieraAzioni]',
-                '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',
-                $temp
-            );
+        else if ($rec['stato'] === "completata") {
+
+            $codiceRichiesta = (int)$rec['codiceRichiesta'];
+            $dbAccess->openDBConnection();
+            if ($dbAccess->esisteRecensionePerRichiesta($codiceRichiesta)) {
+
+                $temp = str_replace(
+                    '[PulsantieraAzioni]',
+                    "<span class='profileBtn disabled'>Valutazione effettuata</span>",
+                    $temp
+                );
+
+            } else {
+
+                $reviewUrl = "/volontario/nuova-recensione?codiceRichiesta=" . $codiceRichiesta;
+
+                $temp = str_replace(
+                    '[PulsantieraAzioni]',
+                    "<a href='{$reviewUrl}' class='profileBtn'>Recensisci volontario</a>",
+                    $temp
+                );
+            }
         }
         else if ($rec['stato'] == "scaduta") {
             $temp = str_replace(
