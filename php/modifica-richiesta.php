@@ -52,22 +52,41 @@ $dati_richiesta = [
     'ora'         => $ora_db
 ];
 
+$messaggio = "";
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $descrizione = !empty($_POST['descrizione'])   ? trim($_POST['descrizione']) : $dati_richiesta['descrizione'];
     $idTipo      = !empty($_POST['idTipo'])        ? $_POST['idTipo']            : $dati_richiesta['idTipo'];
     $idCitta     = !empty($_POST['idCitta'])       ? $_POST['idCitta']           : $dati_richiesta['idCitta'];
-    $citta_nome  = !empty($_POST['citta_nome'])    ? $_POST['citta_nome']        : $dati_richiesta['nomeCitta'];
+    $citta_nome  = !empty($_POST['citta_nome'])    ? trim($_POST['citta_nome'])        : $dati_richiesta['nomeCitta'];
 
-    $dataInput   = !empty($_POST['dataRichiesta']) ? $_POST['dataRichiesta']     : $dati_richiesta['data'];
-    $oraInput    = !empty($_POST['ora'])           ? $_POST['ora']               : $dati_richiesta['ora'];
-
-    $dataIntervento = $dataInput . " " . $oraInput . ":00";
+    $data   = !empty($_POST['dataRichiesta']) ? $_POST['dataRichiesta']     : $dati_richiesta['data'];
+    $ora    = !empty($_POST['ora'])           ? $_POST['ora']               : $dati_richiesta['ora'];
+    $dataIntervento = $data . " " . $ora;
 
     $errori = [];
 
-    if(!empty($_POST['descrizione']) && strlen($descrizione) > 255) {
+    if(strlen($descrizione) > 255) {
         $errori[] = "La descrizione è troppo lunga (max 255 caratteri).";
+    }
+
+    if(!$idTipo || filter_var($idTipo, FILTER_VALIDATE_INT) === false) {
+        $errori[] = "Categoria non valida.";
+    }
+
+    if(!$idCitta || filter_var($idTipo, FILTER_VALIDATE_INT) === false) {
+        $errori[] = "Città non valida.";
+    }
+
+    if(empty($data) || empty($ora)) {
+        $errori[] = "Data o ora non validi.";
+    } else {
+        $data_ora = strtotime($data . ' ' . $ora);
+        $adesso = time();
+        if($data_ora < $adesso) {
+            $errori[] = "Data o ora non validi (La richiesta non può essere nel passato).";
+        }
     }
 
     if(!empty($errori)) {
@@ -79,8 +98,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $dati_richiesta['descrizione'] = $descrizione;
         $dati_richiesta['nomeCitta']   = $citta_nome;
-        $dati_richiesta['data']        = $dataInput;
-        $dati_richiesta['ora']         = $oraInput;
+        $dati_richiesta['data']        = $data;
+        $dati_richiesta['ora']         = $ora;
 
     } else if ($dbAccess->openDBConnection()) {
         
@@ -103,9 +122,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$html_content = file_get_contents(ROOT_PATH . '/templates/modificaRichiesta.html');
-
-$messaggio = isset($messaggio) ? $messaggio : ""; 
+$html = file_get_contents(ROOT_PATH . '/templates/modificaRichiesta.html');
 
 $options_html = "";
 foreach($categories as $cat) {
@@ -121,12 +138,12 @@ $messaggio
         <legend>Dettagli richiesta</legend>   
         
         <label for='categoria'>Categoria di aiuto:</label>
-        <select name='idTipo' id='categoria' required aria-required='true'>
+        <select name='idTipo' id='categoria' required>
             $options_html
         </select>
 
         <label for='descrizione'>Descrizione:</label>
-        <textarea name='descrizione' id='descrizione' maxlength='255' required aria-required='true' aria-describedby='aiuto-desc'>{$dati_richiesta['descrizione']}</textarea>
+        <textarea name='descrizione' id='descrizione' maxlength='255' required aria-describedby='aiuto-desc'>{$dati_richiesta['descrizione']}</textarea>
         <span id='aiuto-desc' class='aiuto'>Aggiorna la descrizione (max 255 caratteri)</span>
 
         <div class='autocomplete-container'>
@@ -150,11 +167,11 @@ $messaggio
         <span id='aiuto-citta' class='aiuto'>Digita il comune e usa le frecce per selezionare.</span>
 
         <label for='data'>Data dell'intervento:</label>
-        <input type='date' name='dataRichiesta' id='data' min='$minDate' value='{$dati_richiesta['data']}' required aria-required='true'>
+        <input type='date' name='dataRichiesta' id='data' min='$minDate' value='{$dati_richiesta['data']}' required>
         <span class='aiuto'>Modifica la data richiesta</span>
 
         <label for='ora'>Orario richiesto:</label>
-        <input type='time' name='ora' id='ora' value='{$dati_richiesta['ora']}' required aria-required='true'>
+        <input type='time' name='ora' id='ora' value='{$dati_richiesta['ora']}' required>
         <span class='aiuto'>Modifica l'orario richiesto</span>
 
     </fieldset>
@@ -162,7 +179,7 @@ $messaggio
 </form>
 <p>Vuoi annullare? <a href='/volontario/richieste?id=$id_visitatore'>Torna alle tue richieste</a></p>";
 
-$html_content = str_replace('[Form]', $form, $html_content);
+$html = str_replace('[Form]', $form, $html);
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';
@@ -175,7 +192,7 @@ $placeholders_layout = [
     '[onload]'        => 'onload="initCittaAutocomplete()"', 
     '[Header]'        => $header_html,
     '[Footer]'        => $footer_html,
-    '[MainContent]'   => $html_content 
+    '[MainContent]'   => $html 
 ];
 
 foreach($placeholders_layout as $chiave => $valore) {
