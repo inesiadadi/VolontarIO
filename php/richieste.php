@@ -15,14 +15,16 @@ $id_utente_target = $id_visitatore;
 
 $dbAccess = new DBAccess();
 if (!$dbAccess->openDBConnection()) {
-    header('Location: /volontario/error-500');
+    http_response_code(500);
+    include ROOT_PATH . '/php/error_500.php';
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rimuovi'])) {
-    echo "Codice richiesta da eliminare: " . $_POST['codiceRichiesta'];
+    // Rimosso l'echo che sporcava l'output prima del redirect
     $dbAccess->rimuoviRichiesta($_POST['codiceRichiesta']);
     header("Location: /volontario/richieste?id=" . $id_utente_target);
+    exit;
 }
 
 // Ottieni dati utente
@@ -59,32 +61,32 @@ if(!empty($resultRec)) {
         $temp = str_replace('[LuogoRichiesta]', htmlspecialchars($rec['citta']), $temp);
         $temp = str_replace('[StatoRichiesta]', htmlspecialchars($rec['stato']), $temp);
 
-        if ($rec['stato'] == "aperta") {
-            // Stato aperto: pulsante disabilitato
-            $temp = str_replace(
-                '[PulsantieraAzioni]',
-                '<form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
-                    <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
-                    <button type="submit" name="rimuovi" class="btn-action">Rimuovi richiesta</button>
-                 </form>',
-                $temp
-            );
-        } 
+if ($rec['stato'] == "aperta") {
+    $linkModifica = "/volontario/modifica-richiesta?id=" . $rec['codiceRichiesta'];
+    
+    $temp = str_replace(
+        '[PulsantieraAzioni]',
+        '<a href="' . $linkModifica . '" class="btn-modify">Modifica</a>
+         <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post">
+            <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
+            <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
+         </form>',
+        $temp
+    );
+} 
         else if ($rec['stato'] == "in_carico") {
-            // Stato in carico: pulsante cliccabile verso il profilo dell'offerente
             $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
-                <form action="/volontario/richieste?id="' . $id_utente_target . ' method="post" >
-                    <input type="hidden" name="codiceRichiesta" value='. $rec['codiceRichiesta'] .'>
-                    <button type="submit" name="rimuovi" class="btn-action">Rimuovi richiesta</button>
+                <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
+                    <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
+                    <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
                  </form>',
                 $temp
             );
         } 
         else if ($rec['stato'] == "completata") {
-            // Stato completata: pulsante cliccabile verso profilo dell'offerente per recensione
             $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
             $temp = str_replace(
                 '[PulsantieraAzioni]',
@@ -93,7 +95,6 @@ if(!empty($resultRec)) {
             );
         }
         else if ($rec['stato'] == "scaduta") {
-            // Stato aperto: pulsante disabilitato
             $temp = str_replace(
                 '[PulsantieraAzioni]',
                 '<button class="disabledBtn" disabled>Nessun volontario</button>',

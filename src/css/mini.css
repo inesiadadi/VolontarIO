@@ -340,6 +340,17 @@ SEZIONE COME_FUNZIONA
 .no-request-msg {
     margin-top: 0rem;
 }
+
+.req-footer > .action-button {
+    flex-direction: column;
+    gap: 12px;
+}
+
+.req-footer > .action-button .btn-action,
+.req-footer > .action-button .btn-modify {
+    width: 100%;
+}
+
 /* 
    ========================
 
