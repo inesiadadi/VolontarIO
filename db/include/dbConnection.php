@@ -398,6 +398,65 @@ public function getCandidatureEffettuate($idVolontario) {
         $query->bind_param("ssis", $nome_cognome, $email, $numero, $messaggio);
         $query->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
     }
+
+    public function getRichiestaPerId($id_richiesta) {
+    if (!isset($this->connection)) {
+        return null;
+    }
+
+    $query = "SELECT r.codiceRichiesta, r.descrizione, r.dataRichiesta, r.idRichiedente, 
+                     r.idTipo AS idTipologia, r.idCitta, c.nome AS citta, t.nome AS nomeTipologia, r.stato
+              FROM Richiesta r
+              JOIN Citta c ON r.idCitta = c.idCitta
+              JOIN Tipologia t ON r.idTipo = t.idTipo
+              WHERE r.codiceRichiesta = ?";
+
+    $stmt = $this->connection->prepare($query);
+    if (!$stmt) {
+
+        return null;
+    }
+
+    $stmt->bind_param('i', $id_richiesta);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return null;
+    }
+}
+
+public function modificaRichiesta($id_richiesta, $descrizione, $dataIntervento, $idTipo, $idCitta) {
+    if (!isset($this->connection)) {
+        return false;
+    }
+
+    $query = "UPDATE Richiesta 
+              SET descrizione = ?, 
+                  dataRichiesta = ?, 
+                  idTipo = ?, 
+                  idCitta = ? 
+              WHERE codiceRichiesta = ?";
+
+    $stmt = $this->connection->prepare($query);
+    if (!$stmt) {
+        return false;
+    }
+
+    $stmt->bind_param('ssiii', $descrizione, $dataIntervento, $idTipo, $idCitta, $id_richiesta);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 };
+
+
 
 ?>

@@ -86,5 +86,8 @@ switch ($path) {
         http_response_code(404);
         include ROOT_PATH . '/php/error_404.php';
         break;
+    case '/modifica-richiesta':
+    include ROOT_PATH . '/php/modifica-richiesta.php';
+    break;
 }
 ?>

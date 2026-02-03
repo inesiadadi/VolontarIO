@@ -1472,23 +1472,35 @@ ul.category-list {
     width: 100%;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 15px;
 }
+
 .requests-list .btn-action{
-    padding: 0.8rem 1.5rem;
-    border: none;
-    margin: 0.5rem 0.5rem;
-    cursor: pointer;
+display: inline-flex;
+    align-items: center;
     justify-content: center;
+    padding: 0.8rem 1.5rem;
+    margin: 0;
     color: var(--white);
     background-color: var(--dark-green);
+    border: 2px solid var(--dark-green); 
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    height: 50px; 
+    min-width: 160px;
 }
 
 .btn-action.btn-delete{
     background-color:#AA4E4E;
+    color: var(--white);
+    border: 2px solid #AA4E4E;
 }
 .btn-action.btn-delete:hover {
     background-color: #833333;
+    border: 2px solid #833333;
 }
 
 .no-request-msg {
@@ -1509,6 +1521,32 @@ ul.category-list {
 
 .no-request-msg p {
     font-size: 1.8rem;
+}
+
+.action-button form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.btn-modify {
+display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    margin: 0;
+    background-color: var(--deep-green);
+    color: var(--white);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    height: 50px;
+    min-width: 160px;
+}
+
+.btn-modify:hover {
+    color: var(--main-bg);
+    background-color: #06562a;
 }
 /* 
    ========================
@@ -2218,17 +2256,16 @@ textarea#messaggio {
 }
 
 .profileBtn {
-    display: inline-block;
+   display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     background-color: var(--deep-green);
     color: var(--white);
-    text-decoration: none;      /* rimuove sottolineatura link */
-    padding: 0.8rem 1.2rem;
-    border-radius: 1rem;
-    font-size: 1.3rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;;
+    font-size: 0.9rem;
     font-weight: 500;
-    text-align: center;
-    transition: background-color 0.2s ease;
 }
 
 .profileBtn:hover {
@@ -2476,7 +2513,7 @@ body.dark-mode .biographyText p,
 body.dark-mode .error-500 p,
 body.dark-mode .error-500 .btn-primary,
 body.dark-mode .error-404 h1 .pun,
-body.dark-mode .error-404 p {
+body.dark-mode .error-404 p{
     color: var(--dark-green);
 }
 
@@ -2572,11 +2609,8 @@ body.dark-mode .site-footer a:hover {
     color: var(--outline);
 }
 
-body.dark-mode .btn-delete {
-    background-color: var(--main-bg);
-}
+
 body.dark-mode .btn-delete:hover {
-    background-color: var(--outline);
     color: var(--main-bg);
 }
 
@@ -2591,8 +2625,7 @@ body.dark-mode .btn.apply-filters {
 }
 
 body.dark-mode .modifyProfile,
-body.dark-mode .btn.reset-link,
-body.dark-mode .btn-action.btn-delete {
+body.dark-mode .btn.reset-link{
     color: var(--secondary-bg);
 } 
 
@@ -2641,7 +2674,7 @@ body.dark-mode .btn-secondary:hover {
 body.dark-mode .back-to-top {
     border: 2px solid var(--white);
 }
-body.dark-mode .back-to-top::after {
+body.dark-mode .back-to-top::after{
     color: var(--white);
 }
 
