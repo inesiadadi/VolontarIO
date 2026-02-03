@@ -86,7 +86,13 @@ if ($rec['stato'] == "aperta") {
                 $temp
             );
         } 
-        else if ($rec['stato'] === "completata") {
+        else if ($rec['stato'] == "completata") {
+            $profiloUrl = "/volontario/profilo?id=" . $rec['idOfferente'];
+            $temp = str_replace(
+                '[PulsantieraAzioni]',
+                '<a href="' . $profiloUrl . '" class="profileBtn">Recensisci volontario</a>',
+                $temp
+            );
             $codiceRichiesta = (int)$rec['codiceRichiesta'];
             $dbAccess->openDBConnection();
             if ($dbAccess->esisteRecensionePerRichiesta($codiceRichiesta)) {
@@ -111,21 +117,19 @@ if ($rec['stato'] == "aperta") {
         else if ($rec['stato'] == "scaduta") {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<button class="disabledBtn" disabled>Nessun volontario</button>',
+                '<span class="disabledBtn" disabled>Nessun volontario</span>',
                 $temp
             );
         } 
 
         $html_richieste_output .= $temp;
     }
-} else {
-    $html_richieste_output = file_get_contents(ROOT_PATH . '/templates/components/no_request.html');
 }
-
 $html_pagina_richieste = file_get_contents(ROOT_PATH . '/templates/requestsPage.html');
-$categorie = file_exists(ROOT_PATH . '/templates/components/categories.html') ? file_get_contents(ROOT_PATH . '/templates/components/categories.html') : '';
-$html_pagina_richieste = str_replace('[Categorie]', $categorie, $html_pagina_richieste);
+$categorie = file_exists(ROOT_PATH . '/templates/components/checkboxCategories.html') ? file_get_contents(ROOT_PATH . '/templates/components/checkboxCategories.html') : '';
+$html_pagina_richieste = str_replace('[CheckboxesCategorie]', $categorie, $html_pagina_richieste);
 $html_pagina_richieste = str_replace('[Richieste]', $html_richieste_output, $html_pagina_richieste);
+$html_pagina_richieste = str_replace('[idUtenteTarget]', $id_utente_target, $html_pagina_richieste);
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents(ROOT_PATH . '/templates/components/footer.html') : '';

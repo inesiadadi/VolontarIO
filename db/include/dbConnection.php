@@ -6,9 +6,9 @@ class DBAccess {
     private const HOST_DB = "127.0.0.1";
     private const DATABASE_NAME = "volontario";
     private const USERNAME = "root";
-    private const PASSWORD = "";
-    //private const PORT = 8889;
-    //private const PASSWORD = "root";
+    //private const PASSWORD = "";
+    private const PORT = 8889;
+    private const PASSWORD = "root";
     private $connection;
 
     public function openDBConnection() {
@@ -19,7 +19,7 @@ class DBAccess {
                 DBAccess::USERNAME, 
                 DBAccess::PASSWORD, 
                 DBAccess::DATABASE_NAME,
-                //DBAccess::PORT
+                DBAccess::PORT
             );
 
             mysqli_set_charset($this->connection, "utf8mb4");
@@ -79,7 +79,8 @@ class DBAccess {
     }
 
     public function getRecensioniRicevute($idVolontario) {
-        $sql = "SELECT 
+        $sql = "SELECT
+                    V.idValutazione, 
                     V.voto, 
                     V.descrizione AS testo_recensione, 
                     R.dataRichiesta, 
@@ -173,32 +174,17 @@ class DBAccess {
         return $exists;
     }
     public function checkUpdateRequests() {
-        $query = "SELECT codiceRichiesta, stato, dataRichiesta FROM Richiesta";
-        $result = $this->connection->query($query);
+        $this->connection->query("
+            UPDATE Richiesta
+            SET stato = 'scaduta'
+            WHERE stato = 'aperta' AND dataRichiesta < NOW()
+        ");
 
-        while ($rec = $result->fetch_assoc()) {
-            $aggiorna = false;
-            $nuovoStato = $rec['stato'];
-            $ora = new \DateTime();
-
-            $dataRichiesta = new \DateTime($rec['dataRichiesta']);
-
-            if ($rec['stato'] == 'aperta' && $dataRichiesta < $ora) {
-                $nuovoStato = 'scaduta';
-                $aggiorna = true;
-            }
-            else if ($rec['stato'] == 'in_carico' && $dataRichiesta < $ora) {
-                $nuovoStato = 'completata';
-                $aggiorna = true;
-            }
-
-            if ($aggiorna) {
-                $stmt = $this->connection->prepare("UPDATE Richiesta SET stato = ? WHERE codiceRichiesta = ?");
-                $stmt->bind_param("si", $nuovoStato, $rec['codiceRichiesta']);
-                $stmt->execute();
-                $stmt->close();
-            }
-        }
+        $this->connection->query("
+            UPDATE Richiesta
+            SET stato = 'completata'
+            WHERE stato = 'in_carico' AND dataRichiesta < NOW()
+        ");
     }
 
 public function getCandidatureEffettuate($idVolontario) {
@@ -271,7 +257,73 @@ public function getCandidatureEffettuate($idVolontario) {
         return true;
     }
     
-    public function addReview() {}
+    
+    public function getRichiestaPerId(int $codiceRichiesta)
+    {
+        $sql = "SELECT codiceRichiesta, idRichiedente, idOfferente, stato
+                FROM Richiesta
+                WHERE codiceRichiesta = ?";
+
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $codiceRichiesta);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return null;
+        }
+
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+
+        $stmt->close();
+        return $row ?: null;
+    }
+
+    public function esisteRecensionePerRichiesta(int $codiceRichiesta): bool
+    {
+        $sql = "SELECT 1
+                FROM Valutazione
+                WHERE idRichiesta = ?
+                LIMIT 1";
+
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("i", $codiceRichiesta);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            return false;
+        }
+
+        $res = $stmt->get_result();
+        $exists = ($res && $res->num_rows > 0);
+
+        $stmt->close();
+        return $exists;
+    }
+
+    public function inserisciRecensione(int $codiceRichiesta, int $voto, string $descrizione): bool
+    {
+        $sql = "INSERT INTO Valutazione (descrizione, voto, idRichiesta)
+                VALUES (?, ?, ?)";
+
+        $stmt = $this->connection->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("sii", $descrizione, $voto, $codiceRichiesta);
+
+        $ok = $stmt->execute();
+        $stmt->close();
+
+        return $ok;
+    }
 
     public function modificaProfiloUtente($idPersona, $nome, $cognome, $dataNascita, $descrizione, $immagine, $idCitta, $email, $password) {
         $sql = "UPDATE Persona 

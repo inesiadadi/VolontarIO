@@ -1,24 +1,36 @@
-<article class="reviewCard" itemprop="review" itemscope itemtype="https://schema.org/Review">
-    <div class="reviewHeader">
-        <div class="reviewerIdentity">
-            <img src="[FotoAutore]" alt="Foto di [AutoreRecensione]" class="reviewerPfp" onerror="this.src='images/default_user.png'">    
-            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-                <a href="/volontario/profilo?id=[IdAutore]" class="reviewAuthorLink" itemprop="url">
-                    <span class="reviewAuthor" itemprop="name">[AutoreRecensione]</span>
-                </a>
-            </span>
-        </div>    
-        <div class="reviewVote" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-            <meta itemprop="worstRating" content="1">
-            <meta itemprop="bestRating" content="10">
-            <span itemprop="ratingValue">[VotoRecensione]</span>/10
-        </div>
-    </div>
-    <div class="reviewCategory">[CategoriaServizio]</div>
-    <p class="reviewText" itemprop="reviewBody">
-        "[TestoRecensione]"
+<article class="reviewCard">
+    <header class="reviewHeader">
+      <div class="reviewerIdentity">
+        <img
+          src="[FotoAutore]"
+          alt="Foto di [AutoreRecensione]"
+          class="reviewerPfp"
+          loading="lazy"
+          width="48"
+          height="48"
+        >
+
+        <a href="/volontario/profilo?id=[IdAutore]" class="reviewAuthorLink">
+          <span id="reviewTitle-[ReviewKey]" class="reviewAuthor">[AutoreRecensione]</span>
+        </a>
+      </div>
+
+      <p class="reviewVote">
+        <span class="srOnly">Valutazione:</span>
+        <span data-value="ratingValue" class="reviewVoteValue">[VotoRecensione]</span><span aria-hidden="true">/10</span>
+        <span class="srOnly">su dieci</span>
+      </p>
+    </header>
+
+    <p class="reviewCategory">
+      <span class="srOnly">Categoria servizio:</span>
+      [CategoriaServizio]
     </p>
-    <time class="reviewDate" itemprop="datePublished" datetime="[DataISO]">
-        [DataVisual]
-    </time>
-</article>
+
+    <p class="reviewText">[TestoRecensione]</p>
+
+    <p class="reviewMeta">
+      <span class="srOnly">Data:</span>
+      <time class="reviewDate" datetime="[DataISO]">[DataVisual]</time>
+    </p>
+  </article>
