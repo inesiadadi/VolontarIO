@@ -127,32 +127,17 @@ class DBAccess {
     }
 
     public function checkUpdateRequests() {
-        $query = "SELECT codiceRichiesta, stato, dataRichiesta FROM Richiesta";
-        $result = $this->connection->query($query);
+        $this->connection->query("
+            UPDATE Richiesta
+            SET stato = 'scaduta'
+            WHERE stato = 'aperta' AND dataRichiesta < NOW()
+        ");
 
-        while ($rec = $result->fetch_assoc()) {
-            $aggiorna = false;
-            $nuovoStato = $rec['stato'];
-            $ora = new \DateTime();
-
-            $dataRichiesta = new \DateTime($rec['dataRichiesta']);
-
-            if ($rec['stato'] == 'aperta' && $dataRichiesta < $ora) {
-                $nuovoStato = 'scaduta';
-                $aggiorna = true;
-            }
-            else if ($rec['stato'] == 'in_carico' && $dataRichiesta < $ora) {
-                $nuovoStato = 'completata';
-                $aggiorna = true;
-            }
-
-            if ($aggiorna) {
-                $stmt = $this->connection->prepare("UPDATE Richiesta SET stato = ? WHERE codiceRichiesta = ?");
-                $stmt->bind_param("si", $nuovoStato, $rec['codiceRichiesta']);
-                $stmt->execute();
-                $stmt->close();
-            }
-        }
+        $this->connection->query("
+            UPDATE Richiesta
+            SET stato = 'completata'
+            WHERE stato = 'in_carico' AND dataRichiesta < NOW()
+        ");
     }
 
 public function getCandidatureEffettuate($idVolontario) {

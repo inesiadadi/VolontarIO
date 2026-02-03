@@ -78,8 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($voto < 1 || $voto > 10 || mb_strlen($descrizione) > 255) {
         $dbAccess->closeDBConnection();
-        http_response_code(400);
-        include ROOT_PATH . '/php/error_400.php';
+        http_response_code(404);
+        include ROOT_PATH . '/php/error_404.php';
         exit;
     }
 
