@@ -68,6 +68,7 @@ if ($rec['stato'] == "aperta") {
         '[PulsantieraAzioni]',
         '<a href="' . $linkModifica . '" class="btn-modify">Modifica</a>
          <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post">
+             ' . csrf_field() . '
             <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
             <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
          </form>',
@@ -80,6 +81,7 @@ if ($rec['stato'] == "aperta") {
                 '[PulsantieraAzioni]',
                 '<a href="' . $profiloUrl . '" class="profileBtn">Visualizza volontario</a>
                 <form action="/volontario/richieste?id=' . $id_utente_target . '" method="post" >
+                    ' . csrf_field() . '
                     <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
                     <button type="submit" name="rimuovi" class="btn-action btn-delete">Rimuovi richiesta</button>
                  </form>',

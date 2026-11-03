@@ -134,6 +134,7 @@ $minDate = date('Y-m-d');
 $form = "
 $messaggio
 <form class='accessForm' id='modifyRequestForm' action='/volontario/modifica-richiesta?id=$id_richiesta' method='post'>
+    " . csrf_field() . "
      <fieldset>
         <legend>Dettagli richiesta</legend>   
         

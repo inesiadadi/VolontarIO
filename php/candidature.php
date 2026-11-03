@@ -69,6 +69,7 @@ if(!empty($resultRec)) {
                 '[PulsantieraAzioni]',
                 '<form action="/volontario/candidature" method="post">
                     <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
+                    ' . csrf_field() . '
                     <button type="submit" name="rinuncia" class="profileBtn delete-btn" aria-label="Rinuncia incarico (Id: ' . $rec['codiceRichiesta']. ')">Rinuncia incarico<span class="sr-only">(Id: '. $rec['codiceRichiesta'].')</span></button>
                  </form>',
                 $temp

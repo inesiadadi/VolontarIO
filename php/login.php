@@ -13,6 +13,7 @@ if(isset($_SESSION['logged'])) {
     $form = "
         [error_message]
         <form id='logForm' class='accessForm form-input' action='/volontario/login' method='post'>
+            " . csrf_field() . "
             <fieldset>
                 <legend id='legendForm'>Accedi al tuo account</legend>
                 <label for='username'><span lang='en'>Username</span>:</label>

@@ -76,6 +76,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
 
 }
     
+$html = str_replace('[csrf]', csrf_field(), $html);
 
 $pagina = file_get_contents(ROOT_PATH .'/templates/blueprint.html');
 $footer_html = file_exists(ROOT_PATH . '/templates/components/footer.html') ? file_get_contents('templates/components/footer.html') : '';

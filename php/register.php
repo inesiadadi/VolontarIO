@@ -15,6 +15,7 @@ if(isset($_SESSION['logged'])) {
 } else {
     $form = " <div id='error'>[error_message]</div>
                 <form class='accessForm form-input' id='signForm' action='/volontario/register' method='post'>
+                    " . csrf_field() . "
                     <fieldset>
                         <legend id='legendForm'>Registra un account</legend>
                         <label for='username'>Username:</label>

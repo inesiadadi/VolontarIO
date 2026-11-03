@@ -46,6 +46,7 @@ $dati_utente = [
 $form = "
 [error_message]
 <form class='accessForm' id='modifyForm' action='/volontario/modifica-profilo?id=$id_utente_target' method='post' enctype='multipart/form-data'>
+    " . csrf_field() . "
         <fieldset>
         <legend>Modifica il tuo profilo</legend>   
         <label for='nome'>Nome (attuale: {$dati_utente['nome']}):</label>
