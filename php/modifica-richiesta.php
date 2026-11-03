@@ -45,7 +45,7 @@ $ora_db  = date('H:i', $timestamp);
 
 $dati_richiesta = [
     'descrizione' => $richiesta['descrizione'],
-    'idTipo'      => $richiesta['idTipologia'], 
+    'idTipo'      => $richiesta['idTipo'], 
     'nomeCitta'   => $richiesta['citta'], 
     'idCitta'     => $richiesta['idCitta'],
     'data'        => $data_db,
@@ -75,7 +75,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errori[] = "Categoria non valida.";
     }
 
-    if(!$idCitta || filter_var($idTipo, FILTER_VALIDATE_INT) === false) {
+    if(!$idCitta || filter_var($idCitta, FILTER_VALIDATE_INT) === false) {
         $errori[] = "Città non valida.";
     }
 
@@ -190,7 +190,7 @@ $placeholders_layout = [
     '[Description]'   => 'Pagina di modifica richiesta',
     '[Keywords]'      => 'modifica, richiesta, aiuto',
     '[pageNameId]'    => 'modifyRequestPage',
-    '[onload]'        => 'onload="initCittaAutocomplete()"', 
+    '[onload]'        => 'initCittaAutocomplete()', 
     '[Header]'        => $header_html,
     '[Footer]'        => $footer_html,
     '[MainContent]'   => $html 
