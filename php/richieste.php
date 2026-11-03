@@ -22,7 +22,7 @@ if (!$dbAccess->openDBConnection()) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rimuovi'])) {
     // Rimosso l'echo che sporcava l'output prima del redirect
-    $dbAccess->rimuoviRichiesta($_POST['codiceRichiesta']);
+    $dbAccess->rimuoviRichiesta((int)($_POST['codiceRichiesta'] ?? 0), $id_visitatore);
     header("Location: /volontario/richieste?id=" . $id_utente_target);
     exit;
 }
