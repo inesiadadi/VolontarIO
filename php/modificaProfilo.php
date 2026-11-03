@@ -77,6 +77,10 @@ $form = "
     <input type='email' name='email' id='email' placeholder='{$dati_utente['email']}' aria-describedby='aiuto-email'>
     <span id='aiuto-email' class='aiuto'>Inserisci un nuovo indirizzo email valido</span>
 
+        <label for='vecchia_password'>Password attuale:</label>
+        <input type='password' name='vecchia_password' id='vecchia_password' autocomplete='current-password' aria-describedby='aiuto-vecchia-password'>
+        <span id='aiuto-vecchia-password' class='aiuto'>Obbligatoria per cambiare email o password</span>
+
         <label for='password'>Nuova Password:</label>
         <input type='password' name='password' id='password' aria-describedby='aiuto-password'>
         <span id='aiuto-password' class='aiuto'>Lascia vuoto se non desideri cambiare la password</span>
@@ -112,12 +116,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idCitta     = !empty($_POST['idCitta'])     ? $_POST['idCitta']     : $dati_utente['idCitta'];
     $email       = !empty($_POST['email'])       ? $_POST['email']       : $dati_utente['email'];
 
-    $password = (!empty($_POST['password'])) 
-                ? password_hash(trim($_POST['password']), PASSWORD_DEFAULT) 
-                : $dati_utente['password'];
-    $pass_again = (!empty($_POST['pass_again'])) 
-                ? password_hash(trim($_POST['pass_again']), PASSWORD_DEFAULT) 
-                : $dati_utente['password'];
+    $nuova_password   = $_POST['password'] ?? '';
+    $pass_again       = $_POST['pass_again'] ?? '';
+    $vecchia_password = $_POST['vecchia_password'] ?? '';
+    $cambia_password  = $nuova_password !== '';
+    $cambia_email     = $email !== $dati_utente['email'];
 
     $errori = [];
 
@@ -141,18 +144,24 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errori[] = "Devi essere maggiorenne per registrarti."; 
             }
     }
-    if(!empty($_POST['password']) && !preg_match("/^(?=.*[A-Z])(?=.*\\d).{8,}$/", $password)) {
+    if(($cambia_password || $cambia_email) && !password_verify($vecchia_password, $dati_utente['password'])) {
+        $errori[] = "La password attuale non è corretta.";
+    }
+    if($cambia_password && !preg_match("/^(?=.*[A-Z])(?=.*\\d).{8,}$/", $nuova_password)) {
         $errori[] = "La password deve essere lunga almeno 8 caratteri e deve contenere almeno una maiuscola e un numero.";
     }
-    if(!empty($_POST['password']) && ($password != $pass_again)) {
+    if($cambia_password && $nuova_password !== $pass_again) {
         $errori[] = "Le password sono diverse";
     }
+    $password = $cambia_password ? password_hash($nuova_password, PASSWORD_DEFAULT) : $dati_utente['password'];
     
     $immagine_finale = $dati_utente['immagine']; 
-    if (isset($_FILES['immagine']) && $_FILES['immagine']['error'] === UPLOAD_ERR_OK) {
+    if (empty($errori) && isset($_FILES['immagine']) && $_FILES['immagine']['error'] !== UPLOAD_ERR_NO_FILE) {
         $nuovo_nome = aggiungiNuovaImmagineProfilo($_FILES['immagine'], $id_utente_target);
         if ($nuovo_nome) {
             $immagine_finale = $nuovo_nome;
+        } else {
+            $errori[] = "L'immagine deve essere un file PNG di massimo 2MB.";
         }
     }
     if(!empty($errori)) {
