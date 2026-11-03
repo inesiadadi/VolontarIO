@@ -5,10 +5,10 @@ include('header.php');
 $html = file_get_contents(ROOT_PATH .'/templates/come_funziona.html');
 
 if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
-    $nome = trim(filter_input(INPUT_POST, 'nome_cognome', FILTER_SANITIZE_SPECIAL_CHARS));
+    $nome = trim($_POST['nome_cognome'] ?? '');
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $numero = trim(filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_SPECIAL_CHARS));
-    $messaggio = trim(filter_input(INPUT_POST, 'messaggio', FILTER_SANITIZE_SPECIAL_CHARS));
+    $numero = trim($_POST['tel'] ?? '');
+    $messaggio = trim($_POST['messaggio'] ?? '');
     $errori = [];
     
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

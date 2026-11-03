@@ -160,13 +160,13 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
 
     $html = str_replace("[error_message]", "", $html);
 }
-$html = str_replace("[username]", $username,$html);
-$html = str_replace("[email]", $email,$html);
-$html = str_replace("[dataNascita]", $dataNascita,$html);
-$html = str_replace("[nome]", $nome,$html);
-$html = str_replace("[cognome]", $cognome,$html);
-$html = str_replace("[password]", $password,$html);
-$html = str_replace("[pass_again]", $pass_again,$html);
+$html = str_replace("[username]", e($username),$html);
+$html = str_replace("[email]", e($email),$html);
+$html = str_replace("[dataNascita]", e($dataNascita),$html);
+$html = str_replace("[nome]", e($nome),$html);
+$html = str_replace("[cognome]", e($cognome),$html);
+$html = str_replace("[password]", e($password),$html);
+$html = str_replace("[pass_again]", e($pass_again),$html);
 
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 
