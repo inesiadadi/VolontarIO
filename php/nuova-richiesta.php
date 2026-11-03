@@ -139,67 +139,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 } else {
-<<<<<<< HEAD
     $html = str_replace('[error_message]', "", $html);
-=======
-    $data_minima = date('Y-m-d'); // Impedisce di selezionare date passate nel calendario browser
-
-    $form = "
-        <form id='richiestaForm' class='accessForm' action='/volontario/nuova-richiesta' method='post'>
-            <fieldset>
-                <legend>Crea una nuova richiesta</legend>
-                <label for='categoria'>Categoria di aiuto:</label>
-                <select name='idTipo' id='categoria' required>
-                    <option value='' disabled selected>Scegli una categoria...</option>
-                    $tipologie
-                </select>
-                <label for='descrizione'>Breve descrizione:</label>
-                <textarea name='descrizione' id='descrizione' maxlength='255' required aria-describedby='aiuto-desc'></textarea>
-                <span id='aiuto-desc' class='aiuto'>Spiegare brevemente di cosa si ha bisogno (massimo 255 caratteri)</span>
-                <div class='autocomplete-container'>
-                        <label for='citta-input'>Città di residenza:</label>
-
-                        <input
-                            type='text'
-                            id='citta-input'
-                            name='citta_nome'
-                            autocomplete='off'
-                            role='combobox'
-                            aria-autocomplete='list'
-                            aria-expanded='false'
-                            aria-controls='suggerimenti-citta'
-                            aria-describedby='aiuto-citta'
-                        >
-
-                        <ul
-                            id='suggerimenti-citta'
-                            role='listbox'
-                            tabindex='-1'
-                            hidden
-                        ></ul>
-
-                        <input type='hidden' name='idCitta' id='idCitta-input'>
-
-                        <div id='status-citta' class='sr-only' aria-live='polite'></div>
-                    </div>
-
-                    <span id='aiuto-citta' class='aiuto'>
-                        Digita il comune e usa le frecce su e giù per selezionare.
-                    </span>
-                <label for='data'>Data dell'intervento:</label>
-                <input type='date' name='dataRichiesta' id='data' min='$data_minima' required>
-                <span class='aiuto'>Specificare la data in cui si richiede il servizio</span>
-
-                <label for='ora'>Orario richiesto:</label>
-                <input type='time' name='ora' id='ora' required>
-                <span class='aiuto'>Specificare l'orario in cui si richiede il servizio</span>
-                <button type='submit' id='createRequest'>Invia Richiesta</button>
-            </fieldset>
-        </form>
-        <p>Non hai più bisogno di aiuto? <a href='/volontario/bacheca-richieste'>Torna alla Bacheca</a></p>";
-
-    $html = str_replace('[Form]', $form, $html);
->>>>>>> dev-suar
 }
 
 $descrizione = '';
@@ -208,30 +148,6 @@ $dataRichiesta = '';
 $idTipo = '';
 $idCitta = '';
 
-<<<<<<< HEAD
-=======
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $descrizione = $_POST['descrizione'];
-    $dataRichiesta = $_POST['dataRichiesta'] . " " . $_POST['ora'] . ":00";
-    $idTipo = $_POST['idTipo'];
-    $idCitta = $_POST['idCitta'];
-    $idRichiedente = $_SESSION['user_id'];
-
-    if(!$dbAccess->openDBConnection()) {
-        http_response_code(500);
-        include ROOT_PATH . '/php/error500.php';
-        exit;
-    }
-
-    $successo = $dbAccess->aggiungiNuovaRichiesta($descrizione, $dataRichiesta, $idRichiedente, $idTipo, $idCitta);
-
-    $dbAccess->closeDBConnection();
-    if($successo) {
-        header('Location: /volontario/richieste?id=' . $id_utente_target);
-        exit();
-    }
-}
->>>>>>> dev-suar
 $pagina = file_get_contents(ROOT_PATH . '/templates/blueprint.html');
 $footer_html = file_get_contents(ROOT_PATH . '/templates/components/footer.html');
 

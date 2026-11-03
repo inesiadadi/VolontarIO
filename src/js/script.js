@@ -133,7 +133,7 @@ function initValidations() {
 
     if(form.id == "signForm") {
         regole = [
-            ['username', /^[a-zA-Z0-9_]{4,20}$/, "4-20 caratteri (lettere, numeri, underscore)", "Username non valido"],
+            ['username', /^[a-zA-Z0-9_]{4,20}$/, "4-20 caratteri (lettere, numeri, <span lang='en'>underscore</span>)", "Username non valido"],
             ['email', /^[a-zA-Z0-9._%+-]+@[a-zAèZ0-9.-]+\.[a-zA-Z]{2,}$/, "Inserisci un'email valida, es: aala@ajmai.me", "Email non valida"],
             ['nome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Mario", "Nome non valido"],
             ['cognome', /^[A-Za-zÀ-ÿ\s']{2,30}$/, "Solo lettere, minimo 2 caratteri, es: Rossi", "Cognome non valido"],
@@ -554,8 +554,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('citta-input')) {
         initCittaAutocomplete();
     }
-    initReviewFilters();
-    initRequestFilters();
     const stars = document.querySelectorAll('.starsColor[data-percentuale]');
     stars.forEach(star => {
         // Legge il dato dall'HTML e lo applica come variabile CSS
@@ -579,13 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // VALIDAZIONE FORM
-<<<<<<< HEAD
-    if (document.getElementById('signForm') || document.getElementById('contattoForm')) {
-=======
     if (document.getElementById('signForm') || document.getElementById('contattoForm') || document.getElementById('modifyForm')) {
-        if (typeof initValidations === 'function') {
->>>>>>> dev-suar
-            initValidations();
-    } 
-
+        initValidations();
+    }
 });

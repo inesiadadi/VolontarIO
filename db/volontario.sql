@@ -8014,7 +8014,8 @@ INSERT INTO Persona (username, email, password, ruolo, nome, cognome, dataNascit
 ('alberto', 'alberto@volontario.it', '$2a$12$7jvRwNIFNbDnDueuuRlxGOVdLq59t71JOm4HpWLLqH4WIz2qdbZum', 'admin', 'Alberto', 'Suar', '1992-03-21', 205),
 ('ines', 'ines@volontario.it', '$2a$12$7jvRwNIFNbDnDueuuRlxGOVdLq59t71JOm4HpWLLqH4WIz2qdbZum', 'admin', 'Ines', 'Iadadi', '1998-11-02', 40),
 ('angela', 'angela@volontario.it', '$2a$12$7jvRwNIFNbDnDueuuRlxGOVdLq59t71JOm4HpWLLqH4WIz2qdbZum', 'admin', 'Angela', 'Maule', '1985-07-30', 601),
-('user', 'user@volontario.it', '$2a$12$7jvRwNIFNbDnDueuuRlxGOVdLq59t71JOm4HpWLLqH4WIz2qdbZum', 'user', 'Mario', 'Rossi', '2000-01-01', 14);
+('user', 'user@volontario.it', '$2a$12$7jvRwNIFNbDnDueuuRlxGOVdLq59t71JOm4HpWLLqH4WIz2qdbZum', 'user', 'Mario', 'Rossi', '2000-01-01', 14),
+('admin', 'admin@volontario.it', '$2a$12$n2Thi0C.dTeuRsP5UuC3hO44IU1OAYh89Q8/i2q7w8ZP9n4Swj/aq', 'admin', 'Giuseppe', 'Verdi', '2026-03-02', 67);
 
 INSERT INTO Richiesta (descrizione, dataRichiesta, stato, idRichiedente, idOfferente, idTipo, idCitta) VALUES
 ('Cerco aiuto per la spesa settimanale', NOW(), 'aperta', 5, NULL, 2, 14),
