@@ -8,7 +8,7 @@ $id_visitatore = $_SESSION['user_id'] ?? 0;
 if ($id_visitatore === 0) {
     header("Location: /volontario/login"); // O redirect alla Home
     exit;
-} else if($_SESSION['role'] == "user") {
+} else if(($_SESSION['role'] ?? '') !== "admin") {
     header("Location: /volontario/");
     exit;
 }

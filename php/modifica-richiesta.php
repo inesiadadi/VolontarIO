@@ -105,6 +105,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $successo = $dbAccess->modificaRichiesta(
             $id_richiesta, 
+            $id_visitatore,
             $descrizione, 
             $dataIntervento, 
             $idTipo, 

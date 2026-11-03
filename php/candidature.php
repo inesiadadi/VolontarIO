@@ -27,8 +27,8 @@ if (!$dbAccess->openDBConnection()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rinuncia'])) {
-    $dbAccess->rinunciaCandidatura($_POST['codiceRichiesta']);
-    header("Location: /volontario/candidature");
+    $dbAccess->rinunciaCandidatura((int)($_POST['codiceRichiesta'] ?? 0), $id_visitatore);
+    header("Location: /volontario/candidature?id=" . $id_visitatore);
     exit;
 }
 
@@ -67,7 +67,7 @@ if(!empty($resultRec)) {
         if ($rec['stato'] == "in_carico") {
             $temp = str_replace(
                 '[PulsantieraAzioni]',
-                '<form action="/volontario/candidature" method="post">
+                '<form action="/volontario/candidature?id=' . $id_visitatore . '" method="post">
                     <input type="hidden" name="codiceRichiesta" value="'. $rec['codiceRichiesta'] .'">
                     <button type="submit" name="rinuncia" class="profileBtn delete-btn" aria-label="Rinuncia incarico (Id: ' . $rec['codiceRichiesta']. ')">Rinuncia incarico<span class="sr-only">(Id: '. $rec['codiceRichiesta'].')</span></button>
                  </form>',

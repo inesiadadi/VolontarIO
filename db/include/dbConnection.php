@@ -185,7 +185,18 @@ public function getCandidatureEffettuate($idVolontario) {
         return true;
     }
 
-    public function rimuoviRichiesta($idRichiesta) {
+    public function rimuoviRichiesta($idRichiesta, $idRichiedente) {
+        $sql = "DELETE FROM Richiesta WHERE codiceRichiesta = ? AND idRichiedente = ?";
+        $query = $this->connection->prepare($sql);
+        $query->bind_param('ii', $idRichiesta, $idRichiedente);
+        if (!$query->execute()) {
+                error_log("Errore SQL: " . $this->connection->error);
+                return false;
+        }
+        return $query->affected_rows > 0;
+    }
+
+    public function rimuoviRichiestaAdmin($idRichiesta) {
         $sql = "DELETE FROM Richiesta WHERE codiceRichiesta = ?";
         $query = $this->connection->prepare($sql);
         $query->bind_param('i', $idRichiesta);
@@ -197,15 +208,15 @@ public function getCandidatureEffettuate($idVolontario) {
         return true;
     }
 
-    public function rinunciaCandidatura($codiceRichiesta) {
-        $sql = "UPDATE Richiesta SET idOfferente = NULL, stato = 'aperta' WHERE codiceRichiesta = ?";
+    public function rinunciaCandidatura($codiceRichiesta, $idOfferente) {
+        $sql = "UPDATE Richiesta SET idOfferente = NULL, stato = 'aperta' WHERE codiceRichiesta = ? AND idOfferente = ? AND stato = 'in_carico'";
         $query = $this->connection->prepare($sql);
-        $query->bind_param('i', $codiceRichiesta);
+        $query->bind_param('ii', $codiceRichiesta, $idOfferente);
         if (!$query->execute()) {
             error_log("Errore SQL:" . $this->connection->error);
             return false;
         }
-        return true;
+        return $query->affected_rows > 0;
     }
     
     
@@ -448,7 +459,7 @@ public function getCandidatureEffettuate($idVolontario) {
         $query->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
     }
 
-public function modificaRichiesta($id_richiesta, $descrizione, $dataIntervento, $idTipo, $idCitta) {
+public function modificaRichiesta($id_richiesta, $idRichiedente, $descrizione, $dataIntervento, $idTipo, $idCitta) {
     if (!isset($this->connection)) {
         return false;
     }
@@ -458,14 +469,14 @@ public function modificaRichiesta($id_richiesta, $descrizione, $dataIntervento, 
                   dataRichiesta = ?, 
                   idTipo = ?, 
                   idCitta = ? 
-              WHERE codiceRichiesta = ?";
+              WHERE codiceRichiesta = ? AND idRichiedente = ? AND stato = 'aperta'";
 
     $stmt = $this->connection->prepare($query);
     if (!$stmt) {
         return false;
     }
 
-    $stmt->bind_param('ssiii', $descrizione, $dataIntervento, $idTipo, $idCitta, $id_richiesta);
+    $stmt->bind_param('ssiiii', $descrizione, $dataIntervento, $idTipo, $idCitta, $id_richiesta, $idRichiedente);
 
     if ($stmt->execute()) {
         return true;

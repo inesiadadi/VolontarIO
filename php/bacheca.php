@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accetta_id']) && $is_
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['elimina_id']) && $is_logged_in && $user_role === 'admin') {
     $id_to_delete = intval($_POST['elimina_id']);
-    $dbAccess->rimuoviRichiesta($id_to_delete);
+    $dbAccess->rimuoviRichiestaAdmin($id_to_delete);
 }
 $filtro_data   = isset($_GET['date']) ? $_GET['date'] : '';
 $filtro_orario = isset($_GET['time']) ? $_GET['time'] : '';
