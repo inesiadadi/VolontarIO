@@ -2,9 +2,22 @@
 define('BASE_PATH', '/volontario');
 define('ROOT_PATH', __DIR__);
 
-// Debug: decommenta le righe sotto se vuoi vedere l'errore reale invece del 500
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
 error_reporting(E_ALL);
+
+ini_set('session.use_strict_mode', 1);
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_samesite', 'Lax');
+ini_set('session.cookie_secure', !empty($_SERVER['HTTPS']) ? 1 : 0);
+
+set_exception_handler(function ($e) {
+    error_log($e);
+    if (!headers_sent()) {
+        http_response_code(500);
+    }
+    include ROOT_PATH . '/php/error_500.php';
+});
 
 require_once ROOT_PATH . '/db/include/functions.php';
 

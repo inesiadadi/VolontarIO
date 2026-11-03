@@ -11,12 +11,13 @@ class DBAccess {
 
     public function openDBConnection() {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        $config = file_exists(__DIR__ . '/config.php') ? require __DIR__ . '/config.php' : [];
         try {
             $this->connection = mysqli_connect(
-                DBAccess::HOST_DB, 
-                DBAccess::USERNAME, 
-                DBAccess::PASSWORD, 
-                DBAccess::DATABASE_NAME,
+                $config['host'] ?? DBAccess::HOST_DB, 
+                $config['username'] ?? DBAccess::USERNAME, 
+                $config['password'] ?? DBAccess::PASSWORD, 
+                $config['database'] ?? DBAccess::DATABASE_NAME,
             );
 
             mysqli_set_charset($this->connection, "utf8mb4");
@@ -410,7 +411,7 @@ public function getCandidatureEffettuate($idVolontario) {
      public function loginAccount($username) {
         $check_username = $this->connection->prepare("SELECT username, idPersona, email, ruolo, nome, cognome, password FROM Persona WHERE username =  ?");
         $check_username->bind_param("s", $username);
-        $check_username->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
+        $check_username->execute();
         $result = $check_username->get_result();
         if(mysqli_num_rows($result) != 0) {
             return $result;
@@ -424,13 +425,13 @@ public function getCandidatureEffettuate($idVolontario) {
         //Il blocco qui sotto è fatto in modo da aver una query "safe" invece di avere $username direttamente sparato nella query, ancora manca qualche step per avere solo valori alfanumerici
         $check_username_already_exist = $this->connection->prepare("SELECT username, email FROM Persona WHERE username = ? OR email = ?");
         $check_username_already_exist->bind_param("ss", $username, $email);
-        $check_username_already_exist->execute() or die ("Errore in dbConnection: " . mysqli_error($this->connection));
+        $check_username_already_exist->execute();
         $result = $check_username_already_exist->get_result();
         if(mysqli_num_rows($result) == 0) {
             $password_hashed = password_hash($password, PASSWORD_DEFAULT);
             $create_account = $this->connection->prepare("INSERT INTO Persona (username, email, password, nome, cognome, dataNascita) VALUES (?, ?, ?, ?, ?, ?)");
             $create_account->bind_param("ssssss", $username, $email, $password_hashed, $nome, $cognome, $birthdate);
-            $create_account->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
+            $create_account->execute();
             $id = $this->connection->insert_id;
             // DA RICORDARE: bisogna avere almeno un user nel database senno' return 0 = false
             return $id;
@@ -443,7 +444,7 @@ public function getCandidatureEffettuate($idVolontario) {
 
     public function getMessaggi() {
         $query = $this->connection->prepare("SELECT id, nome_cognome, email, numero, messaggio, data_invio FROM Assistenza");
-        $query->execute() or die ("Errore in dbConnection" . mysqli_error($this->connection));
+        $query->execute();
         $result = $query->get_result();
         if(mysqli_num_rows($result) == 0) {
             $result = false;
@@ -458,7 +459,7 @@ public function getCandidatureEffettuate($idVolontario) {
     public function saveMessaggio($nome_cognome, $email, $numero, $messaggio) {
         $query = $this->connection->prepare("INSERT INTO Assistenza (nome_cognome, email, numero, messaggio) VALUES (?, ?, ?, ?)");
         $query->bind_param("ssss", $nome_cognome, $email, $numero, $messaggio);
-        $query->execute() or die("Errore in dbConnection: " . mysqli_error($this->connection));
+        $query->execute();
     }
 
 public function modificaRichiesta($id_richiesta, $idRichiedente, $descrizione, $dataIntervento, $idTipo, $idCitta) {
