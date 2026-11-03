@@ -42,14 +42,14 @@ function aggiungiNuovaImmagineProfilo($file, $idUtente) {
     $targetDir = __DIR__ . "/../../src/images/uploads/";
     
     if (isset($file) && $file['error'] === UPLOAD_ERR_OK) {
-        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $info = $file['size'] <= 2 * 1024 * 1024 ? getimagesize($file['tmp_name']) : false;
         
-        if ($ext === 'png') {
+        if ($info !== false && $info[2] === IMAGETYPE_PNG) {
             $nuovoNome = $idUtente . ".png";
             $targetPath = $targetDir . $nuovoNome;
 
             if (!file_exists($targetDir)) {
-                mkdir($targetDir, 0777, true);
+                mkdir($targetDir, 0755, true);
             }
 
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
