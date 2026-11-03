@@ -110,6 +110,7 @@ if(!isset($_SESSION['logged'])) {
 } else {
     $form = "
         <form id='recensioneForm' class='accessForm' method='post'>
+            " . csrf_field() . "
             <fieldset>
                 <legend>Lascia una recensione</legend>
 

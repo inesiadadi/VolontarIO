@@ -211,9 +211,11 @@ public function getCandidatureEffettuate($idVolontario) {
     
     public function getRichiestaPerId(int $codiceRichiesta)
     {
-        $sql = "SELECT codiceRichiesta, idRichiedente, idOfferente, stato
-                FROM Richiesta
-                WHERE codiceRichiesta = ?";
+        $sql = "SELECT R.codiceRichiesta, R.idRichiedente, R.idOfferente, R.stato,
+                       R.descrizione, R.dataRichiesta, R.idTipo, R.idCitta, C.nome AS citta
+                FROM Richiesta R
+                LEFT JOIN Citta C ON R.idCitta = C.idCitta
+                WHERE R.codiceRichiesta = ?";
 
         $stmt = $this->connection->prepare($sql);
         if (!$stmt) {

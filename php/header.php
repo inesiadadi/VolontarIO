@@ -5,6 +5,7 @@ require_once ROOT_PATH . '/db/include/dbConnection.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+csrf_verify();
 $header_html = file_get_contents(ROOT_PATH . '/templates/components/header.html');
 
 

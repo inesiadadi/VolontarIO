@@ -39,6 +39,7 @@ $data_minima = date('Y-m-d'); // Impedisce di selezionare date passate nel calen
 $form = "
     [error_message]
     <form id='richiestaForm' class='accessForm' action='/volontario/nuova-richiesta' method='post'>
+        " . csrf_field() . "
         <fieldset>
             <legend>Crea una nuova richiesta</legend>
             <label for='categoria'>Categoria di aiuto:</label>

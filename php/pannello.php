@@ -80,6 +80,7 @@ if($connessioneOK) {
                             </a>
 
                             <form action="/volontario/pannello" method="POST">
+                                ' . csrf_field() . '
                                 <input type="hidden" name="id" value="' . $id . '">
                                 <button type="submit" name="delete_btn" class="btnh btn-register-header"
                                 aria-label="Elimina messaggio di ' . $nome_cognome .'mandato il '. $data .' alle '. $ora .'">
