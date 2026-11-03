@@ -18,7 +18,7 @@ $path = rtrim($path, '/');
 if ($path === '') { $path = '/'; }
 
 // Se il file esiste fisicamente (es. un'immagine o un CSS), lascia che il server lo serva
-if ($path !== '/' && file_exists(ROOT_PATH . $path) && is_file(ROOT_PATH . $path)) {
+if ((strpos($path, '/src/') === 0 || $path === '/db/include/comuni.php') && is_file(ROOT_PATH . $path)) {
     return false;
 }
 

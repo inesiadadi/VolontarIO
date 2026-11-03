@@ -20,11 +20,22 @@
     AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Content-Security-Policy "frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+</IfModule>
+
 RewriteEngine On
 RewriteBase /volontario/
 
 # Blocca accesso diretto ai file php
 RewriteRule ^php/ - [F,L]
+RewriteRule ^db/(?!include/comuni\.php$) - [F,L]
+RewriteRule ^(templates|relazione)/ - [F,L]
+RewriteRule (^|/)\. - [F,L]
+RewriteRule \.(md|sql|tex|ini)$ - [F,L]
 
 # Router
 RewriteCond %{REQUEST_FILENAME} !-f
