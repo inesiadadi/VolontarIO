@@ -1,5 +1,8 @@
 <?php 
 
+function e($valore): string {
+    return htmlspecialchars((string)($valore ?? ''), ENT_QUOTES, 'UTF-8');
+}
 
 function formatDateItalian($date) {
     // Mappa dei mesi in italiano

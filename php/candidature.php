@@ -12,7 +12,7 @@ if ($id_visitatore === 0) {
     exit;
 }
 
-$id_utente_target = $_GET['id'] ?? 0;
+$id_utente_target = (int)($_GET['id'] ?? 0);
 
 if($id_utente_target === 0 || $id_utente_target != $id_visitatore) {
     header('Location: /volontario/');

@@ -94,7 +94,7 @@ $form = "
 $html = str_replace('[Form]', $form, $html);
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $descrizione = trim(filter_input(INPUT_POST, 'descrizione', FILTER_SANITIZE_SPECIAL_CHARS));
+    $descrizione = trim($_POST['descrizione'] ?? '');
     $dataRichiesta = $_POST['dataRichiesta'] . " " . $_POST['ora'] . ":00";
     $idTipo = filter_input(INPUT_POST, 'idTipo', FILTER_VALIDATE_INT);
     $idCitta = filter_input(INPUT_POST, 'idCitta', FILTER_VALIDATE_INT);

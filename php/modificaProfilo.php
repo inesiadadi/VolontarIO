@@ -10,7 +10,7 @@ if($id_visitatore === 0) {
     exit;
     }
     
-$id_utente_target = $_GET['id'] ?? 0;
+$id_utente_target = (int)($_GET['id'] ?? 0);
 if($id_utente_target != $id_visitatore) {
     header('Location: /volontario/');
     exit;
@@ -48,20 +48,20 @@ $form = "
 <form class='accessForm' id='modifyForm' action='/volontario/modifica-profilo?id=$id_utente_target' method='post' enctype='multipart/form-data'>
         <fieldset>
         <legend>Modifica il tuo profilo</legend>   
-        <label for='nome'>Nome (attuale: {$dati_utente['nome']}):</label>
-        <input type='text' name='nome' id='nome' placeholder='{$dati_utente['nome']}' value='' aria-describedby='aiuto-nome'>
+        <label for='nome'>Nome (attuale: " . e($dati_utente['nome']) . "):</label>
+        <input type='text' name='nome' id='nome' placeholder='" . e($dati_utente['nome']) . "' value='' aria-describedby='aiuto-nome'>
         <span id='aiuto-nome' class='aiuto'>Inserire il nuovo nome per modificarlo</span>
 
-        <label for='cognome'>Cognome (attuale: {$dati_utente['cognome']}):</label>
-        <input type='text' name='cognome' id='cognome' placeholder='{$dati_utente['cognome']}' value='' aria-describedby='aiuto-cognome'>
+        <label for='cognome'>Cognome (attuale: " . e($dati_utente['cognome']) . "):</label>
+        <input type='text' name='cognome' id='cognome' placeholder='" . e($dati_utente['cognome']) . "' value='' aria-describedby='aiuto-cognome'>
         <span id='aiuto-cognome' class='aiuto'>Inserire il nuovo cognome per modificarlo</span>
 
         <label for='dataNascita'>Data di nascita:</label>
-        <input type='date' name='dataNascita' id='dataNascita' max='". date('Y-m-d', strtotime('-18 years')) ."' value='{$dati_utente['nascita']}' aria-describedby='aiuto-data'>
+        <input type='date' name='dataNascita' id='dataNascita' max='". date('Y-m-d', strtotime('-18 years')) ."' value='" . e($dati_utente['nascita']) . "' aria-describedby='aiuto-data'>
         <span id='aiuto-data' class='aiuto'>Modifica la tua data di nascita</span>
 
         <label for='descrizione'>Breve descrizione:</label>
-        <textarea name='descrizione' id='descrizione' maxlength='255' aria-describedby='aiuto-desc'>{$dati_utente['descrizione']}</textarea>
+        <textarea name='descrizione' id='descrizione' maxlength='255' aria-describedby='aiuto-desc'>" . e($dati_utente['descrizione']) . "</textarea>
         <span id='aiuto-desc' class='aiuto'>Aggiorna la tua presentazione (max 255 caratteri)</span>
     
     <label for='citta-input'>Città di residenza:</label>
@@ -74,7 +74,7 @@ $form = "
     </span>
 
     <label for='email'>Email:</label>
-    <input type='email' name='email' id='email' placeholder='{$dati_utente['email']}' aria-describedby='aiuto-email'>
+    <input type='email' name='email' id='email' placeholder='" . e($dati_utente['email']) . "' aria-describedby='aiuto-email'>
     <span id='aiuto-email' class='aiuto'>Inserisci un nuovo indirizzo email valido</span>
 
         <label for='password'>Nuova Password:</label>
