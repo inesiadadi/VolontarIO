@@ -135,7 +135,7 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
         
         if($result) {
             // Inizio della sessione, da vedere meglio ancora
-            session_start();
+            session_regenerate_id(true);
             $_SESSION['logged'] = true;
             $_SESSION['user_id'] = $result;
             $_SESSION['username'] = $username;

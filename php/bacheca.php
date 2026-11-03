@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['elimina_id']) && $is_
 $filtro_data   = isset($_GET['date']) ? $_GET['date'] : '';
 $filtro_orario = isset($_GET['time']) ? $_GET['time'] : '';
 $filtro_citta  = isset($_GET['city']) ? trim($_GET['city']) : '';
-$filtro_cats   = isset($_GET['category']) ? $_GET['category'] : [];
+$filtro_cats   = array_map('intval', (array)($_GET['category'] ?? []));
 
 $richieste = $dbAccess->getRichieste($filtro_data, $filtro_citta, $filtro_cats);
 $dbAccess->closeDBConnection();
